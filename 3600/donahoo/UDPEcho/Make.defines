@@ -8,7 +8,7 @@
 # for SOLARIS
 OSFLAG = -DSOLARIS
 #LIBS = 
-LINKFLAGS = -lsocket -lnsl
+#LINKFLAGS = -lsocket -lnsl
 # for Linux
 #OSFLAG = -DLINUX
 #LIBS = 
