@@ -1,21 +1,66 @@
-#include <stdio.h>
-#include <time.h>
-#include <stdlib.h>
+#include "vg.h"
 
-//returns a random int value
-//TODO -- find better random generator
-int generateRand(){
-    srand(time(NULL));
-    int r = rand();
-    return r;
-}
 
 int main (int argc, char *argv[]){
+    int sock;                        /* Socket */
+    struct sockaddr_in echoServAddr; /* Local address */
+    struct sockaddr_in echoClntAddr; /* Client address */
+    unsigned int cliAddrLen;         /* Length of incoming message */
+    char echoBuffer[256];        /* Buffer for echo string */
+    unsigned short echoServPort;     /* Server port */
+    int recvMsgSize;                 /* Size of received message */
 
-    /*
-    Once the client has a guess, it sends a message
-    to the server asking if the value is correct.
-    */
+    if (argc != 3)         /* Test for correct number of parameters */
+    {
+        fprintf(stderr,"Usage:  valueServer <serverPort> <initialValue>\n");
+        exit(1);
+    }
+
+    echoServPort = atoi(argv[1]);  /* First arg:  local port */
+
+    /* Create socket for sending/receiving datagrams */
+    if ((sock = socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0){
+        printf("socket() failed"); //DieWithError("socket() failed");
+        exit(1);
+    }
+
+    /* Construct local address structure */
+    memset(&echoServAddr, 0, sizeof(echoServAddr));   /* Zero out structure */
+    echoServAddr.sin_family = AF_INET;                /* Internet address family */
+    echoServAddr.sin_addr.s_addr = htonl(INADDR_ANY); /* Any incoming interface */
+    echoServAddr.sin_port = htons(echoServPort);      /* Local port */
+
+    /* Bind to the local address */
+    printf("UDPEchoServer: About to bind to port %d\n", echoServPort);
+    if (bind(sock, (struct sockaddr *) &echoServAddr, sizeof(echoServAddr)) < 0){
+        printf("bind() failed"); //DieWithError("bind() failed");
+        exit(1);
+    }
+
+
+    for (;;) /* Run forever */
+    {
+        /* Set the size of the in-out parameter */
+        cliAddrLen = sizeof(echoClntAddr);
+
+        /* Block until receive message from a client */
+        if ((recvMsgSize = recvfrom(sock, echoBuffer, 255, 0,
+            (struct sockaddr *) &echoClntAddr, &cliAddrLen)) < 0){
+                printf("recvfrom() failed");    //DieWithError("recvfrom() failed");
+                exit(1);
+            }
+
+            printf("Handling client %s\n", inet_ntoa(echoClntAddr.sin_addr));
+
+            /* Send received datagram back to the client */
+            if (sendto(sock, echoBuffer, recvMsgSize, 0,
+                (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != recvMsgSize){
+                    printf("sendto() sent a different number of bytes than expected");
+                    exit(1);
+                }
+                //DieWithError("sendto() sent a different number of bytes than expected");
+    }
+            /* NOT REACHED */
 
     /*
     TODO -- The server replies with a message of 0, 1, or 2.
@@ -24,7 +69,7 @@ int main (int argc, char *argv[]){
     */
 
     /*
-    TODO -- At the server, if the value is guessed, the server randomly 
+    TODO -- At the server, if the value is guessed, the server randomly
     comes up with a new value and loops to play the game again.
     */
 
@@ -33,8 +78,14 @@ int main (int argc, char *argv[]){
     it terminates displaying an appropriate message to the user.
     */
 
+    return 0;
+}
 
-
-
-
+//returns a random int value
+//TODO -- find better random generator
+int selectNextValue(){
+    srand(time(NULL));
+    int r = rand();
+    printf("guess: %d", r);
+    return r;
 }

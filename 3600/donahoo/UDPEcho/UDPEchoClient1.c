@@ -1,6 +1,6 @@
 /*********************************************************
 *
-* Module Name: UDP Echo client source 
+* Module Name: UDP Echo client source
 *
 * File Name:    UDPEchoClient1.c
 *
@@ -67,15 +67,15 @@ int main(int argc, char *argv[])
     }
 
     /* Send the string to the server */
-    printf("UDPEchoClient: Send the string: %s to the server: %s \n", echoString,servIP);    
+    printf("UDPEchoClient: Send the string: %s to the server: %s \n", echoString,servIP);
     if (sendto(sock, echoString, echoStringLen, 0, (struct sockaddr *)
                &echoServAddr, sizeof(echoServAddr)) != echoStringLen)
       DieWithError("sendto() sent a different number of bytes than expected");
-  
+
     /* Recv a response */
-    printf("UDPEchoClient: And now wait for a response... \n");    
+    printf("UDPEchoClient: And now wait for a response... \n");
     fromSize = sizeof(fromAddr);
-    if ((respStringLen = recvfrom(sock, echoBuffer, ECHOMAX, 0, 
+    if ((respStringLen = recvfrom(sock, echoBuffer, ECHOMAX, 0,
          (struct sockaddr *) &fromAddr, &fromSize)) != echoStringLen)
         DieWithError("recvfrom() failed");
 
@@ -95,5 +95,3 @@ void clientCNTCCode() {
   printf("UDPEchoClient:  CNT-C Interrupt,  exiting....\n");
 
 }
-
-
