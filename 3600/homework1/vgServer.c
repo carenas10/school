@@ -1,5 +1,8 @@
 #include "vg.h"
 
+//function prototypes
+int selectNextValue();
+
 
 int main (int argc, char *argv[]){
     int sock;                        /* Socket */
@@ -51,6 +54,19 @@ int main (int argc, char *argv[]){
             }
 
             printf("Handling client %s\n", inet_ntoa(echoClntAddr.sin_addr));
+
+            //check guess
+            guessedValue = atoi(echoBuffer);
+            printf("%s\n"guessedValue);
+            if(guessedValue > valueToGuess){ //guessedValue too large
+
+            }else if(guessedValue < valueToGuess){ //guessedValue too small
+
+            }else if(guessedValue == valueToGuess){ //guessedValue is correct!
+            //guess new value
+            }
+
+
 
             /* Send received datagram back to the client */
             if (sendto(sock, echoBuffer, recvMsgSize, 0,
