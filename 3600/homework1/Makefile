@@ -1,10 +1,10 @@
 all: client.o server.o
 
 client.o: vgClient.c
-	gcc -Wall vgClient.c -o client
+	gcc -Wall vgClient.c DieWithError.c -o client
 
 server.o: vgServer.c
-	gcc -Wall vgServer.c -o server
+	gcc -Wall vgServer.c DieWithError.c -o server
 
 clean:
 	rm -f *o

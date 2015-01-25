@@ -10,3 +10,6 @@
 #include <stdlib.h>     /* for atoi() and exit() */
 #include <unistd.h>     /* for close() */
 #include <time.h>       /* used by rand */
+
+
+void DieWithError(char *errorMessage);  /* External error handling function */

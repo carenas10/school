@@ -5,6 +5,11 @@ int selectNextValue();
 
 
 int main (int argc, char *argv[]){
+    int valueToGuess;   //the server's random value
+    int guessedValue;   //the guessed value from the client
+    char response = -1;      //to send back to client.
+    // 1 if high, 2 if low, 0 if correct.
+
     int sock;                        /* Socket */
     struct sockaddr_in echoServAddr; /* Local address */
     struct sockaddr_in echoClntAddr; /* Client address */
@@ -20,6 +25,7 @@ int main (int argc, char *argv[]){
     }
 
     echoServPort = atoi(argv[1]);  /* First arg:  local port */
+    valueToGuess = atoi(argv[2]);  /* Second arg:  initial guess */
 
     /* Create socket for sending/receiving datagrams */
     if ((sock = socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0){
@@ -57,7 +63,7 @@ int main (int argc, char *argv[]){
 
             //check guess
             guessedValue = atoi(echoBuffer);
-            printf("%s\n"guessedValue);
+            printf("%d\n",guessedValue); //DEBUG print
             if(guessedValue > valueToGuess){ //guessedValue too large
 
             }else if(guessedValue < valueToGuess){ //guessedValue too small
