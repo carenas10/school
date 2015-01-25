@@ -9,22 +9,22 @@ char *itoa (int value, char *result, int base);
 int main (int argc, char *argv[]){
     //Client vars
     int guess;                  //value to send to server
-    //int result = -1;            //response from server
+    int result = -1;            //response from server
     int tries = 0;              //number of attempts
     float runningTime = 0.0;    //elapsed time
 
     //UDP vars
     int sock;                        /* Socket descriptor */
     struct sockaddr_in echoServAddr; /* server address */
-    //struct sockaddr_in fromAddr;     /* Source address of response */
+    struct sockaddr_in fromAddr;     /* Source address of response */
     struct hostent *thehost;         /* Hostent from gethostbyname() */
     unsigned short echoServPort;     /* Echo server port */
-    //unsigned int fromSize;           /* In-out of address size for recvfrom() */
+    unsigned int fromSize;           /* In-out of address size for recvfrom() */
     char *servIP;                    /* IP address of server */
     char *echoString;                /* String to send to echo server */
-    //char echoBuffer[256];      /* Buffer for receiving echoed string */
+    char echoBuffer[256];      /* Buffer for receiving echoed string */
     int echoStringLen;               /* Length of string to echo */
-    //int respStringLen;               /* Length of received response */
+    int respStringLen;               /* Length of received response */
 
     //check cmd line arguments
     if(argc != 3){
@@ -66,6 +66,38 @@ int main (int argc, char *argv[]){
     if (sendto(sock, echoString, echoStringLen, 0, (struct sockaddr *)
         &echoServAddr, sizeof(echoServAddr)) != echoStringLen)
         DieWithError("sendto() sent a different number of bytes than expected");
+
+    //receive
+    fromSize = sizeof(fromAddr);
+    if ((respStringLen = recvfrom(sock, echoBuffer, 256, 0,
+        (struct sockaddr *) &fromAddr, &fromSize)) != echoStringLen)
+        DieWithError("recvfrom() failed");
+
+    //check to make sure correct address was sending
+    if (echoServAddr.sin_addr.s_addr != fromAddr.sin_addr.s_addr){
+        fprintf(stderr,"Error: received a packet from unknown source \n");
+    }
+
+    result = atoi(echoBuffer);
+    if (result == -1){
+        //no response set
+    } else if (result == 0){
+        //correct guess
+    } else if (result == 1){
+        //too high
+    } else if (result == 2){
+        //too low
+    } else {
+        //incorrect response
+    }
+
+
+
+
+        //finish and close
+        close(sock);
+        exit(0);
+
 
 //----------------------- SEND/RCV ---------------------
 
