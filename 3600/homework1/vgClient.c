@@ -25,7 +25,7 @@ int main (int argc, char *argv[]){
     char echoBuffer[256];      /* Buffer for receiving echoed string */
     int echoStringLen;               /* Length of string to echo */
     int respStringLen;               /* Length of received response */
-
+printf("HI!!!\n");
     //check cmd line arguments
     if(argc != 3){
         printf("Usage: valueGuesser <serverName> <serverPort>\n");
@@ -56,9 +56,9 @@ int main (int argc, char *argv[]){
     //guess random, send random, check result, repeat (if incorrect);
 //----------------------- SEND/RCV ---------------------
     guess = selectNextValue();
-    //sprintf(echoString, "%d\n", guess);
+    sprintf(echoString, "%d\n", guess);
 
-    itoa(guess,echoString,10);
+    //itoa(guess,echoString,10);
     printf("%s\n",echoString);
     echoStringLen = sizeof(echoString);
 
@@ -79,6 +79,7 @@ int main (int argc, char *argv[]){
     }
 
     result = atoi(echoBuffer);
+    printf("Echoed result: %d",result);
     if (result == -1){
         //no response set
     } else if (result == 0){
@@ -88,20 +89,18 @@ int main (int argc, char *argv[]){
     } else if (result == 2){
         //too low
     } else {
+        printf("Error:\n");
+        printf("Server responded with %d\n",result);
         //incorrect response
     }
-
-
-
-
-        //finish and close
-        close(sock);
-        exit(0);
-
 
 //----------------------- SEND/RCV ---------------------
 
 // printf("%d\t%.3f\t%d\n",tries,runningTime,guess);
+
+//finish and close
+close(sock);
+exit(0);
 
 return 0;
 }

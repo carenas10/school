@@ -7,7 +7,7 @@ int selectNextValue();
 int main (int argc, char *argv[]){
     int valueToGuess;   //the server's random value
     int guessedValue;   //the guessed value from the client
-    char response = -1;      //to send back to client.
+    char *response = "-1";      //to send back to client.
     // 1 if high, 2 if low, 0 if correct.
 
     int sock;                        /* Socket */
@@ -17,6 +17,7 @@ int main (int argc, char *argv[]){
     char echoBuffer[256];        /* Buffer for echo string */
     unsigned short echoServPort;     /* Server port */
     int recvMsgSize;                 /* Size of received message */
+    int sendMsgSize;
 
     if (argc != 3)         /* Test for correct number of parameters */
     {
@@ -46,7 +47,6 @@ int main (int argc, char *argv[]){
         exit(1);
     }
 
-
     for (;;) /* Run forever */
     {
         /* Set the size of the in-out parameter */
@@ -55,8 +55,7 @@ int main (int argc, char *argv[]){
         /* Block until receive message from a client */
         if ((recvMsgSize = recvfrom(sock, echoBuffer, 255, 0,
             (struct sockaddr *) &echoClntAddr, &cliAddrLen)) < 0){
-                printf("recvfrom() failed");    //DieWithError("recvfrom() failed");
-                exit(1);
+                DieWithError("recvfrom() failed");
             }
 
             printf("Handling client %s\n", inet_ntoa(echoClntAddr.sin_addr));
@@ -65,40 +64,45 @@ int main (int argc, char *argv[]){
             guessedValue = atoi(echoBuffer);
             printf("%d\n",guessedValue); //DEBUG print
             if(guessedValue > valueToGuess){ //guessedValue too large
-
+                response = "1";
+                sendMsgSize = sizeof(response);
+                /* Send received datagram back to the client */
+                if (sendto(sock, response, sendMsgSize, 0,
+                    (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != sendMsgSize){
+                        DieWithError("sendto() sent a different number of bytes than expected.");
+                    }
             }else if(guessedValue < valueToGuess){ //guessedValue too small
-
+                response = "2";
+                sendMsgSize = sizeof(response);
+                /* Send received datagram back to the client */
+                if (sendto(sock, response, sendMsgSize, 0,
+                    (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != sendMsgSize){
+                        DieWithError("sendto() sent a different number of bytes than expected.");
+                    }
             }else if(guessedValue == valueToGuess){ //guessedValue is correct!
-            //guess new value
+                response = "0";
+                sendMsgSize = sizeof(response);
+                /* Send received datagram back to the client */
+                if (sendto(sock, response, sendMsgSize, 0,
+                    (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != sendMsgSize){
+                        DieWithError("sendto() sent a different number of bytes than expected.");
+                    }
+            } else {
+                response = "-1";
+                sendMsgSize = sizeof(response);
+                /* Send received datagram back to the client */
+                if (sendto(sock, response, sendMsgSize, 0,
+                    (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != sendMsgSize){
+                        DieWithError("sendto() sent a different number of bytes than expected.");
+                    }
             }
-
-
 
             /* Send received datagram back to the client */
             if (sendto(sock, echoBuffer, recvMsgSize, 0,
                 (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != recvMsgSize){
-                    printf("sendto() sent a different number of bytes than expected");
-                    exit(1);
+                    DieWithError("sendto() sent a different number of bytes than expected.");
                 }
-                //DieWithError("sendto() sent a different number of bytes than expected");
     }
-            /* NOT REACHED */
-
-    /*
-    TODO -- The server replies with a message of 0, 1, or 2.
-    Zero is returned if the guess is correct,
-    1 if the guess is too high, and 2 if the guess is too low.
-    */
-
-    /*
-    TODO -- At the server, if the value is guessed, the server randomly
-    comes up with a new value and loops to play the game again.
-    */
-
-    /*
-    At the client, if it successfully guesses the value
-    it terminates displaying an appropriate message to the user.
-    */
 
     return 0;
 }
