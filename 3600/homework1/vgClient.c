@@ -25,7 +25,7 @@ int main (int argc, char *argv[]){
     char echoBuffer[256];      /* Buffer for receiving echoed string */
     int echoStringLen;               /* Length of string to echo */
     int respStringLen;               /* Length of received response */
-printf("HI!!!\n");
+
     //check cmd line arguments
     if(argc != 3){
         printf("Usage: valueGuesser <serverName> <serverPort>\n");
@@ -82,12 +82,16 @@ printf("HI!!!\n");
     printf("Echoed result: %d",result);
     if (result == -1){
         //no response set
+        printf("Server responded with %d\n",result);
     } else if (result == 0){
         //correct guess
+        printf("Server responded with %d\n",result);
     } else if (result == 1){
         //too high
+        printf("Server responded with %d\n",result);
     } else if (result == 2){
         //too low
+        printf("Server responded with %d\n",result);
     } else {
         printf("Error:\n");
         printf("Server responded with %d\n",result);
