@@ -1,8 +1,9 @@
 #include "vg.h"
 
+#define MAXVAL 1000000000
+
 //function prototypes
 int selectNextValue();
-
 
 int main (int argc, char *argv[]){
     int valueToGuess;   //the server's random value
@@ -98,10 +99,10 @@ int main (int argc, char *argv[]){
             }
 
             /* Send received datagram back to the client */
-            if (sendto(sock, echoBuffer, recvMsgSize, 0,
-                (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != recvMsgSize){
-                    DieWithError("sendto() sent a different number of bytes than expected.");
-                }
+//            if (sendto(sock, echoBuffer, recvMsgSize, 0,
+//                (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != recvMsgSize){
+//                    DieWithError("sendto() sent a different number of bytes than expected.");
+//                }
     }
 
     return 0;
@@ -112,6 +113,7 @@ int main (int argc, char *argv[]){
 int selectNextValue(){
     srand(time(NULL));
     int r = rand();
+    r = r % MAXVAL;
     printf("guess: %d", r);
     return r;
 }

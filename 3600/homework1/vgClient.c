@@ -1,6 +1,7 @@
 #include "vg.h"
 #include <signal.h>
 
+#define MAXVAL 1000000000
 //function prototypes
 int selectNextValue();
 void clientCNTCCode();
@@ -8,7 +9,9 @@ char *itoa (int value, char *result, int base);
 
 int main (int argc, char *argv[]){
     //Client vars
-    int guess;                  //value to send to server
+    int tmp = 0;
+    int prevGuess = MAXVAL;
+    int guess = MAXVAL/2;                  //value to send to server
     int result = -1;            //response from server
     int tries = 0;              //number of attempts
     float runningTime = 0.0;    //elapsed time
@@ -54,49 +57,60 @@ int main (int argc, char *argv[]){
     }
 
     //guess random, send random, check result, repeat (if incorrect);
-//----------------------- SEND/RCV ---------------------
-    guess = selectNextValue();
-    sprintf(echoString, "%d\n", guess);
+    //----------------------- SEND/RCV ---------------------
 
-    //itoa(guess,echoString,10);
-    printf("%s\n",echoString);
-    echoStringLen = sizeof(echoString);
+    while(1){
+        sprintf(echoString, "%d\n", guess);
 
-    //send
-    if (sendto(sock, echoString, echoStringLen, 0, (struct sockaddr *)
-        &echoServAddr, sizeof(echoServAddr)) != echoStringLen)
-        DieWithError("sendto() sent a different number of bytes than expected");
+        //itoa(guess,echoString,10);
+        printf("%s\n",echoString);
+        echoStringLen = sizeof(echoString);
 
-    //receive
-    fromSize = sizeof(fromAddr);
-    if ((respStringLen = recvfrom(sock, echoBuffer, 256, 0,
-        (struct sockaddr *) &fromAddr, &fromSize)) != echoStringLen)
-        DieWithError("recvfrom() failed");
+        //send
+        if (sendto(sock, echoString, echoStringLen, 0, (struct sockaddr *)
+            &echoServAddr, sizeof(echoServAddr)) != echoStringLen)
+            DieWithError("sendto() sent a different number of bytes than expected");
 
-    //check to make sure correct address was sending
-    if (echoServAddr.sin_addr.s_addr != fromAddr.sin_addr.s_addr){
-        fprintf(stderr,"Error: received a packet from unknown source \n");
-    }
+        //receive
+        fromSize = sizeof(fromAddr);
+        if ((respStringLen = recvfrom(sock, echoBuffer, 256, 0,
+            (struct sockaddr *) &fromAddr, &fromSize)) != echoStringLen)
+            DieWithError("recvfrom() failed");
 
-    result = atoi(echoBuffer);
-    printf("Echoed result: %d",result);
-    if (result == -1){
-        //no response set
-        printf("Server responded with %d\n",result);
-    } else if (result == 0){
-        //correct guess
-        printf("Server responded with %d\n",result);
-    } else if (result == 1){
-        //too high
-        printf("Server responded with %d\n",result);
-    } else if (result == 2){
-        //too low
-        printf("Server responded with %d\n",result);
-    } else {
-        printf("Error:\n");
-        printf("Server responded with %d\n",result);
-        //incorrect response
-    }
+        //check to make sure correct address was sending
+        if (echoServAddr.sin_addr.s_addr != fromAddr.sin_addr.s_addr){
+            fprintf(stderr,"Error: received a packet from unknown source \n");
+        }
+
+        result = atoi(echoBuffer);
+
+        //binary search
+        if (result == -1){
+            //no response set
+            printf("Server didn't respond.");
+        } else if (result == 0){
+            printf("correct guess!");
+            exit(0);
+            //printf("Server responded with %d\n",result);
+        } else if (result == 1){
+            //too high
+            tmp = guess;
+            guess = guess - abs(prevGuess-guess)/2;
+            prevGuess = tmp;
+            printf("Server responded with %d\n",result);
+        } else if (result == 2){
+            //too low
+            tmp = guess;
+            guess = guess + abs(prevGuess - guess)/2;
+            prevGuess = tmp;
+            printf("Server responded with %d\n",result);
+        } else {
+            printf("Error:\n");
+            printf("Server responded with %d\n",result);
+            //incorrect response
+        }
+
+    }//while
 
 //----------------------- SEND/RCV ---------------------
 
@@ -119,6 +133,17 @@ int selectNextValue(){
     //printf("guess: %d", r);
     return r;
 }
+
+//calculates the result of base^power as ints
+int ipower(int base, int power){
+    int result = base;
+    while (power > 1){
+        result = result * base;
+        power--;
+    }
+    return result;
+}
+
 
 void clientCNTCCode() {
     printf("UDPEchoClient:  CNT-C Interrupt,  exiting....\n");
