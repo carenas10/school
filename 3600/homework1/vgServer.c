@@ -59,11 +59,14 @@ int main (int argc, char *argv[]){
                 DieWithError("recvfrom() failed");
             }
 
-            printf("Handling client %s\n", inet_ntoa(echoClntAddr.sin_addr));
+            //printf("Handling client %s\n", inet_ntoa(echoClntAddr.sin_addr));
 
             //check guess
             guessedValue = atoi(echoBuffer);
-            printf("%d\n",guessedValue); //DEBUG print
+
+            printf("guess: %d, server: %d\n",guessedValue,valueToGuess); //DEBUG print
+            printf("size: %d\n",recvMsgSize);
+
             if(guessedValue > valueToGuess){ //guessedValue too large
                 response = "1";
                 sendMsgSize = sizeof(response);

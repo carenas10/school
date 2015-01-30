@@ -64,7 +64,8 @@ int main (int argc, char *argv[]){
 
         //itoa(guess,echoString,10);
         printf("%s\n",echoString);
-        echoStringLen = sizeof(echoString);
+        echoStringLen = strlen(echoString)-2;
+        printf("send size: %d\n",echoStringLen);
 
         //send
         if (sendto(sock, echoString, echoStringLen, 0, (struct sockaddr *)
@@ -74,7 +75,7 @@ int main (int argc, char *argv[]){
         //receive
         fromSize = sizeof(fromAddr);
         if ((respStringLen = recvfrom(sock, echoBuffer, 256, 0,
-            (struct sockaddr *) &fromAddr, &fromSize)) != echoStringLen)
+            (struct sockaddr *) &fromAddr, &fromSize)) != echoStringLen) //added +1
             DieWithError("recvfrom() failed");
 
         //check to make sure correct address was sending
@@ -97,12 +98,14 @@ int main (int argc, char *argv[]){
             tmp = guess;
             guess = guess - abs(prevGuess-guess)/2;
             prevGuess = tmp;
+            if (guess == prevGuess) guess--;
             printf("Server responded with %d\n",result);
         } else if (result == 2){
             //too low
             tmp = guess;
             guess = guess + abs(prevGuess - guess)/2;
             prevGuess = tmp;
+            if (guess == prevGuess) guess++;
             printf("Server responded with %d\n",result);
         } else {
             printf("Error:\n");
