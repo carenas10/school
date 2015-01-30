@@ -23,7 +23,6 @@ int main (int argc, char *argv[]){
     int guess = MAXVAL/2;           //value to send to server
     int result = -1;                //response from server
 
-
     //UDP vars
     int sock;                        // Socket descriptor
     struct sockaddr_in echoServAddr; // server address
@@ -43,21 +42,21 @@ int main (int argc, char *argv[]){
         exit(1);
     }
 
-    servIP = argv[1];           /* First arg: server IP address (dotted quad) */
-    echoServPort = atoi(argv[2]);     /* Second arg: server port */
+    servIP = argv[1];               // First arg: server IP address (dotted quad)
+    echoServPort = atoi(argv[2]);   // Second arg: server port
 
-    /* Create a datagram/UDP socket */
+    // Create a datagram/UDP socket
     if ((sock = socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0){
         DieWithError("socket() failed");
     }
 
-    /* Construct the server address structure */
-    memset(&echoServAddr, 0, sizeof(echoServAddr));    /* Zero out structure */
-    echoServAddr.sin_family = AF_INET;                 /* Internet addr family */
-    echoServAddr.sin_addr.s_addr = inet_addr(servIP);  /* Server IP address */
-    echoServAddr.sin_port   = htons(echoServPort);     /* Server port */
+    // Construct the server address structure */
+    memset(&echoServAddr, 0, sizeof(echoServAddr));    // Zero out structure
+    echoServAddr.sin_family = AF_INET;                 // Internet addr family
+    echoServAddr.sin_addr.s_addr = inet_addr(servIP);  // Server IP address
+    echoServAddr.sin_port   = htons(echoServPort);     // Server port
 
-    /* If user gave a dotted decimal address, we need to resolve it  */
+    // If user gave a dotted decimal address, we need to resolve it
     if (echoServAddr.sin_addr.s_addr == -1) {
         thehost = gethostbyname(servIP);
         echoServAddr.sin_addr.s_addr = *((unsigned long *) thehost->h_addr_list[0]);
@@ -68,10 +67,7 @@ int main (int argc, char *argv[]){
         tries++;
         sprintf(echoString, "%d", guess);
 
-        //itoa(guess,echoString,10);
-        //printf("%s\n",echoString);
         echoStringLen = strlen(echoString);
-        //printf("send size: %d\n",echoStringLen);
 
         //set up signal handler
         struct sigaction handler;
@@ -87,7 +83,7 @@ int main (int argc, char *argv[]){
             &echoServAddr, sizeof(echoServAddr)) != echoStringLen)
             DieWithError("sendto() sent a different number of bytes than expected");
 
-        //receive
+        //receive with a timer to trip at TIMEOUT_SECS (2)
         alarm(TIMEOUT_SECS);    //start timer
         fromSize = sizeof(fromAddr);
         if ((respStringLen = recvfrom(sock, echoBuffer, 256, 0,
@@ -103,31 +99,26 @@ int main (int argc, char *argv[]){
             }
         }
 
-
         result = atoi(echoBuffer);
-        //printf("result after failing: %d",result);
+
         //binary search
         if (result == -1){
             //no response set
-            //printf("Server didn't respond.");
         } else if (result == 0){
-            //printf("correct guess!\n");
+            //correct guess! Break loop and print.
             break;
-            //printf("Server responded with %d\n",result);
         } else if (result == 1){
             //too high
             tmp = guess;
             guess = guess - abs(prevGuess-guess)/2;
             prevGuess = tmp;
             if (guess == prevGuess) guess--;
-            //printf("Server responded with %d\n",result);
         } else if (result == 2){
             //too low
             tmp = guess;
             guess = guess + abs(prevGuess - guess)/2;
             prevGuess = tmp;
             if (guess == prevGuess) guess++;
-            //printf("Server responded with %d\n",result);
         }
     }//while
 
@@ -154,10 +145,10 @@ void catchAlarm(int ignored){
 //returns the time in seconds
 double getTime()
 {
-        struct timeval curTime;
-        (void) gettimeofday (&curTime, (struct timezone *) NULL);
-        return (((((double) curTime.tv_sec) * 1000000.0)
-             + (double) curTime.tv_usec) / 1000000.0);
+    struct timeval curTime;
+    (void) gettimeofday (&curTime, (struct timezone *) NULL);
+    return (((((double) curTime.tv_sec) * 1000000.0)
+         + (double) curTime.tv_usec) / 1000000.0);
 }
 
 //handles user pressing ctrl-c by printout output and exiting.

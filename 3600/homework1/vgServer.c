@@ -14,62 +14,58 @@ char clientList [256];
 int main (int argc, char *argv[]){
     signal(SIGINT, clientCNTCCode); //handler for Ctrl-C signal
 
-    int valueToGuess;   //the server's random value
-    int guessedValue;   //the guessed value from the client
-    char *response = "-1";      //to send back to client.
-    clientList[0] = '\0';   //initialize empty string for clients.
+    int valueToGuess;               //the server's random value
+    int guessedValue;               //the guessed value from the client
+    char *response = "-1";          //to send back to client.
+    clientList[0] = '\0';           //initialize empty string for clients.
 
-    int sock;                        /* Socket */
-    struct sockaddr_in echoServAddr; /* Local address */
-    struct sockaddr_in echoClntAddr; /* Client address */
-    unsigned int cliAddrLen;         /* Length of incoming message */
-    char echoBuffer[256];        /* Buffer for echo string */
-    unsigned short echoServPort;     /* Server port */
-    int recvMsgSize;                 /* Size of received message */
+    int sock;                           // Socket
+    struct sockaddr_in echoServAddr;    // Local address
+    struct sockaddr_in echoClntAddr;    // Client address
+    unsigned int cliAddrLen;            // Length of incoming message
+    char echoBuffer[256];               // Buffer for echo string
+    unsigned short echoServPort;        // Server port
+    int recvMsgSize;                    // Size of received message
     int sendMsgSize;
 
-    if (argc != 3 && argc !=2)         /* Test for correct number of parameters */
+    if (argc != 3 && argc !=2)          // Test for correct number of parameters
     {
         fprintf(stderr,"Usage:  valueServer <serverPort> <initialValue>\n");
         exit(1);
     }
 
-    echoServPort = atoi(argv[1]);  /* First arg:  local port */
+    echoServPort = atoi(argv[1]);       // First arg:  local port
 
-    if (argc == 3) valueToGuess = atoi(argv[2]);  /* Second arg:  initial guess */
+    if (argc == 3) valueToGuess = atoi(argv[2]);  // Second arg: (optional) initial guess
     else valueToGuess = selectNextValue();
 
-    /* Create socket for sending/receiving datagrams */
+    // Create socket for sending/receiving datagrams
     if ((sock = socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0){
-        printf("socket() failed"); //DieWithError("socket() failed");
-        exit(1);
+        DieWithError("socket() failed");
     }
 
-    /* Construct local address structure */
-    memset(&echoServAddr, 0, sizeof(echoServAddr));   /* Zero out structure */
-    echoServAddr.sin_family = AF_INET;                /* Internet address family */
-    echoServAddr.sin_addr.s_addr = htonl(INADDR_ANY); /* Any incoming interface */
-    echoServAddr.sin_port = htons(echoServPort);      /* Local port */
+    // Construct local address structure
+    memset(&echoServAddr, 0, sizeof(echoServAddr));   // Zero out structure
+    echoServAddr.sin_family = AF_INET;                // Internet address family
+    echoServAddr.sin_addr.s_addr = htonl(INADDR_ANY); // Any incoming interface
+    echoServAddr.sin_port = htons(echoServPort);      // Local port
 
-    /* Bind to the local address */
+    // Bind to the local address
     printf("UDPEchoServer: About to bind to port %d\n", echoServPort);
     if (bind(sock, (struct sockaddr *) &echoServAddr, sizeof(echoServAddr)) < 0){
-        printf("bind() failed"); //DieWithError("bind() failed");
-        exit(1);
+        DieWithError("bind() failed");
     }
 
-    for (;;) /* Run forever */
-    {
-        /* Set the size of the in-out parameter */
+    //receive message, add client info, check guess, respond, repeat.
+    while (1) {     // Run forever
+        // Set the size of the in-out parameter
         cliAddrLen = sizeof(echoClntAddr);
 
-        /* Block until receive message from a client */
+        // Block until receive message from a client
         if ((recvMsgSize = recvfrom(sock, echoBuffer, 255, 0,
             (struct sockaddr *) &echoClntAddr, &cliAddrLen)) < 0){
                 DieWithError("recvfrom() failed");
             }
-
-            //printf("Handling client %s\n", inet_ntoa(echoClntAddr.sin_addr));
 
             //handle a client. Track a client.
             strcat(clientList,inet_ntoa(echoClntAddr.sin_addr));
@@ -78,17 +74,13 @@ int main (int argc, char *argv[]){
 
             //check guess
             echoBuffer[recvMsgSize] = '\0';
-            printf("echoBuffer: %s\n",echoBuffer);
             guessedValue = atoi(echoBuffer);
-
-            printf("guess: %d, server: %d\n\n",guessedValue,valueToGuess); //DEBUG print
-            //printf("size: %d\n",recvMsgSize);
 
             if(guessedValue > valueToGuess){ //guessedValue too large
                 response = "1";
                 sendMsgSize = strlen(response);
-                //printf("Response: %s, Length: %d",response,sendMsgSize);
-                /* Send received datagram back to the client */
+
+                // Send received datagram back to the client
                 if (sendto(sock, response, sendMsgSize, 0,
                     (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != sendMsgSize){
                         DieWithError("sendto() sent a different number of bytes than expected.");
@@ -96,8 +88,8 @@ int main (int argc, char *argv[]){
             }else if(guessedValue < valueToGuess){ //guessedValue too small
                 response = "2";
                 sendMsgSize = strlen(response);
-                //printf("Response: %s, Length: %d",response,sendMsgSize);
-                /* Send received datagram back to the client */
+
+                // Send received datagram back to the client
                 if (sendto(sock, response, sendMsgSize, 0,
                     (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != sendMsgSize){
                         DieWithError("sendto() sent a different number of bytes than expected.");
@@ -105,8 +97,8 @@ int main (int argc, char *argv[]){
             }else if(guessedValue == valueToGuess){ //guessedValue is correct!
                 response = "0";
                 sendMsgSize = strlen(response);
-                //printf("Response: %s, Length: %d",response,sendMsgSize);
-                /* Send received datagram back to the client */
+
+                // Send received datagram back to the client
                 if (sendto(sock, response, sendMsgSize, 0,
                     (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != sendMsgSize){
                         DieWithError("sendto() sent a different number of bytes than expected.");
@@ -117,16 +109,14 @@ int main (int argc, char *argv[]){
             } else {
                 response = "-1";
                 sendMsgSize = strlen(response);
-                //printf("Response: %s, Length: %d",response,sendMsgSize);
-                /* Send received datagram back to the client */
+
+                // Send received datagram back to the client
                 if (sendto(sock, response, sendMsgSize, 0,
                     (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != sendMsgSize){
                         DieWithError("sendto() sent a different number of bytes than expected.");
                     }
             } //else
-
-
-    }
+    }//while
 
     return 0;
 }

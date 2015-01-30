@@ -1,12 +1,12 @@
-all: client.o server.o
+all: valueGuesser.o valueServer.o
 
-client.o: vgClient.c
-	gcc -Wall vgClient.c DieWithError.c -o client
+valueGuesser.o: vgClient.c
+	gcc -Wall vgClient.c DieWithError.c -o valueGuesser
 
-server.o: vgServer.c
-	gcc -Wall vgServer.c DieWithError.c -o server
+valueServer.o: vgServer.c
+	gcc -Wall vgServer.c DieWithError.c -o valueServer
 
 clean:
 	rm -f *o
-	rm -f client
-	rm -f server
+	rm -f valueGuesser
+	rm -f valueServer
