@@ -88,6 +88,8 @@ int main (int argc, char *argv[]){
                     (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != sendMsgSize){
                         DieWithError("sendto() sent a different number of bytes than expected.");
                     }
+                //client guessed correctly. Guess a new value and start over.
+                valueToGuess = selectNextValue();
             } else {
                 response = "-1";
                 sendMsgSize = sizeof(response);
@@ -98,11 +100,7 @@ int main (int argc, char *argv[]){
                     }
             }
 
-            /* Send received datagram back to the client */
-//            if (sendto(sock, echoBuffer, recvMsgSize, 0,
-//                (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != recvMsgSize){
-//                    DieWithError("sendto() sent a different number of bytes than expected.");
-//                }
+
     }
 
     return 0;
@@ -114,6 +112,6 @@ int selectNextValue(){
     srand(time(NULL));
     int r = rand();
     r = r % MAXVAL;
-    printf("guess: %d", r);
+    printf("New guess: %d", r);
     return r;
 }

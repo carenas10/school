@@ -89,7 +89,7 @@ int main (int argc, char *argv[]){
             //no response set
             printf("Server didn't respond.");
         } else if (result == 0){
-            printf("correct guess!");
+            printf("correct guess!\n");
             exit(0);
             //printf("Server responded with %d\n",result);
         } else if (result == 1){
