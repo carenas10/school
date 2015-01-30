@@ -2,7 +2,7 @@
 *
 * Module Name: UDP Echo client/server header file
 *
-* File Name:    UDPEcho.h
+* File Name:    UDPEcho.h	
 *
 * Summary:
 *  This file contains common stuff for the client and server
@@ -26,3 +26,4 @@
 #define ECHOMAX 255     /* Longest string to echo */
 
 void DieWithError(char *errorMessage);  /* External error handling function */
+

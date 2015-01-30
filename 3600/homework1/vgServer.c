@@ -4,6 +4,7 @@
 
 //function prototypes
 int selectNextValue();
+void copyStringAndTerminate(int, char*, char*);
 
 int main (int argc, char *argv[]){
     int valueToGuess;   //the server's random value
@@ -16,6 +17,7 @@ int main (int argc, char *argv[]){
     struct sockaddr_in echoClntAddr; /* Client address */
     unsigned int cliAddrLen;         /* Length of incoming message */
     char echoBuffer[256];        /* Buffer for echo string */
+    char copyBuffer[15];
     unsigned short echoServPort;     /* Server port */
     int recvMsgSize;                 /* Size of received message */
     int sendMsgSize;
@@ -62,10 +64,12 @@ int main (int argc, char *argv[]){
             //printf("Handling client %s\n", inet_ntoa(echoClntAddr.sin_addr));
 
             //check guess
+            copyStringAndTerminate(recvMsgSize,echoBuffer,copyBuffer);
+            printf("%s\n",copyBuffer);
             guessedValue = atoi(echoBuffer);
 
             printf("guess: %d, server: %d\n",guessedValue,valueToGuess); //DEBUG print
-            printf("size: %d\n",recvMsgSize);
+            //printf("size: %d\n",recvMsgSize);
 
             if(guessedValue > valueToGuess){ //guessedValue too large
                 response = "1";
@@ -121,4 +125,12 @@ int selectNextValue(){
     r = r % MAXVAL;
     printf("New guess: %d", r);
     return r;
+}
+
+void copyStringAndTerminate(int len, char* in, char* out){
+    int i;
+    for (i=0;i<len;i++){
+        out[i] = in[i];
+    }
+    out[i+1] = '\0';
 }

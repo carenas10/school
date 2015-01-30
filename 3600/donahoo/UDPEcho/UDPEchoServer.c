@@ -43,17 +43,15 @@ int main(int argc, char *argv[])
 
         /* Block until receive message from a client */
         if ((recvMsgSize = recvfrom(sock, echoBuffer, ECHOMAX, 0,
-            (struct sockaddr *) &echoClntAddr, &cliAddrLen)) < 0){
-            printf("recvfrom() failed\n"); //DieWithError("recvfrom() failed");
-            exit(1);
-        }
+            (struct sockaddr *) &echoClntAddr, &cliAddrLen)) < 0)
+            DieWithError("recvfrom() failed");
 
         printf("Handling client %s\n", inet_ntoa(echoClntAddr.sin_addr));
 
         /* Send received datagram back to the client */
         if (sendto(sock, echoBuffer, recvMsgSize, 0,
              (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != recvMsgSize)
-            DieWithError("sendto() sent a different number of bytes than expected\n");
+            DieWithError("sendto() sent a different number of bytes than expected");
     }
     /* NOT REACHED */
 }
