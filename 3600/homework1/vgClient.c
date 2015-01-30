@@ -75,7 +75,7 @@ int main (int argc, char *argv[]){
         //receive
         fromSize = sizeof(fromAddr);
         if ((respStringLen = recvfrom(sock, echoBuffer, 256, 0,
-            (struct sockaddr *) &fromAddr, &fromSize)) != echoStringLen) //added +1
+            (struct sockaddr *) &fromAddr, &fromSize)) < 0) //added +1
             DieWithError("recvfrom() failed");
 
         //check to make sure correct address was sending
