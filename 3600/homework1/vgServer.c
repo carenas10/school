@@ -73,6 +73,7 @@ int main (int argc, char *argv[]){
 
             //handle a client. Track a client.
             strcat(clientList,inet_ntoa(echoClntAddr.sin_addr));
+            strcat(clientList," ");
             numMessages++;
 
             //check guess
