@@ -66,10 +66,10 @@ int main (int argc, char *argv[]){
             //check guess
             copyStringAndTerminate(recvMsgSize,echoBuffer,copyBuffer);
             copyStringAndTerminate(recvMsgSize,copyBuffer,echoBuffer);
-            printf("%s\n",copyBuffer);
+            printf("echoBuffer: %s\n",echoBuffer);
             guessedValue = atoi(echoBuffer);
 
-            printf("guess: %d, server: %d\n",guessedValue,valueToGuess); //DEBUG print
+            printf("guess: %d, server: %d\n\n",guessedValue,valueToGuess); //DEBUG print
             //printf("size: %d\n",recvMsgSize);
 
             if(guessedValue > valueToGuess){ //guessedValue too large
@@ -84,7 +84,7 @@ int main (int argc, char *argv[]){
             }else if(guessedValue < valueToGuess){ //guessedValue too small
                 response = "2";
                 sendMsgSize = strlen(response);
-                printf("Response: %s, Length: %d",response,sendMsgSize);
+                //printf("Response: %s, Length: %d",response,sendMsgSize);
                 /* Send received datagram back to the client */
                 if (sendto(sock, response, sendMsgSize, 0,
                     (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != sendMsgSize){
@@ -93,7 +93,7 @@ int main (int argc, char *argv[]){
             }else if(guessedValue == valueToGuess){ //guessedValue is correct!
                 response = "0";
                 sendMsgSize = strlen(response);
-                printf("Response: %s, Length: %d",response,sendMsgSize);
+                //printf("Response: %s, Length: %d",response,sendMsgSize);
                 /* Send received datagram back to the client */
                 if (sendto(sock, response, sendMsgSize, 0,
                     (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != sendMsgSize){
@@ -104,7 +104,7 @@ int main (int argc, char *argv[]){
             } else {
                 response = "-1";
                 sendMsgSize = strlen(response);
-                printf("Response: %s, Length: %d",response,sendMsgSize);
+                //printf("Response: %s, Length: %d",response,sendMsgSize);
                 /* Send received datagram back to the client */
                 if (sendto(sock, response, sendMsgSize, 0,
                     (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != sendMsgSize){
