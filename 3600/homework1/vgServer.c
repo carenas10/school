@@ -4,7 +4,6 @@
 
 //function prototypes
 int selectNextValue();
-void copyStringAndTerminate(int, char*, char*);
 
 int main (int argc, char *argv[]){
     int valueToGuess;   //the server's random value
@@ -17,19 +16,20 @@ int main (int argc, char *argv[]){
     struct sockaddr_in echoClntAddr; /* Client address */
     unsigned int cliAddrLen;         /* Length of incoming message */
     char echoBuffer[256];        /* Buffer for echo string */
-    char copyBuffer[15];
     unsigned short echoServPort;     /* Server port */
     int recvMsgSize;                 /* Size of received message */
     int sendMsgSize;
 
-    if (argc != 3)         /* Test for correct number of parameters */
+    if (argc != 3 || argc !=2)         /* Test for correct number of parameters */
     {
         fprintf(stderr,"Usage:  valueServer <serverPort> <initialValue>\n");
         exit(1);
     }
 
     echoServPort = atoi(argv[1]);  /* First arg:  local port */
-    valueToGuess = atoi(argv[2]);  /* Second arg:  initial guess */
+
+    if (argc == 3) valueToGuess = atoi(argv[2]);  /* Second arg:  initial guess */
+    else valueToGuess = selectNextValue();
 
     /* Create socket for sending/receiving datagrams */
     if ((sock = socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0){
@@ -64,8 +64,7 @@ int main (int argc, char *argv[]){
             //printf("Handling client %s\n", inet_ntoa(echoClntAddr.sin_addr));
 
             //check guess
-            copyStringAndTerminate(recvMsgSize,echoBuffer,copyBuffer);
-            copyStringAndTerminate(recvMsgSize,copyBuffer,echoBuffer);
+            echoBuffer[recvMsgSize] = '\0';
             printf("echoBuffer: %s\n",echoBuffer);
             guessedValue = atoi(echoBuffer);
 
@@ -126,12 +125,4 @@ int selectNextValue(){
     r = r % MAXVAL;
     printf("New guess: %d", r);
     return r;
-}
-
-void copyStringAndTerminate(int len, char* in, char* out){
-    int i;
-    for (i=0;i<len;i++){
-        out[i] = in[i];
-    }
-    out[i+1] = '\0';
 }
