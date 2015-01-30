@@ -70,6 +70,7 @@ int main (int argc, char *argv[]){
             if(guessedValue > valueToGuess){ //guessedValue too large
                 response = "1";
                 sendMsgSize = strlen(response);
+                printf("Response: %d, Length: %d",response,sendMsgSize);
                 /* Send received datagram back to the client */
                 if (sendto(sock, response, sendMsgSize, 0,
                     (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != sendMsgSize){
@@ -78,6 +79,7 @@ int main (int argc, char *argv[]){
             }else if(guessedValue < valueToGuess){ //guessedValue too small
                 response = "2";
                 sendMsgSize = strlen(response);
+                printf("Response: %d, Length: %d",response,sendMsgSize);
                 /* Send received datagram back to the client */
                 if (sendto(sock, response, sendMsgSize, 0,
                     (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != sendMsgSize){
@@ -86,6 +88,7 @@ int main (int argc, char *argv[]){
             }else if(guessedValue == valueToGuess){ //guessedValue is correct!
                 response = "0";
                 sendMsgSize = strlen(response);
+                printf("Response: %d, Length: %d",response,sendMsgSize);
                 /* Send received datagram back to the client */
                 if (sendto(sock, response, sendMsgSize, 0,
                     (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != sendMsgSize){
@@ -96,12 +99,13 @@ int main (int argc, char *argv[]){
             } else {
                 response = "-1";
                 sendMsgSize = strlen(response);
+                printf("Response: %d, Length: %d",response,sendMsgSize);
                 /* Send received datagram back to the client */
                 if (sendto(sock, response, sendMsgSize, 0,
                     (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != sendMsgSize){
                         DieWithError("sendto() sent a different number of bytes than expected.");
                     }
-            }
+            } //else
 
 
     }
