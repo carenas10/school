@@ -1,3 +1,15 @@
+/*
+*   File: vgClient.c
+*   Author: Jackson Dawkins
+*   Last Modified: 1.30.2015
+*   Usage: valueGuesser <serverName> <serverPort>
+*
+*   Summary: This file contains code for a value-guessing client.
+*           The client connects to a server designated in cmd line args
+*           The client guesses a number, sends it, and uses the response to
+*           conduct a binary search to guess the correct server value
+*/
+
 #include "vg.h"
 
 #define MAXVAL 1000000000
@@ -138,6 +150,7 @@ return 0;
 //----------------------- methods ---------------------------------
 
 //handler for SIGALRM
+//parameters don't matter, and are ignored.
 void catchAlarm(int ignored){
     //do nothing
 }

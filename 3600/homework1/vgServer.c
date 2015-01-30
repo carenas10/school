@@ -1,3 +1,16 @@
+/*
+*   File: vgServer.c
+*   Author: Jackson Dawkins
+*   Last Modified: 1.30.2015
+*   Usage: valueServer <serverPort> <initialValue>
+*
+*   Summary: This file contains code for a value-guessing server.
+*           The server binds to the port designated in the cmd line args.
+*           The server picks a random number bounded to 10^9
+*           The server waits for udp messages containing a guess, and responds
+*           depending on the value of the guess.
+*/
+
 #include "vg.h"
 
 #define MAXVAL 1000000000
@@ -120,6 +133,8 @@ int main (int argc, char *argv[]){
     return 0;
 }
 
+//----------------------- methods ---------------------------------
+
 //handles user pressing ctrl-c by printout output and exiting.
 void clientCNTCCode() {
     printf("\nvalueServer:  CNT-C Interrupt,  exiting....\n");
@@ -128,7 +143,7 @@ void clientCNTCCode() {
 }
 
 //returns a random int value
-//TODO -- find better random generator
+//find better random generator
 int selectNextValue(){
     srand(time(NULL));
     int r = rand();

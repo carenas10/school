@@ -1,3 +1,13 @@
+/*
+*   File: vg.h
+*   Author: Jackson Dawkins
+*   Last Modified: 1.30.2015
+*   Usage: included
+*
+*   Summary: This file contains the files and libraries needed for the value
+*           guessing client and server.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
