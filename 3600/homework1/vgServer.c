@@ -65,6 +65,7 @@ int main (int argc, char *argv[]){
 
             //check guess
             copyStringAndTerminate(recvMsgSize,echoBuffer,copyBuffer);
+            copyStringAndTerminate(recvMsgSize,copyBuffer,echoBuffer);
             printf("%s\n",copyBuffer);
             guessedValue = atoi(echoBuffer);
 
@@ -74,7 +75,7 @@ int main (int argc, char *argv[]){
             if(guessedValue > valueToGuess){ //guessedValue too large
                 response = "1";
                 sendMsgSize = strlen(response);
-                printf("Response: %s, Length: %d",response,sendMsgSize);
+                //printf("Response: %s, Length: %d",response,sendMsgSize);
                 /* Send received datagram back to the client */
                 if (sendto(sock, response, sendMsgSize, 0,
                     (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != sendMsgSize){
