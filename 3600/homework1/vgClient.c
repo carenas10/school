@@ -1,33 +1,41 @@
 #include "vg.h"
-#include <signal.h>
 
 #define MAXVAL 1000000000
+
 //function prototypes
-int selectNextValue();
 void clientCNTCCode();
-char *itoa (int value, char *result, int base);
+double getTime();
+void catchAlarm(int ignored);       //handler for SIGALRM signal - timeout
+
+//globals
+int tries = 0;                      //number of attempts
+static const unsigned int TIMEOUT_SECS = 2; //time before timeout fired.
 
 int main (int argc, char *argv[]){
+    signal(SIGINT, clientCNTCCode); //handler for Ctrl-C signal
+
+    double time = 0.0;              //elapsed time
+    time = getTime();
+
     //Client vars
     int tmp = 0;
-    int prevGuess = MAXVAL;
-    int guess = MAXVAL/2;                  //value to send to server
-    int result = -1;            //response from server
-    int tries = 0;              //number of attempts
-    float runningTime = 0.0;    //elapsed time
+    int prevGuess = MAXVAL;         //used for binary search
+    int guess = MAXVAL/2;           //value to send to server
+    int result = -1;                //response from server
+
 
     //UDP vars
-    int sock;                        /* Socket descriptor */
-    struct sockaddr_in echoServAddr; /* server address */
-    struct sockaddr_in fromAddr;     /* Source address of response */
-    struct hostent *thehost;         /* Hostent from gethostbyname() */
-    unsigned short echoServPort;     /* Echo server port */
-    unsigned int fromSize;           /* In-out of address size for recvfrom() */
-    char *servIP;                    /* IP address of server */
-    char *echoString;                /* String to send to echo server */
-    char echoBuffer[256];      /* Buffer for receiving echoed string */
-    int echoStringLen;               /* Length of string to echo */
-    int respStringLen;               /* Length of received response */
+    int sock;                        // Socket descriptor
+    struct sockaddr_in echoServAddr; // server address
+    struct sockaddr_in fromAddr;     // Source address of response
+    struct hostent *thehost;         // Hostent from gethostbyname()
+    unsigned short echoServPort;     // Server port
+    unsigned int fromSize;           // In-out of address size for recvfrom()
+    char *servIP;                    // IP address of server
+    char *echoString;                // String to send to echo server
+    char echoBuffer[256];            // Buffer for receiving response string
+    int echoStringLen;               // Length of string to echo
+    int respStringLen;               // Length of received response
 
     //check cmd line arguments
     if(argc != 3){
@@ -36,7 +44,6 @@ int main (int argc, char *argv[]){
     }
 
     servIP = argv[1];           /* First arg: server IP address (dotted quad) */
-    //echoString = argv[2];       /* Second arg: string to echo */
     echoServPort = atoi(argv[2]);     /* Second arg: server port */
 
     /* Create a datagram/UDP socket */
@@ -56,16 +63,24 @@ int main (int argc, char *argv[]){
         echoServAddr.sin_addr.s_addr = *((unsigned long *) thehost->h_addr_list[0]);
     }
 
-    //guess random, send random, check result, repeat (if incorrect);
-    //----------------------- SEND/RCV ---------------------
-
+    //choose guess (bsearch), send, check response, repeat (if incorrect)
     while(1){
+        tries++;
         sprintf(echoString, "%d", guess);
 
         //itoa(guess,echoString,10);
-        printf("%s\n",echoString);
+        //printf("%s\n",echoString);
         echoStringLen = strlen(echoString);
-        printf("send size: %d\n",echoStringLen);
+        //printf("send size: %d\n",echoStringLen);
+
+        //set up signal handler
+        struct sigaction handler;
+        handler.sa_handler = catchAlarm;
+        if (sigfillset(&handler.sa_mask)<0) //block everything in handler
+            DieWithError("sigfillset() failed");
+        handler.sa_flags = 0;
+        if (sigaction(SIGALRM, &handler, 0) < 0)
+            DieWithError("sigaction() failed for SIGALRM");
 
         //send
         if (sendto(sock, echoString, echoStringLen, 0, (struct sockaddr *)
@@ -73,25 +88,31 @@ int main (int argc, char *argv[]){
             DieWithError("sendto() sent a different number of bytes than expected");
 
         //receive
+        alarm(TIMEOUT_SECS);    //start timer
         fromSize = sizeof(fromAddr);
         if ((respStringLen = recvfrom(sock, echoBuffer, 256, 0,
-            (struct sockaddr *) &fromAddr, &fromSize)) < 0) //added +1
-            DieWithError("recvfrom() failed");
+            (struct sockaddr *) &fromAddr, &fromSize)) < 0)
+            strcpy(echoBuffer, "-1"); //-1 indicates error
+        alarm(0); //reset timer. Receive successful.
 
-        //check to make sure correct address was sending
-        if (echoServAddr.sin_addr.s_addr != fromAddr.sin_addr.s_addr){
-            fprintf(stderr,"Error: received a packet from unknown source \n");
+        //if no receive error, check address.
+        if (strcmp(echoBuffer,"-1") != 0){
+            //check to make sure correct address was sending
+            if (echoServAddr.sin_addr.s_addr != fromAddr.sin_addr.s_addr){
+                fprintf(stderr,"Error: received a packet from unknown source \n");
+            }
         }
 
-        result = atoi(echoBuffer);
 
+        result = atoi(echoBuffer);
+        //printf("result after failing: %d",result);
         //binary search
         if (result == -1){
             //no response set
-            printf("Server didn't respond.");
+            //printf("Server didn't respond.");
         } else if (result == 0){
-            printf("correct guess!\n");
-            exit(0);
+            //printf("correct guess!\n");
+            break;
             //printf("Server responded with %d\n",result);
         } else if (result == 1){
             //too high
@@ -99,80 +120,48 @@ int main (int argc, char *argv[]){
             guess = guess - abs(prevGuess-guess)/2;
             prevGuess = tmp;
             if (guess == prevGuess) guess--;
-            printf("Server responded with %d\n",result);
+            //printf("Server responded with %d\n",result);
         } else if (result == 2){
             //too low
             tmp = guess;
             guess = guess + abs(prevGuess - guess)/2;
             prevGuess = tmp;
             if (guess == prevGuess) guess++;
-            printf("Server responded with %d\n",result);
-        } else {
-            printf("Error:\n");
-            printf("Server responded with %d\n",result);
-            //incorrect response
+            //printf("Server responded with %d\n",result);
         }
-
     }//while
 
-//----------------------- SEND/RCV ---------------------
+    //subtract curr time from time at start to get runtime
+    time = getTime() - time;
 
-// printf("%d\t%.3f\t%d\n",tries,runningTime,guess);
+    //final printout after correct guess
+    printf("%d\t%.6f\t%d\n",tries,time,guess);
 
-//finish and close
-close(sock);
-exit(0);
+    //finish and close
+    close(sock);
+    exit(0);
 
 return 0;
 }
 
 //----------------------- methods ---------------------------------
 
-//returns a random int value
-//TODO -- find better random generator
-int selectNextValue(){
-    srand(time(NULL));
-    int r = rand();
-    //printf("guess: %d", r);
-    return r;
+//handler for SIGALRM
+void catchAlarm(int ignored){
+    //do nothing
 }
 
-//calculates the result of base^power as ints
-int ipower(int base, int power){
-    int result = base;
-    while (power > 1){
-        result = result * base;
-        power--;
-    }
-    return result;
-}
-
-
-void clientCNTCCode() {
-    printf("UDPEchoClient:  CNT-C Interrupt,  exiting....\n");
-}
-
-char *itoa (int value, char *result, int base)
+//returns the time in seconds
+double getTime()
 {
-    // check that the base if valid
-    if (base < 2 || base > 36) { *result = '\0'; return result; }
+        struct timeval curTime;
+        (void) gettimeofday (&curTime, (struct timezone *) NULL);
+        return (((((double) curTime.tv_sec) * 1000000.0)
+             + (double) curTime.tv_usec) / 1000000.0);
+}
 
-        char* ptr = result, *ptr1 = result, tmp_char;
-        int tmp_value;
-
-        do {
-            tmp_value = value;
-            value /= base;
-            *ptr++ = "zyxwvutsrqponmlkjihgfedcba9876543210123456789abcdefghijklmnopqrstuvwxyz" [35 + (tmp_value - value * base)];
-        } while ( value );
-
-        // Apply negative sign
-        if (tmp_value < 0) *ptr++ = '-';
-        *ptr-- = '\0';
-        while (ptr1 < ptr) {
-            tmp_char = *ptr;
-            *ptr--= *ptr1;
-            *ptr1++ = tmp_char;
-        }
-        return result;
+//handles user pressing ctrl-c by printout output and exiting.
+void clientCNTCCode() {
+    printf("\nvalueGuesser:  CNT-C Interrupt,  exiting....\n");
+    exit(0);
 }

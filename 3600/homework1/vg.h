@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <sys/types.h>
+#include <sys/time.h>
 #include <string.h>     /* for memset() */
 #include <netinet/in.h> /* for in_addr */
 #include <sys/socket.h> /* for socket(), connect(), sendto(), and recvfrom() */
@@ -10,6 +11,7 @@
 #include <stdlib.h>     /* for atoi() and exit() */
 #include <unistd.h>     /* for close() */
 #include <time.h>       /* used by rand */
+#include <signal.h>     /* for kill handling */
 
 
 void DieWithError(char *errorMessage);  /* External error handling function */

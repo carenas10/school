@@ -5,11 +5,16 @@
 //function prototypes
 int selectNextValue();
 
+//globals
+int numMessages = 0;
+int numCorrect = 0;
+char clientList [256];
+
 int main (int argc, char *argv[]){
     int valueToGuess;   //the server's random value
     int guessedValue;   //the guessed value from the client
     char *response = "-1";      //to send back to client.
-    // 1 if high, 2 if low, 0 if correct.
+    clientList[0] = '\0';   //initialize empty string for clients.
 
     int sock;                        /* Socket */
     struct sockaddr_in echoServAddr; /* Local address */
@@ -20,7 +25,7 @@ int main (int argc, char *argv[]){
     int recvMsgSize;                 /* Size of received message */
     int sendMsgSize;
 
-    if (argc != 3 || argc !=2)         /* Test for correct number of parameters */
+    if (argc != 3 && argc !=2)         /* Test for correct number of parameters */
     {
         fprintf(stderr,"Usage:  valueServer <serverPort> <initialValue>\n");
         exit(1);
@@ -63,6 +68,10 @@ int main (int argc, char *argv[]){
 
             //printf("Handling client %s\n", inet_ntoa(echoClntAddr.sin_addr));
 
+            //handle a client. Track a client.
+            strcat(clientList,inet_ntoa(echoClntAddr.sin_addr));
+            numMessages++;
+
             //check guess
             echoBuffer[recvMsgSize] = '\0';
             printf("echoBuffer: %s\n",echoBuffer);
@@ -99,6 +108,7 @@ int main (int argc, char *argv[]){
                         DieWithError("sendto() sent a different number of bytes than expected.");
                     }
                 //client guessed correctly. Guess a new value and start over.
+                numCorrect++;
                 valueToGuess = selectNextValue();
             } else {
                 response = "-1";
@@ -115,6 +125,13 @@ int main (int argc, char *argv[]){
     }
 
     return 0;
+}
+
+//handles user pressing ctrl-c by printout output and exiting.
+void clientCNTCCode() {
+    printf("\nvalueServer:  CNT-C Interrupt,  exiting....\n");
+    printf("%d\t%d\t%s",numMessages,numCorrect,clientList);
+    exit(0);
 }
 
 //returns a random int value
