@@ -4,6 +4,7 @@
 
 //function prototypes
 int selectNextValue();
+void clientCNTCCode();
 
 //globals
 int numMessages = 0;
@@ -11,6 +12,8 @@ int numCorrect = 0;
 char clientList [256];
 
 int main (int argc, char *argv[]){
+    signal(SIGINT, clientCNTCCode); //handler for Ctrl-C signal
+
     int valueToGuess;   //the server's random value
     int guessedValue;   //the guessed value from the client
     char *response = "-1";      //to send back to client.
