@@ -60,11 +60,11 @@ int main (int argc, char *argv[]){
     //----------------------- SEND/RCV ---------------------
 
     while(1){
-        sprintf(echoString, "%d\n", guess);
+        sprintf(echoString, "%d", guess);
 
         //itoa(guess,echoString,10);
         printf("%s\n",echoString);
-        echoStringLen = strlen(echoString)-2;
+        echoStringLen = strlen(echoString);
         printf("send size: %d\n",echoStringLen);
 
         //send

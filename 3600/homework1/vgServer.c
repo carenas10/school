@@ -69,7 +69,7 @@ int main (int argc, char *argv[]){
 
             if(guessedValue > valueToGuess){ //guessedValue too large
                 response = "1";
-                sendMsgSize = sizeof(response);
+                sendMsgSize = strlen(response);
                 /* Send received datagram back to the client */
                 if (sendto(sock, response, sendMsgSize, 0,
                     (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != sendMsgSize){
@@ -77,7 +77,7 @@ int main (int argc, char *argv[]){
                     }
             }else if(guessedValue < valueToGuess){ //guessedValue too small
                 response = "2";
-                sendMsgSize = sizeof(response);
+                sendMsgSize = strlen(response);
                 /* Send received datagram back to the client */
                 if (sendto(sock, response, sendMsgSize, 0,
                     (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != sendMsgSize){
@@ -85,7 +85,7 @@ int main (int argc, char *argv[]){
                     }
             }else if(guessedValue == valueToGuess){ //guessedValue is correct!
                 response = "0";
-                sendMsgSize = sizeof(response);
+                sendMsgSize = strlen(response);
                 /* Send received datagram back to the client */
                 if (sendto(sock, response, sendMsgSize, 0,
                     (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != sendMsgSize){
@@ -95,7 +95,7 @@ int main (int argc, char *argv[]){
                 valueToGuess = selectNextValue();
             } else {
                 response = "-1";
-                sendMsgSize = sizeof(response);
+                sendMsgSize = strlen(response);
                 /* Send received datagram back to the client */
                 if (sendto(sock, response, sendMsgSize, 0,
                     (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != sendMsgSize){
