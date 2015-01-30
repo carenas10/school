@@ -51,7 +51,6 @@ int main (int argc, char *argv[]){
     echoServAddr.sin_port = htons(echoServPort);      // Local port
 
     // Bind to the local address
-    printf("UDPEchoServer: About to bind to port %d\n", echoServPort);
     if (bind(sock, (struct sockaddr *) &echoServAddr, sizeof(echoServAddr)) < 0){
         DieWithError("bind() failed");
     }
