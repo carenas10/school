@@ -24,6 +24,7 @@ int tries = 0;                      //number of attempts
 static const unsigned int TIMEOUT_SECS = 2; //time before timeout fired.
 
 int main (int argc, char *argv[]){
+    
     signal(SIGINT, clientCNTCCode); //handler for Ctrl-C signal
 
     double time = 0.0;              //elapsed time
@@ -43,7 +44,7 @@ int main (int argc, char *argv[]){
     unsigned short echoServPort;     // Server port
     unsigned int fromSize;           // In-out of address size for recvfrom()
     char *servIP;                    // IP address of server
-    char *echoString;                // String to send to echo server
+    char echoString[256];                // String to send to echo server
     char echoBuffer[256];            // Buffer for receiving response string
     int echoStringLen;               // Length of string to echo
     int respStringLen;               // Length of received response
@@ -62,7 +63,7 @@ int main (int argc, char *argv[]){
         DieWithError("socket() failed");
     }
 
-    // Construct the server address structure */
+    // Construct the server address structure 
     memset(&echoServAddr, 0, sizeof(echoServAddr));    // Zero out structure
     echoServAddr.sin_family = AF_INET;                 // Internet addr family
     echoServAddr.sin_addr.s_addr = inet_addr(servIP);  // Server IP address
@@ -78,7 +79,6 @@ int main (int argc, char *argv[]){
     while(1){
         tries++;
         sprintf(echoString, "%d", guess);
-
         echoStringLen = strlen(echoString);
 
         //set up signal handler
@@ -100,7 +100,7 @@ int main (int argc, char *argv[]){
         fromSize = sizeof(fromAddr);
         if ((respStringLen = recvfrom(sock, echoBuffer, 256, 0,
             (struct sockaddr *) &fromAddr, &fromSize)) < 0)
-            strcpy(echoBuffer, "-1"); //-1 indicates error
+            strcpy(echoBuffer, "-1"); //-1 indicates error 
         alarm(0); //reset timer. Receive successful.
 
         //if no receive error, check address.
@@ -130,7 +130,7 @@ int main (int argc, char *argv[]){
             tmp = guess;
             guess = guess + abs(prevGuess - guess)/2;
             prevGuess = tmp;
-            if (guess == prevGuess) guess++;
+            if (guess == prevGuess) guess++; 
         }
     }//while
 
