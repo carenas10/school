@@ -6,11 +6,13 @@ void __attribute__ ((constructor)) malloc_init(void);
 #include <stdlib.h>
 #include <dlfcn.h>
 
-int (*original_malloc)(void) = NULL;
+//set up function pointer to original_malloc
+//null for now... returns a void pointer
+void* (*original_malloc)(int) = NULL;
 
 //set up function pointers 
 void malloc_init(void) {
-  if (original_rand == NULL) {
+  if (original_malloc == NULL) {
   		original_malloc = dlsym(RTLD_NEXT, "malloc");
   	}
   printf("initializing library.\n");
