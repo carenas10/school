@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <dlfcn.h>
+#include <stdint.h>
 
 int main(int argc, char *argv[]){
 
@@ -11,12 +12,6 @@ int main(int argc, char *argv[]){
         printf("Usage: %s <command>",argv[0]);
         exit(1);
     }
-
-
-
-
-
-
 
 return 0;
 }
