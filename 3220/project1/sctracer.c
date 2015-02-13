@@ -67,16 +67,18 @@ int main(int argc, char **argv, char **envp) {
 
         //Time to write to file given by argv[2]
         FILE *file = fopen(argv[2],"w");
-        if (f == NULL) {
-		    printf("Error opening file!\n");
-		    exit(1);
+        if (file == NULL) {
+        	printf("Error opening file!\n");
+        	exit(1);
 		}
 
 		for (i = 0; i < 500; ++i) {
 			if (syscalls[i] != 0) {
-				printf("%d\t%d\n", i, syscalls[i]);
+				fprintf(file,"%d\t%d\n", i, syscalls[i]);
 			}
 		}
+
+		fclose(file);
     }//else 
 
     return 0;

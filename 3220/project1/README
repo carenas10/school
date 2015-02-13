@@ -1,0 +1,24 @@
+Jackson Dawkins
+Project1
+CPSC 3220 - Dr. Jacob Sorber
+
+------------------------Project Description------------------------
+This is a project for cpsc 3220 taught by Dr. Jacob Sorber. Topics
+included are interprocess communication, forking and threads, process tracing, 
+system calls, etc.
+
+------------------------KNOWN PROBLEMS------------------------
+when running ./sctracer, sometimes it will print out warnings saying
+that the file could not be found (for example, ls does this), but will still
+run and print out the results to the output file specified.
+
+------------------------DESIGN------------------------
+Leaktrace uses a very large array of structs to track the mallocs. These structs
+include the size and address of each malloc made. The way the program knows if a 
+malloc has been freed is by setting the size field to -1. All of the final calculations
+are done in the cleanup() function. 
+
+The sctracer works very similarly to Dr. Sorber's in-class example of ptrace.
+There is an array of 500 items, and each time a system call #x is made, the counter
+on the array[x] is increased. This allows the program to know both the number of the
+system call as well as the number of times each call has been made.

@@ -42,7 +42,8 @@ void shim_init(void) {
 //  printf("initializing library.\n");
 }
 
-
+//runs and checks to see how many have been freed before printing out. 
+//if size = -1, freed.
 void cleanup(void){
 	//figure out how many leaks and print
 	int i;
@@ -58,8 +59,8 @@ void cleanup(void){
 
 //----------------------SHIMMED FUNCTIONS----------------------
 
+//adds malloc size and address to array.
 void *malloc(size_t size){
-	//printf("malloc run: %d\n",(int)size);
 	void* returnPtr = original_malloc(size);
 	mallocs[totalCount].addr = (long)returnPtr;
 	mallocs[totalCount].size = size;
@@ -69,8 +70,6 @@ void *malloc(size_t size){
 }
 
 void free(void *ptr){
-	//printf("free run\n");
-
 	//lookup and change size of malloc to -1 in mallocs array.
 	int i;
 	for(i=0;i<totalCount;i++){

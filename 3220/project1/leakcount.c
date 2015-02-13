@@ -9,18 +9,17 @@
 
 int main(int argc, char *argv[]){
 
-//	int leakCount = 0;
-//	int leakSize = 0;
-
     //check cmd line args
     if(argc != 2){
-        printf("Usage: %s <command>",argv[0]);
+        printf("Usage: %s <command>\n",argv[0]);
         exit(1);
     }
 
+    //prepare for execve by specifying preload variable
     char* preload[] = {"LD_PRELOAD=./memory_shim.so",NULL};
     char* args[argc];	//args for execve
 
+    //shift args for exec
     int i;
     for (i=0;i<argc;i++){
     	args[i] = argv[i+1];
@@ -39,8 +38,6 @@ int main(int argc, char *argv[]){
     	//NOTE: Nothing after execve runs. Replaces process.
     } else { //parent
     	waitpid(childID, NULL, 0); //waits for child to finish
-    //	file = fopen("log.txt","r"); //open logfile
-    //	fread(readBuffer, sizeof(int), 256, file);
     }
 
 return 0;

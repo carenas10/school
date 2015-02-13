@@ -13,7 +13,4 @@ sctracer: sctracer.c
 	$(CC) $(CFLAGS) -o sctracer sctracer.c
 
 clean:
-	rm memory_shim.so leakcount sctracer
-
-test:
-	$(CC) $(CFLAGS) -o test test.c
+	rm memory_shim.so leakcount sctracer *.txt
