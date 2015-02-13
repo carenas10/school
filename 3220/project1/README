@@ -22,3 +22,7 @@ The sctracer works very similarly to Dr. Sorber's in-class example of ptrace.
 There is an array of 500 items, and each time a system call #x is made, the counter
 on the array[x] is increased. This allows the program to know both the number of the
 system call as well as the number of times each call has been made.
+
+-----------------------RESOURCES-----------------------
+stackoverflow.com -- debugging and c-resources
+piazza -- project-specific questions and linked articles
