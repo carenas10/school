@@ -12,7 +12,6 @@
 #include <stdbool.h>
 
 int main(int argc, char **argv, char **envp) {
-
     char* args[256];
     char* inputString;
     int i=0;
@@ -23,7 +22,7 @@ int main(int argc, char **argv, char **envp) {
     inputString = strtok(argv[1], " "); //break on spaces
 	while (inputString != NULL) {
 		args[i] = inputString;
-		printf("%s\n", inputString);
+		//printf("%s\n", inputString);
 		i++;
 		inputString = strtok(NULL, " ");
 	}
@@ -36,15 +35,20 @@ int main(int argc, char **argv, char **envp) {
         ptrace(PTRACE_TRACEME); //allow tracing
 
         kill(getpid(),SIGSTOP); //prepare parent to trace
-
+		child = getpid();
+        
         //trace another program using execve. if returns < 0, there was an error.
-        //int execvRet = 
-        if (execv(args[0], args) < 0){
-        	printf("execve error!\n");
+        printf("%s %s %s\n",args[0],args[1],args[2]);
+        //printf("%s\n",args[1]);
+        //printf("%s\n",args[2]);
+        
+        if (execlp(args[0], *args, NULL) < 0){
+        	printf("exec error!\n");
         }
 
 
     } else { //parent
+    	printf("PARENT RUN\n");
         int status,syscall_num;
         bool called = false;
 

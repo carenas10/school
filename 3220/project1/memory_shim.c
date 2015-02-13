@@ -50,10 +50,10 @@ void cleanup(void){
 		if(mallocs[i].size > 0){
 			leakCount++;
 			totalLeakSize += mallocs[i].size;
-			printf("LEAK\t%d\n",mallocs[i].size);
+			fprintf(stderr,"LEAK\t%d\n",mallocs[i].size);
 		}
 	}
-	printf("TOTAL\t%d\t%d\n",leakCount,totalLeakSize);
+	fprintf(stderr,"TOTAL\t%d\t%d\n",leakCount,totalLeakSize);
 }
 
 //----------------------SHIMMED FUNCTIONS----------------------

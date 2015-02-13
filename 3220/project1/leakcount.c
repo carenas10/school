@@ -11,8 +11,8 @@ long readBuffer[256];
 
 int main(int argc, char *argv[]){
 
-	int leakCount = 0;
-	int leakSize = 0;
+//	int leakCount = 0;
+//	int leakSize = 0;
 
     //check cmd line args
     if(argc != 2){
@@ -20,7 +20,6 @@ int main(int argc, char *argv[]){
         exit(1);
     }
 
-    FILE *file;
     char* preload[] = {"LD_PRELOAD=./memory_shim.so",NULL};
     char* args[argc];	//args for execve
 
@@ -42,10 +41,10 @@ int main(int argc, char *argv[]){
     	//NOTE: Nothing after execve runs. Replaces process.
     } else { //parent
     	waitpid(childID, NULL, 0); //waits for child to finish
-    	file = fopen("log.txt","r"); //open logfile
-    	fread(readBuffer, sizeof(int), 256, file);
+    //	file = fopen("log.txt","r"); //open logfile
+    //	fread(readBuffer, sizeof(int), 256, file);
     }
-
+/*
     //Prepare to analyze readBuffer
     long size = readBuffer[0];
     bool released;
@@ -77,6 +76,6 @@ int main(int argc, char *argv[]){
 
     //readBuffer has been analyzed.
     fprintf(stderr, "TOTAL\t%d\t%d\n", leakCount, leakSize);
-
+*/
 return 0;
 }

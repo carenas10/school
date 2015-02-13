@@ -8,7 +8,7 @@ int main(int argc, char *argv[]){
 	*dog = 4389048;
 	//printf("About to free\n");
 	//free(cat);
-	//free(dog);
+	free(dog);
 	//printf("THIS IS A TEST!!!\n");
 	
 return 0;
