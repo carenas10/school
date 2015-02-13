@@ -7,8 +7,6 @@
 #include <sys/wait.h>
 #include <stdbool.h>
 
-long readBuffer[256];
-
 int main(int argc, char *argv[]){
 
 //	int leakCount = 0;
@@ -44,38 +42,6 @@ int main(int argc, char *argv[]){
     //	file = fopen("log.txt","r"); //open logfile
     //	fread(readBuffer, sizeof(int), 256, file);
     }
-/*
-    //Prepare to analyze readBuffer
-    long size = readBuffer[0];
-    bool released;
-    int j;
 
-    //search thru readBuffer.
-    //for each address (odd places), check to see if realeased by looking for
-    //-1 values in the size block adjacent (even places)
-    for(i=1;i<size-1;i+=2){
-
-   		//check for a release of readBuffer[i] if readBuffer[i] not zero (cleared)
-   		//if (readBuffer[i] != 0){
-   			released = false;	
-	    	for (j=1;j<size-1;j+=2){
-	    		if(readBuffer[j] == readBuffer[i] && readBuffer[j+1] == -1){
-	    			released = true;
-	    		}
-	    	}//for
-   		//}//if
-
-   		//if readBuffer[i] not released...
-   		//add the size of the unreleased memory to size and increment counter
-   		if (!released){
-   			leakCount++;
-   			leakSize += readBuffer[i+1];
-   			printf("LEAK\t%lu\n",readBuffer[i+1]);
-   		}
-    }
-
-    //readBuffer has been analyzed.
-    fprintf(stderr, "TOTAL\t%d\t%d\n", leakCount, leakSize);
-*/
 return 0;
 }

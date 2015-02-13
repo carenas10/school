@@ -12,21 +12,13 @@
 #include <stdbool.h>
 
 int main(int argc, char **argv, char **envp) {
-    char* args[256];
-    char* inputString;
+
+    char* syscalls = malloc(sizeof(int) * 500); //keeps track of all system calls individually
+
     int i=0;
-
-    char* syscalls = malloc(sizeof(int) * 326); //keeps track of all system calls individually
-
-	//parse input string elements into individual args
-    inputString = strtok(argv[1], " "); //break on spaces
-	while (inputString != NULL) {
-		args[i] = inputString;
-		//printf("%s\n", inputString);
-		i++;
-		inputString = strtok(NULL, " ");
+	for (i=0; i<500; i++){
+		syscalls[i]=0;
 	}
-	//args[i+1] = NULL;
 
     pid_t child = fork();
 
@@ -35,48 +27,56 @@ int main(int argc, char **argv, char **envp) {
         ptrace(PTRACE_TRACEME); //allow tracing
 
         kill(getpid(),SIGSTOP); //prepare parent to trace
-		child = getpid();
-        
-        //trace another program using execve. if returns < 0, there was an error.
-        printf("%s %s %s\n",args[0],args[1],args[2]);
-        //printf("%s\n",args[1]);
-        //printf("%s\n",args[2]);
-        
-        if (execlp(args[0], *args, NULL) < 0){
-        	printf("exec error!\n");
-        }
 
+        //run input file, and replace child.
+        execvp(argv[1],argv);
 
     } else { //parent
-    	printf("PARENT RUN\n");
+
         int status,syscall_num;
-        bool called = false;
+
+        int called = 0;
+
+        waitpid(child,&status,0);
 
         //this option makes it easier to distinguish normal traps from
         //system calls
         ptrace(PTRACE_SETOPTIONS, child, 0, PTRACE_O_TRACESYSGOOD);
 
-		while (1) {
-			ptrace(PTRACE_SYSCALL, child, NULL, NULL);
-			waitpid(child, &status, 0);
-			if(WIFEXITED(status))
-            	exit(1); //child exited. 
-			syscall_num = ptrace(PTRACE_PEEKUSER, child, sizeof(long)*ORIG_RAX, NULL);
-			if (!called) {
-				called = true;
+		do{
+            //wait for a system call
+            ptrace(PTRACE_SYSCALL, child, 0, 0);
+            
+            //actually wait for child status to change
+            waitpid(child, &status, 0);
+
+            if (WIFEXITED(status)) {
+                //the child exited. Break loop.
+                break;
+            }
+
+            syscall_num = ptrace(PTRACE_PEEKUSER, child, sizeof(long)*ORIG_RAX, NULL);
+            if (called == 0) {
+				called = 1;
 			}
 			else {
 				syscalls[syscall_num]++;
-				called = false;
+				called = 0;
 			}
-		}//while
+        }while(1);
 
-		for (i = 0; i < 326; ++i) {
+        //Time to write to file given by argv[2]
+        FILE *file = fopen(argv[2],"w");
+        if (f == NULL) {
+		    printf("Error opening file!\n");
+		    exit(1);
+		}
+
+		for (i = 0; i < 500; ++i) {
 			if (syscalls[i] != 0) {
 				printf("%d\t%d\n", i, syscalls[i]);
 			}
 		}
-
     }//else 
 
     return 0;
