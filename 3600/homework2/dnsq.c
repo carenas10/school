@@ -14,7 +14,9 @@ int main(int argc, char *argv[]) {
 	}
 
 	char* svr = argv[argc-2];
-	char* name = argv[argc-1];
+	char name[256];
+		strcpy(name,argv[argc-1]);
+	printf("Name: %s\n",name);
 
 	//parse server input. Must start with @ char.
 	if (svr[0] != '@'){
@@ -39,12 +41,11 @@ int main(int argc, char *argv[]) {
 	}
 
 	//silence unused warning DEBUG
-	if(timeout == retries && port == retries)
-		printf("oh wow...\n");
+	if(timeout == retries && port == retries){}
 
 
 	//------------------------ FORM QUERY ------------------------
-	struct DNSQ_T *query = malloc(sizeof(struct DNSQ_T));
+	struct DNS_HEAD *query = malloc(sizeof(struct DNS_HEAD));
 
 	char message[256];
 
@@ -74,16 +75,40 @@ int main(int argc, char *argv[]) {
 	query->QCLASS = 1;			//query class. <16>			DEFAULT: 1 	
 
 	((int16_t*)message)[0]=htons(query->ID);
-	((int16_t*)message)[1]=htons(query->ID);//35072
-	((int16_t*)message)[2]=htons(query->ID);
-	((int16_t*)message)[3]=htons(query->ID);
-	((int16_t*)message)[4]=htons(query->ID);
+	((int16_t*)message)[1]=htons(35072);//35072
+	((int16_t*)message)[2]=htons(1);
+	((int16_t*)message)[3]=htons(0);
+	((int16_t*)message)[4]=htons(0);
+	((int16_t*)message)[5]=htons(0);
+
+	//-------- find url segments --------
+	//tokenize name to fragments.
+	char *segments[10];
+	i=0; //number of segments
+
+	segments[i] = strtok(name,".");
+	while(segments[i]!=NULL){
+	   segments[++i] = strtok(NULL,".");
+	}
+	
+	//-------- form questions --------
+
+	//starting at message[6]
+	int j = 0; //segment being processed.
+	int k = 0;
+	int pos = 6; //position in message.
+	while(i>=0){
+		message[pos++] = strlen(segments[j]); //length octet
+
+		}
+		i--; j++;
+	}
 
 
 	//------------------------ SEND QUERY ------------------------
-	char* response;
-	response = sendMSG(svr,port,message,10);
-	printf("%s\n",response);
+	//char* response;
+	//response = sendMSG(svr,port,message,10);
+	//printf("%s\n",response);
 
 	return 0;
 }
