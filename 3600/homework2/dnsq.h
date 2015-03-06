@@ -10,7 +10,8 @@
 #define MAXID 30000
 
 void hostToDNS(unsigned char* dns,unsigned char* host);
-
+u_char* ReadName(unsigned char* reader,unsigned char* buffer,int* count);
+u_char* readname(unsigned char* reader,unsigned char* buffer,int* count);
 
 struct DNS_HEAD { 		// <bit len> 
 	uint16_t ID;		//unique ID <16>					DEFAULT: ~			
@@ -34,12 +35,24 @@ struct DNS_QUESTION {
 	uint16_t QCLASS;	//query class.		DEFAULT: 1
 };
 
-struct DNS_ANSWER {
-	unsigned char *NAME;	//
-	uint16_t TYPE;		//type of answer. A:1, CNAME:5
-	uint16_t CLASS;		//query class internet:1
-	uint32_t TTL;		//time to cache result
-	uint16_t RDLENGTH;	//length of RDATA field
-	unsigned char *RDATA;	//
+struct R_DATA
+{
+    unsigned short type;
+    unsigned short _class;
+    unsigned int ttl;
+    unsigned short data_len;
 };
 
+struct RES_RECORD
+{
+    unsigned char *name;
+    struct R_DATA *resource;
+    unsigned char *rdata;
+};
+ 
+//Structure of a Query
+typedef struct
+{
+    unsigned char *name;
+    struct QUESTION *ques;
+} QUERY;

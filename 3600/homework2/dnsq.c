@@ -49,9 +49,9 @@ int main(int argc, char *argv[]) {
 	struct DNS_HEAD *dns = NULL;
 
 	char message[10000];
-	char *rcvBuffer;
+	unsigned char *rcvBuffer;
 	int messageLen = 0;
-	unsigned char *qname;//*scan;
+	unsigned char *qname, *reader;
 
 	//-------- Set Up Header --------
 	srand(time(NULL)); //only call once. 
@@ -75,8 +75,14 @@ int main(int argc, char *argv[]) {
 	query->NSCOUNT = 0; //num server authority <16> 		DEFUALT: 0
 	query->ARCOUNT = 0; //num server additional <16>		DEFAULT: 0
 
+   int headersize = sizeof(struct DNS_HEAD);
+
+
 	//-------- Set Up Question --------
 	qname =(unsigned char*)&message[sizeof(struct DNS_HEAD)];
+	
+   	int qnamesize = strlen((const char*)qname);
+	
 	hostToDNS(qname,(unsigned char*)name);
 
 	question = (struct DNS_QUESTION*)&message[sizeof(struct DNS_HEAD)+(strlen((const char*)qname)+1)];
@@ -84,17 +90,59 @@ int main(int argc, char *argv[]) {
 	question->QCLASS = htons(1);	//Question class		DEAFULT: 1
 
 	//-------- Send Message --------
+	struct sockaddr_in addr;
 	messageLen = sizeof(struct DNS_HEAD) + (strlen((const char*)qname)+1) + sizeof(struct DNS_QUESTION);
-	rcvBuffer = sendMSG(svr,port,message,messageLen);
+	rcvBuffer = (unsigned char*)sendMSG(svr,port,message,messageLen);
 
 	//-------- Process Response --------
 	dns = (struct DNS_HEAD *)rcvBuffer;
+	struct RES_RECORD answers[20];
 
-    printf("\nThe response contains : ");
-    printf("\n %d Questions.",ntohs(dns->QDCOUNT));
-    printf("\n %d Answers.",ntohs(dns->ANCOUNT));
-    printf("\n %d Authoritative Servers.",ntohs(dns->NSCOUNT));
-    printf("\n %d Additional records.\n\n",ntohs(dns->ARCOUNT));
+   	//dns = (struct DNS_HEADER*) buffer;
+   	reader = &rcvBuffer[headersize + (qnamesize+1) + sizeof(struct DNS_QUESTION)];
+   	int pos=0;
+	int j;
+
+   	//read response
+   	for (i=0;i<ntohs(dns->ANCOUNT);i++) {
+      answers[i].name=readname(reader,rcvBuffer,&pos);
+      reader = reader + pos;
+
+        answers[i].resource = (struct R_DATA*)(reader);
+        reader = reader + sizeof(struct R_DATA);
+
+        answers[i].rdata = (unsigned char*)malloc(ntohs(answers[i].resource->data_len));
+
+        for (j=0 ; j<ntohs(answers[i].resource->data_len) ; j++) {
+            answers[i].rdata[j]=reader[j];
+        }
+
+        answers[i].rdata[ntohs(answers[i].resource->data_len)] = '\0';
+
+        reader = reader + ntohs(answers[i].resource->data_len);
+    }
+
+    //print answers
+    for (i=0 ; i < ntohs(dns->ANCOUNT) ; i++) {
+
+        long *p;
+        p=(long*)answers[i].rdata;
+        addr.sin_addr.s_addr=(*p);
+        printf("IP\t%s\t1\tauth ",inet_ntoa(addr.sin_addr));
+
+        if (ntohs(answers[i].resource->type)==5)
+            printf("CNAME\t%s\t1\tauth",answers[i].rdata);
+
+        printf("\n");
+    }
+
+
+
+
+
+
+
+
 
 	return 0;
 }
@@ -117,5 +165,47 @@ void hostToDNS(unsigned char* dns,unsigned char* host)
     *dns++='\0';
 }//hostToDNS
 
+//read names in from dns format
+u_char* readname(unsigned char* reader,unsigned char* buffer,int* count)
+{
+    unsigned char *name;
+    unsigned int p=0,jumped=0,offset;
+    int i , j;
 
+    *count = 1;
+    name = (unsigned char*)malloc(256);
 
+    name[0]='\0';
+
+    while (*reader!=0) {
+        if (*reader>=192) {
+            offset = (*reader)*256 + *(reader+1) - 49152;
+            reader = buffer + offset - 1;
+            jumped = 1;
+        }
+        else
+            name[p++]=*reader;
+
+        reader = reader+1;
+
+        if (jumped==0) {
+            *count = *count + 1;
+        }
+    }
+
+    name[p]='\0';
+    if (jumped==1) {
+        *count = *count + 1;
+    }
+
+    for (i=0;i<(int)strlen((const char*)name);i++) {
+        p=name[i];
+        for (j=0;j<(int)p;j++) {
+            name[i]=name[i+1];
+            i=i+1;
+        }
+        name[i]='.';
+    }
+    name[i-1]='\0';
+    return name;
+}
