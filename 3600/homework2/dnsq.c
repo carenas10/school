@@ -1,5 +1,5 @@
 #include "dnsq.h"
-#include "udpTools.h"
+#include "udpSend.h"
 
 int main(int argc, char *argv[]) {
 
@@ -46,6 +46,7 @@ int main(int argc, char *argv[]) {
 	//------------------------ FORM QUERY ------------------------
 	struct DNS_HEAD *query = NULL;
 	struct DNS_QUESTION *question = NULL;
+	struct DNS_HEAD *dns = NULL;
 
 	char message[10000];
 	char *rcvBuffer;
@@ -83,13 +84,17 @@ int main(int argc, char *argv[]) {
 	question->QCLASS = htons(1);	//Question class		DEAFULT: 1
 
 	//-------- Send Message --------
-	printf("%s\n",message);
 	messageLen = sizeof(struct DNS_HEAD) + (strlen((const char*)qname)+1) + sizeof(struct DNS_QUESTION);
 	rcvBuffer = sendMSG(svr,port,message,messageLen);
-	printf("%s\n",rcvBuffer);
 
-	//-------- --------
+	//-------- Process Response --------
+	dns = (struct DNS_HEAD *)rcvBuffer;
 
+    printf("\nThe response contains : ");
+    printf("\n %d Questions.",ntohs(dns->QDCOUNT));
+    printf("\n %d Answers.",ntohs(dns->ANCOUNT));
+    printf("\n %d Authoritative Servers.",ntohs(dns->NSCOUNT));
+    printf("\n %d Additional records.\n\n",ntohs(dns->ARCOUNT));
 
 	return 0;
 }
