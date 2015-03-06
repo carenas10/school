@@ -1,3 +1,15 @@
+/*
+*   File: dnsq.c
+*   Author: Jackson Dawkins
+*   Last Modified: 3.6.2015
+*   Usage: Usage: dnsq [-t <time>] [-r <retries>] [-p <port>] @<svr> <name>
+*
+*   Summary: This file contains a simple DNS client. The implementation
+*			is not complete, but request are made, and responses printed
+*			to the fullest of my abilities.
+*/
+
+
 #include "dnsq.h"
 #include "udpSend.h"
 
@@ -39,9 +51,11 @@ int main(int argc, char *argv[]) {
 		i++;
 	}
 
+	//implement timeout
+	alarm(timeout);
+
 	//silence unused warning DEBUG
 	if(timeout == retries && port == retries){}
-
 
 	//------------------------ FORM QUERY ------------------------
 	struct DNS_HEAD *query = NULL;
@@ -98,12 +112,10 @@ int main(int argc, char *argv[]) {
 	dns = (struct DNS_HEAD *)rcvBuffer;
 	struct RES_RECORD answers[20];
 
-   	//dns = (struct DNS_HEADER*) buffer;
    	reader = &rcvBuffer[headersize + (qnamesize+1) + sizeof(struct DNS_QUESTION)];
    	int pos=0;
 	int j;
 
-   	//read response
    	for (i=0;i<ntohs(dns->ANCOUNT);i++) {
       answers[i].name=readname(reader,rcvBuffer,&pos);
       reader = reader + pos;
@@ -122,7 +134,7 @@ int main(int argc, char *argv[]) {
         reader = reader + ntohs(answers[i].resource->data_len);
     }
 
-    //print answers
+    //-------- Print Results --------
     for (i=0 ; i < ntohs(dns->ANCOUNT) ; i++) {
 
         long *p;
@@ -136,14 +148,7 @@ int main(int argc, char *argv[]) {
         printf("\n");
     }
 
-
-
-
-
-
-
-
-
+	alarm(0); //cancel alarm before returning.
 	return 0;
 }
 

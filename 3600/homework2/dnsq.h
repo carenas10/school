@@ -1,3 +1,12 @@
+/*
+*   File: dnsq.h
+*   Author: Jackson Dawkins
+*   Last Modified: 3.6.2015
+*
+*   Summary: contains the structs and includes needed for dnsq.c
+*/
+
+
 #include <stdio.h>
 #include <time.h> //rand()
 #include <stdlib.h>

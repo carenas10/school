@@ -1,11 +1,9 @@
 /*
 *   File: vg.h
 *   Author: Jackson Dawkins
-*   Last Modified: 1.30.2015
-*   Usage: included
+*   Last Modified: 3.3.2015
 *
-*   Summary: This file contains the files and libraries needed for the value
-*           guessing client and server.
+*   Summary: contains function declarations and includes for udpsend.c
 */
 
 #include <stdio.h>

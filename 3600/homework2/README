@@ -1,0 +1,17 @@
+-------- PROJECT 2 - CPSC 3600 - REMY - JACKSON DAWKINS --------
+
+This project implements a DNS client in C using UDP sockets. It makes a request,
+and prints out the information received from the server.
+
+KNOWN PROBLEMS
+	the printout doesn't always find all the information returned
+	from the server, such as TTL, and auth status, properly.
+
+	Retries were not implemented. Not enough time.
+
+DESIGN
+	the program's parsing and UDP logic were separated into separate files.
+	both the parsing logic and UDP logic have header files with all includes,
+	structs, and prototypes.
+	This was done to clean up the individual files, and make it easier to
+	understand.
