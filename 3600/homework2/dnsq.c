@@ -16,7 +16,6 @@ int main(int argc, char *argv[]) {
 	char* svr = argv[argc-2];
 	char name[256];
 		strcpy(name,argv[argc-1]);
-	printf("Name: %s\n",name);
 
 	//parse server input. Must start with @ char.
 	if (svr[0] != '@'){
@@ -45,17 +44,23 @@ int main(int argc, char *argv[]) {
 
 
 	//------------------------ FORM QUERY ------------------------
-	struct DNS_HEAD *query = malloc(sizeof(struct DNS_HEAD));
+	struct DNS_HEAD *query = NULL;
+	struct DNS_QUESTION *question = NULL;
 
-	char message[256];
+	char message[10000];
+	char *rcvBuffer;
+	int messageLen = 0;
+	unsigned char *qname;//*scan;
 
-	//-------- HEADER VARS --------
-	/*srand(time(NULL)); //only call once. 
-	query->ID = rand() % MAXID;*/
-	query->ID = 18505; 	//TEMP for testing -- printout: 'HI' ascii	
+	//-------- Set Up Header --------
+	srand(time(NULL)); //only call once. 
+	int ID = rand() % MAXID;
+
+	query = (struct DNS_HEAD *)&message;
+	query->ID = htons(ID); 	//TEMP for testing -- printout: 'HI' ascii	
 	
-	query->QR = 1; 		//query or message <1>				DEFAULT: 1	
-	query->OPCODE = 1;	//type of query <4>					DEFAULT: 1
+	query->QR = 0; 		//query or message <1>				DEFAULT: 0	
+	query->OPCODE = 0;	//type of query <4>					DEFAULT: 0
 	query->AA = 0; 		//authoritative answer.<1>			DEFAULT: ~
 	query->TC = 0;		//trucated response	<1>				DEFAULT: ~
 	query->RD = 1;		//recursion desired <1>				DEFAULT: 1
@@ -64,51 +69,48 @@ int main(int argc, char *argv[]) {
 	query->Z = 0;		//not used <3>						DEFAULT: 0
 	query->RCODE = 0;	//response type code <4>			DEFAULT: ~
 
-	query->QDCOUNT = 1; //question count. <16> 				DEFAULT: 1
+	query->QDCOUNT = htons(1); //question count. <16> 		DEFAULT: 1
 	query->ANCOUNT = 0; //answer count. <16>				DEFAULT: 0
 	query->NSCOUNT = 0; //num server authority <16> 		DEFUALT: 0
 	query->ARCOUNT = 0; //num server additional <16>		DEFAULT: 0
 
-	//-------- QUESTION VARS --------
-	strcpy(query->QNAME,name); 	//host name from input	
-	query->QTYPE = 1;			//query type. <16> 			DEFAULT: 1
-	query->QCLASS = 1;			//query class. <16>			DEFAULT: 1 	
+	//-------- Set Up Question --------
+	qname =(unsigned char*)&message[sizeof(struct DNS_HEAD)];
+	hostToDNS(qname,(unsigned char*)name);
 
-	((int16_t*)message)[0]=htons(query->ID);
-	((int16_t*)message)[1]=htons(35072);//35072
-	((int16_t*)message)[2]=htons(1);
-	((int16_t*)message)[3]=htons(0);
-	((int16_t*)message)[4]=htons(0);
-	((int16_t*)message)[5]=htons(0);
+	question = (struct DNS_QUESTION*)&message[sizeof(struct DNS_HEAD)+(strlen((const char*)qname)+1)];
+	question->QTYPE = htons(1);		//Question type			DEFAULT: 1
+	question->QCLASS = htons(1);	//Question class		DEAFULT: 1
 
-	//-------- find url segments --------
-	//tokenize name to fragments.
-	char *segments[10];
-	i=0; //number of segments
+	//-------- Send Message --------
+	printf("%s\n",message);
+	messageLen = sizeof(struct DNS_HEAD) + (strlen((const char*)qname)+1) + sizeof(struct DNS_QUESTION);
+	rcvBuffer = sendMSG(svr,port,message,messageLen);
+	printf("%s\n",rcvBuffer);
 
-	segments[i] = strtok(name,".");
-	while(segments[i]!=NULL){
-	   segments[++i] = strtok(NULL,".");
-	}
-	
-	//-------- form questions --------
+	//-------- --------
 
-	//starting at message[6]
-	int j = 0; //segment being processed.
-	int k = 0;
-	int pos = 6; //position in message.
-	while(i>=0){
-		message[pos++] = strlen(segments[j]); //length octet
-
-		}
-		i--; j++;
-	}
-
-
-	//------------------------ SEND QUERY ------------------------
-	//char* response;
-	//response = sendMSG(svr,port,message,10);
-	//printf("%s\n",response);
 
 	return 0;
 }
+
+//change www.google.com to 3www6google3com0 format
+void hostToDNS(unsigned char* dns,unsigned char* host) 
+{
+    int j = 0 , i;  
+    strcat((char*)host,".");
+
+    for(i = 0 ; i < strlen((char*)host) ; i++) {
+        if(host[i]=='.') {
+            *dns++ = i-j; //label len
+            for(;j<i;j++) {
+                *dns++=host[j]; //fill rest of str.
+            }
+            j++;
+        }
+    }
+    *dns++='\0';
+}//hostToDNS
+
+
+
