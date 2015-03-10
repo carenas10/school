@@ -7,12 +7,14 @@
 *					CPSC 3220 at Clemson University.
 *		NOTES:		DOES NOT INCLUDE SYNCHRONIZATION YET. We'll See if there's time...
 *
-*/					
-
-
+*/	
+				
 #include "mythreads.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <assert.h>
+#include <unistd.h>
 
 //------------------------ STRUCTS & GLOBALS ------------------------
 
@@ -70,6 +72,18 @@ returnList *returns;	//list of all return values.
 
 //------------------------ THREAD MANAGEMENT (LIBRARY) FUNCTIONS ------------------------
 
+//interrupt functions
+void interruptDisable(){
+	assert(!interruptsAreDisabled);
+	interruptsAreDisabled = 1;
+
+}
+
+void interruptEnable(){
+	assert(interruptsAreDisabled) ;
+	interruptsAreDisabled = 0;
+}
+
 //run a thread with function pointer and args and exit with threadExit to handle returns 
 void runThread(thFuncPtr func, void *args){
 	void *result = func(args);
@@ -78,7 +92,7 @@ void runThread(thFuncPtr func, void *args){
 
 //initialize threading library
 extern void threadInit(){
-	interruptsAreDisabled = 1;
+	interruptDisable();
 
 	//set up thread queue
 	queue = malloc(sizeof(threadList));
@@ -101,11 +115,12 @@ extern void threadInit(){
 		returns->tail = NULL;	
 
 	totalCount++; //total threads since library init.
+	interruptEnable();
 }
 
 //Creates a new context & threadNode... Adds threadNode to back of queue.
 int threadCreate(thFuncPtr funcPtr, void *argPtr){
-	interruptsAreDisabled = 1; //entering critical section
+	interruptDisable(); //entering critical section
 
 	//context info
 	ucontext_t *newContext = malloc(sizeof(ucontext_t));
@@ -132,7 +147,7 @@ int threadCreate(thFuncPtr funcPtr, void *argPtr){
 	queue->head->prev = queue->tail;
 	queue->curr = queue->tail; //newThread is now current.
 
-	interruptsAreDisabled = 0; //exiting critical section.
+	interruptEnable(); //exiting critical section.
 	swapcontext(prevContext,newContext);
 
 	return newThread->threadID;
@@ -159,7 +174,7 @@ void threadJoin(int thread_id, void **result){
 	//printf("entering threadJoin\n"); //DEBUG
 	bool foundReturn = false;
 	while (!foundReturn){
-		interruptsAreDisabled = 1; //entering critical section
+		interruptDisable(); //entering critical section
 
 		//iterate thru return values, matching threadID
 		returnNode *search = NULL; //for now.
@@ -174,18 +189,20 @@ void threadJoin(int thread_id, void **result){
 			}//while 
 		}//if (search)
 		if(!foundReturn){
-			interruptsAreDisabled = 0;
+			interruptEnable();
+			//printf("yield called\n");
 			threadYield();
+			//printf("yield done\n");
 		}
 	}//while
-	interruptsAreDisabled = 0; //out of critical section.
-	//printf("exiting threadJoin\n"); //DEBUG
+	interruptEnable(); //out of critical section.
+	printf("exiting threadJoin\n"); //DEBUG
 }
 
 //exits the current thread -- closing the main thread will terminate the program
 void threadExit(void *result){
-	//printf("returning thread with ID: %d\n",queue->curr->threadID);
-	interruptsAreDisabled = 1; //entering critical section
+	printf("returning thread with ID: %d\n",queue->curr->threadID);
+	interruptDisable(); //entering critical section
 
 	if(queue->curr->threadID == 0) exit(0); //exiting main thread.
 	else{ //not main thread
@@ -221,10 +238,15 @@ void threadExit(void *result){
 		}//removed thread.
 		
 		//printf("removed current thread from queue.\n"); //DEBUG
+		//set next context...
+		ucontext_t *nextContext = &(queue->curr->context);
+		interruptEnable();
+		setcontext(nextContext);
 
 		queue->currentCount--;
 	}//else (not main thread)
-	//printf("returning from threadExit\n"); //DEBUG
+	
+	printf("returning from threadExit\n"); //DEBUG
 }
 
 //------------------------ SYNCHRONIZATION FUNCTIONS (LIBRARY) ------------------------

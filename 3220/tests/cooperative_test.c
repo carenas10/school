@@ -51,6 +51,6 @@ int main(void)
 
 	threadJoin(id2, (void*)&result2);
 	printf("joined #2 --> %d.\n",*result2);
-
+return 0;
 }
 
