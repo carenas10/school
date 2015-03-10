@@ -1,0 +1,68 @@
+#include "mythreads.h"
+#include <stdlib.h>
+
+//------------------------ STRUCTS & GLOBALS ------------------------
+struct threadNode {
+	int threadID;
+	ucontext_t context;
+	int status;
+	void *retval;
+	struct threadNode *next;
+	struct threadNode *prev;
+};
+
+struct threadList {
+	int count;
+	struct threadList *head;
+	struct threadList *tail;
+	struct threadList *curr;
+};
+
+//------------------------ LIST MANAGEMENT FUNCTIONS ------------------------
+
+
+
+//------------------------ THREAD MANAGEMENT FUNCTIONS ------------------------
+
+//initialize threading library
+extern void threadInit(){
+
+}
+
+//thread management functions
+extern int threadCreate(thFuncPtr funcPtr, void *argPtr){
+	//TODO
+return 0;
+}
+
+extern void threadYield(){
+	//TODO
+}
+
+extern void threadJoin(int thread_id, void **result){
+	//TODO
+}
+
+//exits the current thread -- closing the main thread, will terminate the program
+extern void threadExit(void *result){
+	//TODO
+}
+
+extern void threadLock(int lockNum){
+	//TODO
+}
+
+extern void threadUnlock(int lockNum){
+	//TODO
+}
+
+extern void threadWait(int lockNum, int conditionNum){
+	//TODO
+}
+
+extern void threadSignal(int lockNum, int conditionNum){
+	//TODO
+}
+
+//this
+//extern int interruptsAreDisabled;
