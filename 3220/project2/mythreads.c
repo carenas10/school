@@ -1,3 +1,15 @@
+/*		
+*		FILE:		mythreads.c
+*		AUTHOR:		Jackson Dawkins
+*		MODIFIED:	03.09.2015		
+*		USAGE: 		This file is the implementation of the mythreads library
+*					as defined in mythreads.h. This is part of project 2 for
+*					CPSC 3220 at Clemson University.
+*		NOTES:		DOES NOT INCLUDE SYNCHRONIZATION YET. We'll See if there's time...
+*
+*/					
+
+
 #include "mythreads.h"
 #include <stdlib.h>
 #include <stdbool.h>
@@ -16,6 +28,9 @@ CIRCULAR THREAD QUEUE SETUP...
 |next------>|			|			|			|			|next-> head|
 +-----------+-----------+-----------+-----------+-----------+-----------+
    OLDEST -----------------------> NEWER ---------------------> NEWEST
+
+* ALL THREAD MANAGEMENT FUNCTIONS ARE INLINE WITH API FUNCTIONS
+
 */
 
 typedef struct threadNode {
@@ -52,25 +67,6 @@ int totalCount = 0; //number of threads since initialization.
 int interruptsAreDisabled = 0; 
 threadList *queue;	//list of all running threads, or unjoined threads.
 returnList *returns;	//list of all return values.
-
-//------------------------ LIST MANAGEMENT FUNCTIONS ------------------------
-/*
-//removes thread from circular thread queue.
-void removeThread(threadNode *thread){
-	//front of queue is main. Will never be removed this way. Doesn't need to be removed here...
-	if(queue->tail == thread){ //removing back thread
-		queue->head->prev = queue->tail->prev;
-		queue->tail = queue->tail->prev;
-		queue->curr = queue->head;
-	} else { //removing any other
-		thread->prev->next = thread->next;
-		thread->next->prev = thread->prev;
-	}
-	//free memory??
-
-	queue->currentCount--; //decrememnt current thread count in queue.
-}
-*/
 
 //------------------------ THREAD MANAGEMENT (LIBRARY) FUNCTIONS ------------------------
 
@@ -146,6 +142,7 @@ int threadCreate(thFuncPtr funcPtr, void *argPtr){
 //save context and prepare next context. 
 //DOES NOT RETURN UNTIL SELECTED AGAIN TO RUN.
 void threadYield(){
+	//printf("entering threadYield\n"); //DEBUG
 	//only yield if in noncritical section!
 	if(!interruptsAreDisabled){
 		ucontext_t *prevContext = &(queue->curr->context); 
@@ -154,10 +151,12 @@ void threadYield(){
 		swapcontext(prevContext,nextContext);
 	}
 	//else do nothing... cannot interrupt. 
+	//printf("exiting threadYield\n"); //DEBUG
 }
 
 //wait for thread to return.
 void threadJoin(int thread_id, void **result){
+	//printf("entering threadJoin\n"); //DEBUG
 	bool foundReturn = false;
 	while (!foundReturn){
 		interruptsAreDisabled = 1; //entering critical section
@@ -174,22 +173,31 @@ void threadJoin(int thread_id, void **result){
 				search = search->next;
 			}//while 
 		}//if (search)
+		if(!foundReturn){
+			interruptsAreDisabled = 0;
+			threadYield();
+		}
 	}//while
 	interruptsAreDisabled = 0; //out of critical section.
+	//printf("exiting threadJoin\n"); //DEBUG
 }
 
 //exits the current thread -- closing the main thread will terminate the program
 void threadExit(void *result){
+	//printf("returning thread with ID: %d\n",queue->curr->threadID);
 	interruptsAreDisabled = 1; //entering critical section
 
 	if(queue->curr->threadID == 0) exit(0); //exiting main thread.
 	else{ //not main thread
-
+		//printf("returning from nonmain thread with ID: %d\n",queue->curr->threadID); //DEBUG
+		
 		//create new return type node
 		returnNode *newReturnNode = malloc(sizeof(returnNode));
 		newReturnNode->threadID = queue->curr->threadID;
 		newReturnNode->retVal = result;
-
+		newReturnNode->next = NULL;
+		//printf("newNode made\n"); //DEBUG
+		
 		//add to return list
 		if(returns->head == NULL){ //returns list is empty
 			returns->head = newReturnNode;
@@ -198,7 +206,8 @@ void threadExit(void *result){
 			returns->tail->next = newReturnNode;
 			returns->tail = newReturnNode;
 		}//added return val node
-
+		//printf("added to returns list\n"); //DEBUG
+		
 		//remove current thread from thread queue
 		if(queue->tail == queue->curr){ //removing back thread
 			queue->head->prev = queue->tail->prev;
@@ -210,10 +219,12 @@ void threadExit(void *result){
 			queue->curr->next->prev = queue->curr->prev;
 			queue->curr = nextThread;
 		}//removed thread.
-		//free memory from threadNode?
+		
+		//printf("removed current thread from queue.\n"); //DEBUG
 
 		queue->currentCount--;
 	}//else (not main thread)
+	//printf("returning from threadExit\n"); //DEBUG
 }
 
 //------------------------ SYNCHRONIZATION FUNCTIONS (LIBRARY) ------------------------

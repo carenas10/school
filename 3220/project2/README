@@ -1,0 +1,59 @@
+PROJECT 2 - MYTHREADS
+AUTHOR: Jackson Dawkins
+DUE: 3.10.2015
+
+
+------------------------ KNOWN PROBLEMS ------------------------
+- does not implement the sync functions yet so locks WILL NOT work :(
+	cause: due date quickly approaching :((((
+
+- make test will produce a make error that hasn't been solved, but runs
+the test successfully. Not sure what that is
+
+
+------------------------ DESIGN ------------------------
+- Nothing too fancy with the design. I used a circular queue
+implemented by a doubly linked list. That was just because
+of the dynaic requirements of the library. I used this structure 
+because it's quite easy to implement for this. There is always a thread
+and context that can be called next. I'd be willing to bet money
+I'm not the only one who tried this...
+
+*also in mythreads.c
++-----------------------------------------------------------------------+
+|				THREADLIST				|
++-----------+-----------+-----------+-----------+-----------+-----------+
+|THREADNODE |THREADNODE |THREADNODE |THREADNODE |THREADNODE |THREADNODE |
++-----------------------------------------------------------------------+
+|main thread|		|	    |		|	    |		|
+|prev -> end|	...	|    ...    |	...	|    ...    |<---- prev |
+|next------>|		|	    |		|	    |next-> head|
++-----------+-----------+-----------+-----------+-----------+-----------+
+   OLDEST -----------------------> NEWER ---------------------> NEWEST
+
+- I used another linked list for managing the return values for the
+same reason as the thread queue... dynamic memory allocation.
+
+- I implemented all of my list management functions inline within
+the API code since each one is only called once, and keeps the code
+pretty easy to follow. I commented well so those pieces shouldn't be
+hard to pick out. At least they aren't for me... but then again I 
+wrote them so what do I really know... :l
+
+------------------------ RESOURCES ------------------------
+(MAKEFILE) http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/
+(FUNC PTRS) https://stackoverflow.com/questions/840501/how-do-function-pointers-in-c-work
+(THREAD CONCEPTS) https://en.wikipedia.org/wiki/Thread_%28computing%29
+(THREAD CONCEPTS) Dr. Jacob Sorber
+-----------------------------------------------------------
+
+p.s. Thanks for being a lovely grader
+            _
+           /(|
+          (  :
+         __\  \  _____
+       (____)  `|
+      (____)|   |
+       (____).__|
+        (___)__.|_____
+
