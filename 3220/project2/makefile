@@ -1,10 +1,14 @@
-all: dnsq.o
+CC=gcc
+CFLAGS=-Wall -g
 
-dnsq.o: dnsq.c
-	gcc -Wall dnsq.c udpSend.c DieWithError.c -o dnsq
+all: mythreads.c mythreads.h
+	make library
+
+library: mythreads.c mythreads.h
+	$(CC) -g -c mythreads.c
+	ar -cvq libmythreads.a mythreads.o
 
 clean:
-	rm -f *.o
-	rm -f dnsq
+	rm *.a
+	rm *.o
 	find . -type f -name '*~' -delete
-
