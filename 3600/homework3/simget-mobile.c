@@ -1,0 +1,106 @@
+#include <stdio.h>      // for printf() and fprintf() 
+#include <sys/socket.h> // for socket(), connect(), send(), and recv() 
+#include <arpa/inet.h>  // for sockaddr_in and inet_addr() 
+#include <netdb.h>      // for getHostByName() 
+#include <stdlib.h>     // for atoi() and exit() 
+#include <string.h>     // for memset() 
+#include <unistd.h>     // for close() 
+
+#define RCVBUFSIZE 32   // Size of receive buffer 
+
+void DieWithError(char *errorMessage);  // Error handling function 
+
+int main(int argc, char *argv[])
+{
+    int sock;                           // Socket ID 
+
+    struct sockaddr_in servAddr;        // HTTP server address 
+    unsigned short servPort;            // HTTP server port
+    char *servIP;                       // HTTP Server IP address (dotted quad) 
+    
+    struct hostent *thehost;            // Hostent from gethostbyname() 
+    
+    char *sendMsg;                      //String to send to server (HTTP GET REQUEST)
+    unsigned int sendMsgLen;            // Length of string to send 
+
+    char recvBuffer[RCVBUFSIZE];        // Buffer for data to recv 
+    int bytesRcvd, totalBytesRcvd;      //Bytes read in single recv(), and total bytes read 
+
+    //------------------------ PARSE INPUT ------------------------
+
+    if ((argc < 3) || (argc > 4))       // Test for correct number of arguments 
+    {
+       fprintf(stderr, "Usage: %s <Server IP> <Echo Word> [<Echo Port>]\n",
+               argv[0]);
+       exit(1);
+    }
+
+    servIP = argv[1];             // First arg: server IP address (dotted quad) 
+    sendMsg = argv[2];         // Second arg: string to echo 
+
+    if (argc == 4)
+        servPort = atoi(argv[3]); // Use given port, if any 
+    else
+        servPort = 7;  // 7 is the well-known port for the echo service 
+
+    //cr - 13, lf - 10
+    //------------------------ CONSTRUCT HTTP REQUEST ------------------------
+    char *httpVer = "HTTP/1.1";
+
+    sendMsg = "GET ";
+//    strcat(sendMsg,path);
+    strcat(sendMsg," ");
+    strcat(sendMsg, httpVer);
+    printf("%s",sendMsg);
+
+
+
+    //------------------------ SET UP TCP ------------------------
+
+    // create TCP socket - SOCK_STREAM: stream paradigm, IPPROTO_TCP: tcp
+    if ((sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
+        DieWithError("socket() failed");
+
+    // set up server address structure 
+    memset(&servAddr, 0, sizeof(servAddr));         // Zero out structure 
+    servAddr.sin_family      = AF_INET;             // Internet address family 
+    servAddr.sin_addr.s_addr = inet_addr(servIP);   // Server IP address 
+    servAddr.sin_port        = htons(servPort);     // Server port 
+
+   // If user gave a dotted decimal address resolve to binary
+    if (servAddr.sin_addr.s_addr == -1) {
+        thehost = gethostbyname(servIP);
+            servAddr.sin_addr.s_addr = *((unsigned long *) thehost->h_addr_list[0]);
+    }
+
+    // Establish the connection to the HTTP server 
+    if (connect(sock, (struct sockaddr *) &servAddr, sizeof(servAddr)) < 0)
+        DieWithError("connect() failed");
+
+    sendMsgLen = strlen(sendMsg);   // Determine input length 
+
+    //------------------------ SEND/RECEIVE ------------------------
+
+    // Send the string to the server 
+    if (send(sock, sendMsg, sendMsgLen, 0) != sendMsgLen)
+        DieWithError("send() sent a different number of bytes than expected");
+
+    // Receive the file back from the server 
+    totalBytesRcvd = 0;
+    printf("Received: ");                // Setup to print the echoed string 
+    while (totalBytesRcvd < sendMsgLen)
+    {
+        /* Receive up to the buffer size (minus 1 to leave space for
+           a null terminator) bytes from the sender */
+        if ((bytesRcvd = recv(sock, recvBuffer, RCVBUFSIZE - 1, 0)) <= 0)
+            DieWithError("recv() failed or connection closed prematurely");
+        totalBytesRcvd += bytesRcvd;   // Keep tally of total bytes 
+        recvBuffer[bytesRcvd] = '\0';  // Terminate the string! 
+        printf("%s",recvBuffer);            // Print the echo buffer 
+    }
+
+    printf("\n");    // Print a final linefeed 
+
+    close(sock); //client terminates after timeout. TODO
+    exit(0);
+}
