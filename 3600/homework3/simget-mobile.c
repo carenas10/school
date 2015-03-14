@@ -27,21 +27,34 @@ int main(int argc, char *argv[])
     int bytesRcvd, totalBytesRcvd;      //Bytes read in single recv(), and total bytes read 
 
     //------------------------ PARSE INPUT ------------------------
+    //simget URL [-p port] [-O filename]
+    // >2, even 
+    char *url;
+    char *filename;
 
-    if ((argc < 3) || (argc > 4))       // Test for correct number of arguments 
-    {
-       fprintf(stderr, "Usage: %s <Server IP> <Echo Word> [<Echo Port>]\n",
-               argv[0]);
-       exit(1);
+    //impossible number of input args
+    if(argc > 6 || argc < 2){
+        fprintf(stderr, "Usage: %s URL [-p port] [-O Filename]\n", argv[0]);
+        exit(0);
     }
 
-    servIP = argv[1];             // First arg: server IP address (dotted quad) 
-    sendMsg = argv[2];         // Second arg: string to echo 
-
-    if (argc == 4)
-        servPort = atoi(argv[3]); // Use given port, if any 
-    else
-        servPort = 7;  // 7 is the well-known port for the echo service 
+    if(argc == 2){
+        //url only
+    } else if (argc == 4 && strcmp(argv[2],"-p") == 0){
+        servPort = atoi(argv[3]);
+        printf("port set to: %d\n",servPort);
+    } else if (argc == 4 && strcmp(argv[2],"-O") == 0){
+        filename = argv[3];
+        printf("filename set to: %s\n",filename);
+    } else if (argc == 6 && (strcmp(argv[2],"-p") == 0 && strcmp(argv[4],"-O") == 0)){
+        servPort = atoi(argv[3]);
+        printf("port set to: %d\n",servPort);
+        filename = argv[5];
+        printf("filename set to: %s\n",filename);
+    } else {
+        fprintf(stderr, "Usage: %s URL [-p port] [-O Filename]\n", argv[0]);
+        exit(0);
+    }
 
     //cr - 13, lf - 10
     //------------------------ CONSTRUCT HTTP REQUEST ------------------------
