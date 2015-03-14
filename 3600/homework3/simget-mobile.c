@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     int sock;                           // Socket ID 
 
     struct sockaddr_in servAddr;        // HTTP server address 
-    unsigned short servPort;            // HTTP server port
+    unsigned short servPort = 8080;     // HTTP server port
     char *servIP;                       // HTTP Server IP address (dotted quad) 
     
     struct hostent *thehost;            // Hostent from gethostbyname() 
@@ -117,3 +117,10 @@ int main(int argc, char *argv[])
     close(sock); //client terminates after timeout. TODO
     exit(0);
 }
+
+void DieWithError(char *errorMessage)
+{
+    perror(errorMessage);
+    exit(1);
+}
+
