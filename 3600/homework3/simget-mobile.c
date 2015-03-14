@@ -26,9 +26,7 @@ int main(int argc, char *argv[])
     char recvBuffer[RCVBUFSIZE];        // Buffer for data to recv 
     int bytesRcvd, totalBytesRcvd;      //Bytes read in single recv(), and total bytes read 
 
-    //------------------------ PARSE INPUT ------------------------
-    //simget URL [-p port] [-O filename]
-    // >2, even 
+    //------------------------ PARSE INPUT ------------------------ 
     char *url;
     char *filename;
 
@@ -37,39 +35,65 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Usage: %s URL [-p port] [-O Filename]\n", argv[0]);
         exit(0);
     }
-
-    if(argc == 2){
-        //url only
-    } else if (argc == 4 && strcmp(argv[2],"-p") == 0){
+    
+    //check flags
+    if (argc == 2){ //url only
+        url = argv[1];
+        printf("url set to: %s\n",url);
+    } else if (argc == 4 && strcmp(argv[2],"-p") == 0){ //url & port
+        url = argv[1];
+        printf("url set to: %s\n",url);
         servPort = atoi(argv[3]);
         printf("port set to: %d\n",servPort);
-    } else if (argc == 4 && strcmp(argv[2],"-O") == 0){
+    } else if (argc == 4 && strcmp(argv[2],"-O") == 0){ //url & filename
+        url = argv[1];
+        printf("url set to: %s\n",url);
         filename = argv[3];
         printf("filename set to: %s\n",filename);
-    } else if (argc == 6 && (strcmp(argv[2],"-p") == 0 && strcmp(argv[4],"-O") == 0)){
+    } else if (argc == 6 && (strcmp(argv[2],"-p") == 0 && strcmp(argv[4],"-O") == 0)){ //all 3
+        url = argv[1];
+        printf("url set to: %s\n",url);
         servPort = atoi(argv[3]);
         printf("port set to: %d\n",servPort);
         filename = argv[5];
         printf("filename set to: %s\n",filename);
-    } else {
+    } else { //invalid combination
         fprintf(stderr, "Usage: %s URL [-p port] [-O Filename]\n", argv[0]);
         exit(0);
     }
 
+    //resolve hostname using DNS
+    struct hostent *host;
+    struct in_addr **listOfDNSResults;
+    char ip[100]; //ip of the given url 
+    int i;
+
+    if ((host = gethostbyname(url)) == NULL) {
+        DieWithError("gethostbyname");
+    }
+ 
+    listOfDNSResults = (struct in_addr **) host->h_addr_list;
+
+    if(listOfDNSResults[0] != NULL)
+        strcpy(ip, inet_ntoa(*listOfDNSResults[0]));
+    else
+        DieWithError("gethostbyname");
+
+    printf("%s\n",ip);
+
     //cr - 13, lf - 10
     //------------------------ CONSTRUCT HTTP REQUEST ------------------------
-    char *httpVer = "HTTP/1.1";
 
-    sendMsg = "GET ";
-//    strcat(sendMsg,path);
-    strcat(sendMsg," ");
-    strcat(sendMsg, httpVer);
-    printf("%s",sendMsg);
+
+
+
+
+
 
 
 
     //------------------------ SET UP TCP ------------------------
-
+/*
     // create TCP socket - SOCK_STREAM: stream paradigm, IPPROTO_TCP: tcp
     if ((sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
         DieWithError("socket() failed");
@@ -102,10 +126,10 @@ int main(int argc, char *argv[])
     totalBytesRcvd = 0;
     printf("Received: ");                // Setup to print the echoed string 
     while (totalBytesRcvd < sendMsgLen)
-    {
+    {*/
         /* Receive up to the buffer size (minus 1 to leave space for
            a null terminator) bytes from the sender */
-        if ((bytesRcvd = recv(sock, recvBuffer, RCVBUFSIZE - 1, 0)) <= 0)
+/*        if ((bytesRcvd = recv(sock, recvBuffer, RCVBUFSIZE - 1, 0)) <= 0)
             DieWithError("recv() failed or connection closed prematurely");
         totalBytesRcvd += bytesRcvd;   // Keep tally of total bytes 
         recvBuffer[bytesRcvd] = '\0';  // Terminate the string! 
@@ -115,7 +139,7 @@ int main(int argc, char *argv[])
     printf("\n");    // Print a final linefeed 
 
     close(sock); //client terminates after timeout. TODO
-    exit(0);
+    exit(0);*/
 }
 
 void DieWithError(char *errorMessage)
