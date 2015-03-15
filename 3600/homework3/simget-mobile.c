@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 
     struct sockaddr_in servAddr;        // HTTP server address 
     unsigned short servPort = 8080;     // HTTP server port
-    char *servIP;                       // HTTP Server IP address (dotted quad) 
+    char *servIP = malloc(sizeof(char)*100);                       // HTTP Server IP address (dotted quad) 
     
     struct hostent *thehost;            // Hostent from gethostbyname() 
     
@@ -65,7 +65,6 @@ int main(int argc, char *argv[])
     //resolve hostname using DNS
     struct hostent *host;
     struct in_addr **listOfDNSResults;
-    char ip[100]; //ip of the given url 
     int i;
 
     if ((host = gethostbyname(url)) == NULL) {
@@ -75,25 +74,19 @@ int main(int argc, char *argv[])
     listOfDNSResults = (struct in_addr **) host->h_addr_list;
 
     if(listOfDNSResults[0] != NULL)
-        strcpy(ip, inet_ntoa(*listOfDNSResults[0]));
+        strcpy(servIP, inet_ntoa(*listOfDNSResults[0])); //set servIP here
     else
         DieWithError("gethostbyname");
 
-    printf("%s\n",ip);
+    printf("%s\n",servIP);
 
     //cr - 13, lf - 10
     //------------------------ CONSTRUCT HTTP REQUEST ------------------------
-
-
-
-
-
-
-
+    sendMsg = "GET /index.html HTTP/1.1\r\n";
 
 
     //------------------------ SET UP TCP ------------------------
-/*
+
     // create TCP socket - SOCK_STREAM: stream paradigm, IPPROTO_TCP: tcp
     if ((sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
         DieWithError("socket() failed");
@@ -125,21 +118,22 @@ int main(int argc, char *argv[])
     // Receive the file back from the server 
     totalBytesRcvd = 0;
     printf("Received: ");                // Setup to print the echoed string 
-    while (totalBytesRcvd < sendMsgLen)
-    {*/
+    while (1)
+    {
         /* Receive up to the buffer size (minus 1 to leave space for
            a null terminator) bytes from the sender */
-/*        if ((bytesRcvd = recv(sock, recvBuffer, RCVBUFSIZE - 1, 0)) <= 0)
-            DieWithError("recv() failed or connection closed prematurely");
+        if ((bytesRcvd = recv(sock, recvBuffer, RCVBUFSIZE - 1, 0)) <= 0)
+            break; //done receiving
+            //DieWithError("recv() failed or connection closed prematurely");
         totalBytesRcvd += bytesRcvd;   // Keep tally of total bytes 
         recvBuffer[bytesRcvd] = '\0';  // Terminate the string! 
         printf("%s",recvBuffer);            // Print the echo buffer 
     }
 
     printf("\n");    // Print a final linefeed 
-
-    close(sock); //client terminates after timeout. TODO
-    exit(0);*/
+    printf("finished. closing...\n");
+    close(sock);    //client terminates after timeout. TODO
+    exit(0);
 }
 
 void DieWithError(char *errorMessage)
