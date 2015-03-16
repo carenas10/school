@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     
     struct hostent *thehost;            // Hostent from gethostbyname() 
     
-    char *sendMsg;                      //String to send to server (HTTP GET REQUEST)
+    char sendMsg[256];                      //String to send to server (HTTP GET REQUEST)
     unsigned int sendMsgLen;            // Length of string to send 
 
     char recvBuffer[RCVBUFSIZE];        // Buffer for data to recv 
@@ -39,24 +39,24 @@ int main(int argc, char *argv[])
     //check flags
     if (argc == 2){ //url only
         url = argv[1];
-        printf("url set to: %s\n",url);
+        printf("URL: %s\n",url);
     } else if (argc == 4 && strcmp(argv[2],"-p") == 0){ //url & port
         url = argv[1];
-        printf("url set to: %s\n",url);
+        printf("URL: %s\n",url);
         servPort = atoi(argv[3]);
-        printf("port set to: %d\n",servPort);
+        printf("PORT: %d\n",servPort);
     } else if (argc == 4 && strcmp(argv[2],"-O") == 0){ //url & filename
         url = argv[1];
-        printf("url set to: %s\n",url);
+        printf("URL: %s\n",url);
         filename = argv[3];
-        printf("filename set to: %s\n",filename);
+        printf("FILE: %s\n",filename);
     } else if (argc == 6 && (strcmp(argv[2],"-p") == 0 && strcmp(argv[4],"-O") == 0)){ //all 3
         url = argv[1];
-        printf("url set to: %s\n",url);
+        printf("URL: %s\n",url);
         servPort = atoi(argv[3]);
-        printf("port set to: %d\n",servPort);
+        printf("PORT: %d\n",servPort);
         filename = argv[5];
-        printf("filename set to: %s\n",filename);
+        printf("FILE: %s\n",filename);
     } else { //invalid combination
         fprintf(stderr, "Usage: %s URL [-p port] [-O Filename]\n", argv[0]);
         exit(0);
@@ -65,7 +65,6 @@ int main(int argc, char *argv[])
     //resolve hostname using DNS
     struct hostent *host;
     struct in_addr **listOfDNSResults;
-    int i;
 
     if ((host = gethostbyname(url)) == NULL) {
         DieWithError("gethostbyname");
@@ -78,13 +77,20 @@ int main(int argc, char *argv[])
     else
         DieWithError("gethostbyname");
 
-    printf("%s\n",servIP);
+    printf("URL -> IP: %s\n",servIP);
 
     //cr - 13, lf - 10
     //------------------------ CONSTRUCT HTTP REQUEST ------------------------
-    sendMsg = "GET /index.html HTTP/1.1\r\n";
+    sendMsg[0] = 0;
+    strcat(sendMsg, "GET ");
+    strcat(sendMsg,url);
+    strcat(sendMsg," HTTP/1.1\n\n");
 
+    //strcat();
 
+    printf("%s\n",sendMsg);
+
+    printf("passed request construction...\n");
     //------------------------ SET UP TCP ------------------------
 
     // create TCP socket - SOCK_STREAM: stream paradigm, IPPROTO_TCP: tcp
