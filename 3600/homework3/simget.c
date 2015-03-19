@@ -5,11 +5,14 @@
 #include <stdlib.h>     // for atoi() and exit() 
 #include <string.h>     // for memset() 
 #include <unistd.h>     // for close() 
+#include <stdbool.h>	//for startsWith fuction
 
 #define RCVBUFSIZE 32   // Size of receive buffer 
 #define MAXBUF 1024
+#define DEBUG 0
 
 void DieWithError(char *errorMessage);  // Error handling function 
+bool startsWith(const char *str, const char *pre); //checks if string a starts with b
 
 int main(int argc, char *argv[])
 {
@@ -40,28 +43,57 @@ int main(int argc, char *argv[])
     //check flags
     if (argc == 2){ //url only
         url = argv[1];
-        printf("URL: %s\n",url);
+        if(DEBUG) printf("URL: %s\n",url);
     } else if (argc == 4 && strcmp(argv[2],"-p") == 0){ //url & port
         url = argv[1];
-        printf("URL: %s\n",url);
+        if(DEBUG) printf("URL: %s\n",url);
         servPort = atoi(argv[3]);
-        printf("PORT: %d\n",servPort);
+        if(DEBUG) printf("PORT: %d\n",servPort);
     } else if (argc == 4 && strcmp(argv[2],"-O") == 0){ //url & filename
         url = argv[1];
-        printf("URL: %s\n",url);
+        if(DEBUG) printf("URL: %s\n",url);
         filename = argv[3];
-        printf("FILE: %s\n",filename);
+        if(DEBUG) printf("FILE: %s\n",filename);
     } else if (argc == 6 && (strcmp(argv[2],"-p") == 0 && strcmp(argv[4],"-O") == 0)){ //all 3
         url = argv[1];
-        printf("URL: %s\n",url);
+        if(DEBUG) printf("URL: %s\n",url);
         servPort = atoi(argv[3]);
-        printf("PORT: %d\n",servPort);
+        if(DEBUG) printf("PORT: %d\n",servPort);
         filename = argv[5];
-        printf("FILE: %s\n",filename);
+        if(DEBUG) printf("FILE: %s\n",filename);
     } else { //invalid combination
         fprintf(stderr, "Usage: %s URL [-p port] [-O Filename]\n", argv[0]);
         exit(0);
     }
+
+    //if url starts with http://, remove. http is given.
+	if(startsWith(url,"http://")){ //string starts with http://
+		url += 7;
+		if(DEBUG) printf("URL: %s\n",url);
+	} 
+
+	if(DEBUG) printf("------------------------\n");
+	//separate url into path and host
+
+    char *newPath; //will contain the path of the original URL.
+
+    int pos = 0; //used to find the first slash.
+    for(pos=0; pos<strlen(url); pos++){
+    	if(url[pos]=='/' && pos!=strlen(url)-1){ //only change if not at end.
+    		url[pos] = ' '; //change from slash to space for token
+    		break;
+    	}
+    }
+
+    // url will point to url in original URI.
+	url = strtok(url," ");
+
+	// url will point to path in original URI.
+	newPath = strtok(NULL," ");
+
+    if(DEBUG) printf("NEW PATH:%s\nNEW URL:%s\n",newPath,url);
+	if(DEBUG) printf("------------------------\n");
+
 
     //resolve hostname using DNS
     struct hostent *host;
@@ -78,15 +110,23 @@ int main(int argc, char *argv[])
     else
         DieWithError("gethostbyname");
 
-    printf("URL -> IP: %s\n",servIP);
+    if(DEBUG) printf("URL -> IP: %s\n",servIP);
 
-    //cr - 13, lf - 10
+    //cr - 13, lf - 10 \r\n
     //------------------------ CONSTRUCT HTTP REQUEST ------------------------
-    sprintf(sendMsg,"GET %s HTTP/1.1\n\n",url);
+    if(DEBUG) printf("------------------------\n");
 
-    printf("%s\n",sendMsg);
 
-    printf("passed request construction...\n");
+    if(newPath == NULL){
+    	sprintf(sendMsg,"GET / HTTP/1.1\r\nHost: %s\n\n",url);
+    } else{
+    	sprintf(sendMsg,"GET /%s HTTP/1.1\r\nHost: %s\n\n",newPath,url);
+    }
+    
+
+    if(DEBUG) printf("%s\n",sendMsg);
+	
+    if(DEBUG) printf("passed request construction...\n");
 
     //------------------------ SET UP TCP ------------------------
 
@@ -120,7 +160,12 @@ int main(int argc, char *argv[])
 
     // Receive the file back from the server 
     totalBytesRcvd = 0;
-    printf("Received: ");                // Setup to print the echoed string 
+    printf("Received: ");                // Setup to print the echoed string
+
+    //open a file write location if filname was set in input parsing...
+   	FILE *fp; 
+    if(filename != NULL) fp = fopen(filename, "w");
+
     while (1)
     {
         /* Receive up to the buffer size (minus 1 to leave space for
@@ -130,7 +175,8 @@ int main(int argc, char *argv[])
             //DieWithError("recv() failed or connection closed prematurely");
         totalBytesRcvd += bytesRcvd;   // Keep tally of total bytes 
         recvBuffer[bytesRcvd] = '\0';  // Terminate the string! 
-        printf("%s",recvBuffer);            // Print the echo buffer 
+        if(filename != NULL) fprintf(fp,"%s",recvBuffer);            // Print the echo buffer 
+        printf("%s",recvBuffer);
     }
 
     printf("\n");    // Print a final linefeed 
@@ -145,3 +191,9 @@ void DieWithError(char *errorMessage)
     exit(1);
 }
 
+//checks if a starts with b
+bool startsWith(const char *str, const char *pre)
+{
+   if(strncmp(str, pre, strlen(pre)) == 0) return 1;
+   return 0;
+}
