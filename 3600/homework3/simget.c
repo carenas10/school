@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 	if(DEBUG) printf("------------------------\n");
 	//separate url into path and host
 
-    char *newPath; //will contain the path of the original URL.
+    char *path; //will contain the path of the original URL.
 
     int pos = 0; //used to find the first slash.
     for(pos=0; pos<strlen(url); pos++){
@@ -89,9 +89,9 @@ int main(int argc, char *argv[])
 	url = strtok(url," ");
 
 	// url will point to path in original URI.
-	newPath = strtok(NULL," ");
+	path = strtok(NULL," ");
 
-    if(DEBUG) printf("NEW PATH:%s\nNEW URL:%s\n",newPath,url);
+    if(DEBUG) printf("NEW PATH:%s\nNEW URL:%s\n",path,url);
 	if(DEBUG) printf("------------------------\n");
 
 
@@ -116,11 +116,11 @@ int main(int argc, char *argv[])
     //------------------------ CONSTRUCT HTTP REQUEST ------------------------
     if(DEBUG) printf("------------------------\n");
 
-
-    if(newPath == NULL){
+    //construct different request, depending on if path defined or not.
+    if(path == NULL){
     	sprintf(sendMsg,"GET / HTTP/1.1\r\nHost: %s\n\n",url);
     } else{
-    	sprintf(sendMsg,"GET /%s HTTP/1.1\r\nHost: %s\n\n",newPath,url);
+    	sprintf(sendMsg,"GET /%s HTTP/1.1\r\nHost: %s\n\n",path,url);
     }
     
 
@@ -160,40 +160,40 @@ int main(int argc, char *argv[])
 
     // Receive the file back from the server 
     totalBytesRcvd = 0;
-    printf("Received: ");                // Setup to print the echoed string
+    if(DEBUG) printf("Received: ");                // Setup to print the echoed string
 
     //open a file write location if filname was set in input parsing...
    	FILE *fp; 
     if(filename != NULL) fp = fopen(filename, "w");
 
-    while (1)
-    {
+    while (1) {
         /* Receive up to the buffer size (minus 1 to leave space for
            a null terminator) bytes from the sender */
         if ((bytesRcvd = recv(sock, recvBuffer, RCVBUFSIZE - 1, 0)) <= 0)
             break; //done receiving
             //DieWithError("recv() failed or connection closed prematurely");
+        
         totalBytesRcvd += bytesRcvd;   // Keep tally of total bytes 
         recvBuffer[bytesRcvd] = '\0';  // Terminate the string! 
-        if(filename != NULL) fprintf(fp,"%s",recvBuffer);            // Print the echo buffer 
-        printf("%s",recvBuffer);
-    }
 
-    printf("\n");    // Print a final linefeed 
-    printf("finished. closing...\n");
+        if(filename != NULL) fprintf(fp,"%s",recvBuffer); //print to file if open
+        else printf("%s",recvBuffer);	//else print to stdout
+    }//while receiving 
+
+	printf("\n");    // Print a final linefeed 
+    
+    if(DEBUG) printf("finished. closing...\n");
     close(sock);    //client terminates after timeout. TODO
     exit(0);
 }
 
-void DieWithError(char *errorMessage)
-{
+void DieWithError(char *errorMessage) {
     perror(errorMessage);
     exit(1);
 }
 
 //checks if a starts with b
-bool startsWith(const char *str, const char *pre)
-{
+bool startsWith(const char *str, const char *pre) {
    if(strncmp(str, pre, strlen(pre)) == 0) return 1;
    return 0;
 }
