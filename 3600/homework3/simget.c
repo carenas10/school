@@ -7,7 +7,7 @@
 #include <unistd.h>     // for close() 
 #include <stdbool.h>	//for startsWith fuction
 
-#define RCVBUFSIZE 32   // Size of receive buffer 
+#define RCVBUFSIZE 10000   // Size of receive buffer 
 #define MAXBUF 1024
 #define DEBUG 0
 
