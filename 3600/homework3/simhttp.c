@@ -50,6 +50,8 @@ int main(int argc, char *argv[]){
 		if(DEBUG) printf("PORT: %d\n",servPort);
 		localDirectory = argv[3];
 		if(DEBUG) printf("DIR: %s\n", localDirectory);
+	} else if(argc == 1){ //nothing needed. Default settings
+		//WooHoo!
 	} else {
 		fprintf(stderr, "Usage: %s [-p port] [directory]\n", argv[0]);
 		exit(0);
@@ -103,8 +105,14 @@ int main(int argc, char *argv[]){
         char *path = malloc(1024);	//the requested file.
         char *httpVers = malloc(1024);		//used to assure the correct http version supported.
 
-        //parse request and issue 400 error for bad request if needed.
+        //parse request and issue 400/405 error for bad request/method if needed.
 	 	if(!parseRequest(rcvBuffer,method,path,httpVers)){
+	 		if(strcmp(method,"GET")!=0 && strcmp(method,"HEAD")!=0){ //405 error
+		 	send(clntSock,"HTTP/1.1 405 Method Not Allowed\n",25,0);
+		 	printOutput(method,path,405);
+	 		exit(1);	 			
+	 		}
+
 		 	send(clntSock,"HTTP/1.1 400 Bad Request\n",25,0);
 		 	printOutput(method,path,400);
 	 		exit(1);	 		
@@ -112,6 +120,15 @@ int main(int argc, char *argv[]){
 
 	 	if(strcmp(path,"/")==0) strcpy(path,"/index.html"); //if no path, index.html default
 	 	path++; //increment file path pointer to remove the preceding slash
+
+	 	//lazy check to make sure in correct directory...
+	  	if(strstr(path,"..")){ //403 error
+		 	send(clntSock,"HTTP/1.1 403 Forbidden\n",25,0);
+		 	printOutput(method,path,403);
+	 		exit(1);
+	 	}
+
+
 
 	 	FILE *fp = NULL;
 	 	fp = fopen(path,"r");
@@ -152,6 +169,8 @@ int main(int argc, char *argv[]){
 		sprintf(httpHead,"HTTP/1.1 200 OK\r\n");
 		sprintf(portion,"Date: %s\r\n",formattedDate);
 		strcat(httpHead,portion);
+		sprintf(portion,"Content-Type: %s\r\n",getContentType(path));
+		strcat(httpHead,portion);
 		sprintf(portion,"Content-Length: %d\r\n",fileSize);
 		strcat(httpHead,portion);
 		sprintf(portion,"Server: HTTPeeMyself\r\n\r\n");
@@ -188,7 +207,7 @@ void printOutput(char *method, char *path, int status){
 		size_t ln = strlen(formattedDate) - 1;
 			if (formattedDate[ln] == '\n')
 				formattedDate[ln] = '\0';
-	printf("%s\t%s\t%s\t%d\n", method, path, formattedDate, status);
+	printf("%s\t%s\t%d\n", method, path, status);
 }
 
 //checks if str starts with pre
@@ -205,7 +224,10 @@ bool parseRequest (char *requestString, char *method, char *path, char *httpVers
    	token = strtok(requestString," ");
 		if (strcmp(token,"GET")==0 || strcmp(token,"get")==0) strcpy(method,token);
    		else if (strcmp(token,"HEAD")==0 || strcmp(token,"head")==0) strcpy(method,token);
-		else return false;
+		else{
+			strcpy(method,token);
+			return false;
+		}
 	
 		//printf("Request is type: %s\n",method);
 
@@ -248,9 +270,20 @@ void prepend(char* str, const char* toPrepend) {
 }
 
 char* getContentType(char *path){
-
-
-
-	return NULL;
+	if(strstr(path,".htm")) {
+		return "text/html";
+	} else if (strstr(path,".css")) {
+		return "text/css";
+	} else if (strstr(path,".js")) {
+		return "application/javascript";
+	} else if (strstr(path,".txt")) {
+		return "text/plain";
+	} else if (strstr(path,".jpg")){
+		return "image/jpeg";
+	} else if (strstr(path,".pdf")) {
+		return "application/pdf";
+	} else {
+		return "application/octet-stream";
+	}
 }
 

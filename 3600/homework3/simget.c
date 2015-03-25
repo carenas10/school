@@ -13,6 +13,7 @@
 
 void DieWithError(char *errorMessage);  // Error handling function 
 bool startsWith(const char *str, const char *pre); //checks if string a starts with b
+char* getFileType(char *str);
 
 int main(int argc, char *argv[])
 {
@@ -179,6 +180,9 @@ int main(int argc, char *argv[])
         else printf("%s",recvBuffer);	//else print to stdout
     }//while receiving 
 
+    //fclose(fp);
+    //rename(filename,strcat(filename,getFileType(recvBuffer)));
+
 	printf("\n");    // Print a final linefeed 
     
     if(DEBUG) printf("finished. closing...\n");
@@ -195,4 +199,22 @@ void DieWithError(char *errorMessage) {
 bool startsWith(const char *str, const char *pre) {
    if(strncmp(str, pre, strlen(pre)) == 0) return 1;
    return 0;
+}
+
+char* getFileType(char *str){
+	if(strstr(str,"text/html")) {
+		return ".html";
+	} else if (strstr(str,"text/css")) {
+		return ".css";
+	} else if (strstr(str,"application/javascript")) {
+		return ".js";
+	} else if (strstr(str,"text/plain")) {
+		return ".txt";
+	} else if (strstr(str,"image/jpeg")){
+		return ".jpg";
+	} else if (strstr(str,"application/pdf")) {
+		return ".pdf";
+	} else { //application/octet-stream
+		return ""; //no file extension 
+	}
 }
