@@ -9,7 +9,7 @@
 
 #define RCVBUFSIZE 10000   // Size of receive buffer 
 #define MAXBUF 100000
-#define DEBUG 1
+#define DEBUG 0
 
 void DieWithError(char *errorMessage);  // Error handling function 
 bool startsWith(const char *str, const char *pre); //checks if string a starts with b
@@ -159,7 +159,7 @@ int main(int argc, char *argv[])
 
     // Receive the file back from the server 
     totalBytesRcvd = 0;
-    if(DEBUG) printf("Received: ");	// Setup to print the received string
+    if(DEBUG) printf("Received: ");                // Setup to print the echoed string
 
     //open a file write location if filname was set in input parsing...
    	FILE *fp; 
