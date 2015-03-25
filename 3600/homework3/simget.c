@@ -9,7 +9,7 @@
 
 #define RCVBUFSIZE 10000   // Size of receive buffer 
 #define MAXBUF 100000
-#define DEBUG 1
+#define DEBUG 0
 
 void DieWithError(char *errorMessage);  // Error handling function 
 bool startsWith(const char *str, const char *pre); //checks if string a starts with b
@@ -118,9 +118,9 @@ int main(int argc, char *argv[])
 
     //construct different request, depending on if path defined or not.
     if(path == NULL){
-    	sprintf(sendMsg,"GET / HTTP/1.1\r\nHost: %s\r\n",url);
+    	sprintf(sendMsg,"GET / HTTP/1.1\r\nHost: %s\n\n",url);
     } else{
-    	sprintf(sendMsg,"GET /%s HTTP/1.1\r\nHost: %s\r\n",path,url);
+    	sprintf(sendMsg,"GET /%s HTTP/1.1\r\nHost: %s\n\n",path,url);
     }
 
     if(DEBUG) printf("%s\n",sendMsg);
