@@ -26,7 +26,7 @@ char* getContentType(char *path);
 int main(int argc, char *argv[]){
 
 	unsigned short servPort = 8080; //default port
-	char *localDirectory; //user provided
+	char *localDirectory = NULL; //user provided
 
 	//------------------------ parse input ------------------------
 	//impossible number of input args
@@ -106,19 +106,27 @@ int main(int argc, char *argv[]){
         char *httpVers = malloc(1024);		//used to assure the correct http version supported.
 
         //parse request and issue 400/405 error for bad request/method if needed.
-	 	if(!parseRequest(rcvBuffer,method,path,httpVers)){
-	 		if(strcmp(method,"GET")!=0 && strcmp(method,"HEAD")!=0){ //405 error
-		 	send(clntSock,"HTTP/1.1 405 Method Not Allowed\n",25,0);
-		 	printOutput(method,path,405);
-	 		exit(1);	 			
-	 		}
+        if(rcvBuffer != NULL && rcvBuffer[0] != '\0'){
+	        if(!parseRequest(rcvBuffer,method,path,httpVers)){
+		 		if(strcmp(method,"GET")!=0 && strcmp(method,"HEAD")!=0){ //405 error
+			 	send(clntSock,"HTTP/1.1 405 Method Not Allowed\n",25,0);
+			 	printOutput(method,path,405);
+		 		exit(1);	 			
+		 		}
 
-		 	send(clntSock,"HTTP/1.1 400 Bad Request\n",25,0);
-		 	printOutput(method,path,400);
-	 		exit(1);	 		
-	 	}
+			 	send(clntSock,"HTTP/1.1 400 Bad Request\n",25,0);
+			 	printOutput(method,path,400);
+		 		exit(1);	 		
+		 	}	
+        }
+	 	
 
 	 	if(strcmp(path,"/")==0) strcpy(path,"/index.html"); //if no path, index.html default
+	 	if(localDirectory != NULL){
+	 		prepend(path,localDirectory);
+	 		if(path[0] == '.') path++;
+	 		//printf("PATH WITH LOCAL_DIR: %s\n",path);
+	 	}
 	 	path++; //increment file path pointer to remove the preceding slash
 
 	 	//lazy check to make sure in correct directory...
@@ -217,8 +225,10 @@ bool startsWith(const char *str, const char *pre) {
 }
 
 bool parseRequest (char *requestString, char *method, char *path, char *httpVers){
+	printf("----------------begin parsing----------------\n");
     int i = 0;
     char *token; //process request piece-by piece
+    if(requestString[0] == '.') requestString++;
 
    	// FIRST TOKEN. should be GET or HEAD
    	token = strtok(requestString," ");

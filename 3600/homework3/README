@@ -1,0 +1,17 @@
+JACKSON DAWKINS (UN: jacksod)
+SIMPLE HTTP CLIENT AND SERVER
+FOR CPSC 3600, DR. REMY
+
+------------------------ DESIGN ------------------------ 
+This project is a simple http server handling GET requests. It is written using
+C and TCP sockets. It uses simple string parsing, and for many issues relies
+on the fact that the client should be issuing valid requests. I separated many 
+of the parsing and string manipulation functions (such as prepend) from the
+main routine for simplicity and readability.
+
+------------------------ KNOWN PROBLEMS ------------------------
+This http client has sandboxing issues and sometimes has
+trouble sending the correct error when a permissions issue is run into.
+
+I also did not implement the HEAD protocol, so results of issuing HEAD
+requests to the server are ambiguous and may contain errors or incorrect data.
