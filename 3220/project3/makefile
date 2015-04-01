@@ -1,17 +1,19 @@
 CC=gcc
 
-all:  allocator.c allocator.h
+all:  allocator2.c
 	make library
 
-library: allocator.c allocator.h
-	$(CC) -O2 -DNDEBUG -Wall -fPIC -shared allocator.c -o libmyalloc.so
+library: allocator2.c
+	$(CC) -O2 -DNDEBUG -Wall -fPIC -shared allocator2.c -o libmyalloc.so
 
-test: allocator.c allocator.h test.c
-	make library
-	$(CC) -g -o test test.c
+lib2: allocator2.c
+	$(CC) -O2 -DNDEBUG -Wall -fPIC -shared allocator2.c -o libmyalloc.so
 
-pkg: allocator.c allocator.h README makefile
-	tar cvzf project3.tgz README makefile allocator.c allocator.h
+test: allocator.c test.c
+	$(CC) -g -o test test.c allocator2.c
+
+pkg: allocator2.c README makefile
+	tar cvzf project3.tgz README makefile allocator2.c
 
 clean:
 	rm -rf *.a

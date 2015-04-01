@@ -9,7 +9,7 @@
 #include <sys/types.h> //open
 #include <sys/stat.h>	//open
 #include <fcntl.h>		//open
-#include "allocator.h"
+//#include "allocator.h"
 
 #define PAGESIZE 4096
 
@@ -48,18 +48,6 @@ page_t *lists[11];
 
 //set up function pointers 
 void shim_init(void) {
-/*	if (original_malloc == NULL) {
-  		original_malloc = dlsym(RTLD_NEXT, "malloc");
-  	}
-  	if (original_malloc == NULL) {
-  		original_malloc = dlsym(RTLD_NEXT, "calloc");
-  	}
- 	if (original_malloc == NULL) {
-  		original_malloc = dlsym(RTLD_NEXT, "realloc");
-  	}
-  	if (original_free == NULL) {
-  		original_free = dlsym(RTLD_NEXT, "free");
-  	}*/
   	return;
 }
 
@@ -67,12 +55,14 @@ void shim_init(void) {
 
 /*					MALLOC:
 *	Using size, determine which page to place in.
-*	Create page if needed.
+*	Create page if needed (no page in list).
 *	Check if there is space in that page.
-*	If space, create new memBlock and add to linked list.
+*		If space, create new memBlock and add to linked list.
+*		No space, create new page.
 *	If size > 1024, place in its own page on lists[10];
 */
 void *malloc(size_t size){
+	/*
 	memBlock *newBlock = NULL;
 	page_t *workingPage = NULL;	
 	int blockSize = -1; //for making new pages/blocks
@@ -136,23 +126,35 @@ void *malloc(size_t size){
 		return newBlock;
 	} else {
 		return &newBlock->data;
-	}
+	}*/
+		return NULL;
 } //malloc end
 
-//calloc. Just malloc with memory initialized to 0.
-//nmemb -> number of members of "size" each.
-void *calloc(size_t nmemb, size_t size){
+
+/*				CALLOC:
+*	Acts like malloc, but with memory initialization to 0.
+*	allocates nmemb block of size.
+*/
+void *calloc(size_t nmemb, size_t size){/*
 	void *retptr;
 	int totalSize = nmemb * size;
 	retptr = malloc(totalSize);
 
-	if(totalSize < 4096) memset(retptr, 0, totalSize);
+	if(totalSize < 4096) memset(retptr, 0, totalSize); //init to 0. 
 
-	return retptr;
+	return retptr;*/
+	return NULL;
 }
 
 
-void *realloc(void *ptr, size_t size){
+/*				REALLOC:
+*	If ptr is null, acts as malloc for size
+*	if size == 0 and ptr is valid, acts as free
+*	if size and ptr both valid
+*		calls malloc on size and memcpys to that location
+*		free old ptr.
+*/
+void *realloc(void *ptr, size_t size){/*
 	void *newLoc = ptr;
 	
 	if (ptr == NULL) return malloc(size);
@@ -166,10 +168,18 @@ void *realloc(void *ptr, size_t size){
 			free(ptr);
 		} //don't know what to do otherwise...
 	}
-	return newLoc;
+	return newLoc;*/
+	return NULL;
 }
 
-void free(void *ptr){
+/*				FREE:
+*	null ptr arg -> returns NULL.
+*	identify page # by last 12 lsb in ptr.
+*	mark the memory block as invalid, and decrement num objects in page.
+*	DISABLED: unmap page if empty.
+*/
+
+void free(void *ptr){/*
 	if(ptr == NULL) return; //nothing to free! We done!
 
 	//for bit math fix for getting the page containing the memBlock
@@ -180,8 +190,8 @@ void free(void *ptr){
 	memBlock *curr = (memBlock *) &freePage->data;
 	while(&curr->data != ptr) curr = curr->next; //iterate to find block
 		curr->valid = 0;
-		freePage->totalObjects--;
-
+		freePage->totalObjects--;*/
+/*
 	//check for empty page. If no objects, unmap & adjust list.
 	if(freePage->totalObjects == 0){ //unmap
 		if(freePage->prev == NULL) {//list head
@@ -210,7 +220,8 @@ void free(void *ptr){
 		//list management is done. Remove the page node.
 
 		munmap(freePage,freePage->blockSize);
-	}
+	}*/
+		return;
 }
 
 //------------------------ CREATION ------------------------
@@ -231,7 +242,7 @@ page_t *newPage(page_t *prev, int size){
 	//set up list
 	newPage->prev = prev;
 	newPage->next = NULL;
-	prev->next = newPage;
+	if (!(prev == NULL)) prev->next = newPage;
 
 	//set up node
 	newPage->blockSize = size;
@@ -272,6 +283,11 @@ memBlock *newBlockNode(page_t *page, int size){ //size is size of OBJECT. Not bl
 	memBlock *newBlock = NULL;
 	memBlock *current = page->data; //start at beginning of page.
 	memBlock *prev = NULL;
+
+	if(current == NULL){ //need to create list.
+
+	}
+
 
 	while(current->valid){ //search list for free block.
 		prev = current;
