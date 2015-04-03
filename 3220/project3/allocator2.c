@@ -127,11 +127,13 @@ void *malloc(size_t size){
 
 		//page should be assigned by here. Remove from free list.
 		memBlock = page->freeList;
-		page->freeList = NULL;	//in large pages, there's only one object.
+		
 
 		//add to front of used list.
 		//memBlock->next = page->usedList;
 		page->usedList = memBlock;
+
+		page->freeList = NULL;	//in large pages, there's only one object.
 
 		return memBlock->data;
 	}
@@ -160,22 +162,21 @@ void *calloc(size_t nmemb, size_t size){
 *		calls malloc on size and memcpys to that location
 *		free old ptr.
 */
-void *realloc(void *ptr, size_t size){ /*
+void *realloc(void *ptr, size_t size){ 
 	void *newLoc = ptr;
 	
-	if (ptr == NULL) return malloc(size);
-	if (size == 0 && ptr != NULL) free(ptr);
+	if (ptr == NULL) return malloc(size); //spec
+	//if (size == 0 && ptr != NULL) free(ptr); //spec
 	else if (size != 0 && ptr != NULL){
-		page_t *page = (void*)((uintptr_t)ptr & ~((uintptr_t)0x00FFF));
+		page_t *page = (page_t *)((uintptr_t)ptr & ((uintptr_t)0xFFFFFFFFFFFFF000));
 		int currentSize = page->blockSize;
 		if(size > currentSize) {
 			newLoc = malloc(size);
 			memcpy(newLoc, ptr, currentSize); //move to new location
-			free(ptr);
+			//free(ptr);
 		} //don't know what to do otherwise...
 	}
-	return newLoc;*/
-	return NULL;
+	return newLoc;
 }
 
 /*				FREE:
@@ -184,7 +185,6 @@ void *realloc(void *ptr, size_t size){ /*
 *	mark the memory block as invalid, and decrement num objects in page.
 *	DISABLED: unmap page if empty.
 */
-
 void free(void *ptr){
 	if(ptr == NULL) return; //nothing to free! We done!
 
@@ -225,27 +225,41 @@ void free(void *ptr){
 	if(page->usedList == NULL){ //unmap
 		int listNum,isHead = 0;
 
-		//checks if head. if it is, identifies which one.
-		for (listNum=0;listNum<11;listNum++){
-			if(lists[listNum] == page) isHead = 1; //is head of list i.
-		}
-/*
-		//identify previous node if not head.
-		if(!isHead){
-			while(){
+		//get the list number.
+		if(page->blockSize > 1024) listNum = 0;
+		else if(page->blockSize == 2) listNum = 1; 		//size 2
+		else if(page->blockSize == 4) listNum = 2; 		//size 4 
+		else if(page->blockSize == 8) listNum = 3;		// 8
+		else if(page->blockSize == 16) listNum = 4;		// 16
+		else if(page->blockSize == 32) listNum = 5;		// 32
+		else if(page->blockSize == 64) listNum = 6;		// 64
+		else if(page->blockSize == 128) listNum = 7;	// 128
+		else if(page->blockSize == 256) listNum = 8;	// 256
+		else if(page->blockSize == 512) listNum = 9;	// 512
+		else listNum = 10;
 
+		//checks if head of list.
+		if(page == lists[listNum]) isHead = 1;								// 1024
+
+		//identify previous node if not head.
+		page_t *curr2 = NULL;
+		page_t *prev2 = NULL;
+		if(!isHead){
+			curr2 = lists[listNum];
+			while(curr2 != page && curr2 != NULL){
+				prev2 = curr2;
+				if (curr2) curr2 = curr2->next;
 			}
+			prev2 = curr2;
 		}
-*/
+
 		if(isHead) {//list head
 			lists[listNum] = page->next; //advance
-		} else if(page->next != NULL) { //middle of list
-			page->prev->next = page->next;
-			page->next->prev = page->prev;
-		} else page->prev->next = NULL; //end of list
+		} else if(!isHead && page->next != NULL) { //middle of list
+			prev2->next = page->next;
+		} else prev2->next = NULL; //end of list
 	
 		//list management is done. Remove the page node.
-
 		munmap(page,page->blockSize);
 	}
 }
@@ -317,6 +331,7 @@ page_t *newLargePage(page_t *prev, int size){
 
 	mem_t *currentBlock = newPage->freeList;
 		currentBlock->data = (void*)((char*)currentBlock + sizeof(mem_t)); //set up data pointer.
+		currentBlock->next = NULL;
 	 
 	return newPage;	
 

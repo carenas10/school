@@ -21,7 +21,7 @@ int main(){
 	free(test1);
 	printf("Free Passed: %d\n",*test1);	
 	free(test2);
-	printf("Free Passed: %d\n",*test2);	
+	//printf("Free Passed: %d\n",*test2);	
 
 	//------------------------ LG OBJS ------------------------
 	char *test3 = malloc(1500);
@@ -33,7 +33,7 @@ int main(){
 
 	printf("string: %s\n",test3);
 	free(test3);
-	printf("test3 freed: %s\n",test3);
+	//printf("test3 freed: %s\n",test3);
 
 
 
