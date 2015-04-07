@@ -8,4 +8,5 @@ exam: jacksodExam2.c
 clean:
 	rm -rf *.o
 	rm -rf jacksodExam2
+	find . -type f -name '*~' -delete
 

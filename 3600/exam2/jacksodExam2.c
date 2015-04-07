@@ -10,17 +10,24 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <time.h>		//for printing date
+#include <signal.h>
 
 #define MAXPENDING 5    //max number of clients. use this? 
 #define SVRRCVBUFSIZE 10000   // Size of receiver's receive buffer
 //#define CLTRCVBUFSIZE 4096   // Size of sender's receive buffer 
 #define MAXBUF 100000
-#define DEBUG 1
+#define DEBUG 0
 
 void DieWithError(char *errorMessage);  // Error handling function
 bool clientSend(char *serverName,int serverPort, char *fileName);
 bool serverRecv(int serverPort, char *fileName);
 char *nextFileName(char *fileName);
+void userCNTCCode();
+
+
+//------------------------ GLOBALS ------------------------
+int transfers;
+char *globalError;
 
 /*------------------------ INPUT PARAMETERS ------------------------
 *
@@ -33,6 +40,10 @@ char *nextFileName(char *fileName);
 
 int main(int argc, char *argv[])
 {
+	transfers = 0;
+	globalError = malloc(1000);
+	signal(SIGINT, userCNTCCode); //handler for Ctrl-C signal
+
 	//check structure of input
 	if(argc > 5 || argc < 4){
 		fprintf(stderr, "Client Usage: %s <0> <svr name> <svr port> <file to xfr>\n", argv[0]);
@@ -44,19 +55,30 @@ int main(int argc, char *argv[])
 	char *fileName = NULL;
 	int serverPort = -1;
 
+
 	//check client/server
 	if(strcmp(argv[1],"0") == 0){ //CLIENT -- SENDING
 		//parse client input
 		serverName = argv[2];
 		serverPort = atoi(argv[3]);
 		fileName = argv[4];
-		clientSend(serverName,serverPort,fileName);
+		if(clientSend(serverName,serverPort,fileName)){//successful send
+			printf("Success! Sent: %s\n",fileName);
+		} else {
+			printf("Failed to send: %s\n",fileName);
+			printf("Error: %s",globalError);
+		}
 	} else if (strcmp(argv[1],"1") == 0){ //SERVER -- RECEIVING
 		//parse server input
 		serverPort = atoi(argv[2]);
 		fileName = argv[3];
-		//while(1) serverRecv(serverPort,fileName);
-		serverRecv(serverPort,fileName);
+		bool status = false;
+		while(1){
+			status = serverRecv(serverPort,fileName);
+			if(status) transfers++; //success
+			else printf("Error: %s\n",globalError);
+		}
+		//serverRecv(serverPort,fileName);
 	} else {
 		fprintf(stderr, "Client Usage: %s <0> <svr name> <svr port> <file to xfr>\n", argv[0]);
 		fprintf(stderr, "Server Usage: %s <1> <svr port> <file to create>\n", argv[0]);
@@ -86,6 +108,7 @@ bool clientSend(char *serverName,int servPort, char *fileName){
 	//------------------------ RESOLVE HOSTNAME ------------------------
     if ((host = gethostbyname(serverName)) == NULL) {
 		if (DEBUG) printf("gethostbyname() failed\n"); //DieWithError("gethostbyname");
+		else strcpy(globalError,"gethostbyname() failed\n");
 		return false;
     }
     
@@ -95,6 +118,7 @@ bool clientSend(char *serverName,int servPort, char *fileName){
         strcpy(servIP, inet_ntoa(*listOfDNSResults[0])); //set servIP here
     else {
     	if (DEBUG) printf("gethostbyname failed\n"); //DieWithError("gethostbyname");
+		else strcpy(globalError,"gethostbyname() failed\n");
     	return false;
     }
     	
@@ -104,6 +128,7 @@ bool clientSend(char *serverName,int servPort, char *fileName){
     // create TCP socket - SOCK_STREAM: stream paradigm, IPPROTO_TCP: tcp
     if ((sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0){
     	if (DEBUG) printf("socket() failed\n"); //DieWithError("socket() failed");
+		else strcpy(globalError,"socket() failed\n");
         return false;
     }
 
@@ -122,6 +147,7 @@ bool clientSend(char *serverName,int servPort, char *fileName){
     // Establish the connection to the HTTP server 
     if (connect(sock, (struct sockaddr *) &servAddr, sizeof(servAddr)) < 0){
     	if (DEBUG) printf("connect() failed\n");
+		else strcpy(globalError,"connect() failed\n");
         //DieWithError("connect() failed");
     	return false;
     }
@@ -131,6 +157,7 @@ bool clientSend(char *serverName,int servPort, char *fileName){
     int fd = open(fileName, O_RDWR);
 	if(fd == -1){
  		if (DEBUG) printf("file not opened. Breaking\n");
+		else strcpy(globalError,"file unable to open. failed\n");
  		return false; 
  	}
 
@@ -139,6 +166,7 @@ bool clientSend(char *serverName,int servPort, char *fileName){
  	fp = fopen(fileName,"r");
  	if(fp == NULL){ //error opening file
  		if (DEBUG) printf("file not opened(2). Breaking\n");
+		else strcpy(globalError,"file unable to open. failed\n");
  		return false;
  	}
 
@@ -154,8 +182,9 @@ bool clientSend(char *serverName,int servPort, char *fileName){
 
     //------------------------ SEND FILE ------------------------
 	if (send(sock, sendBuffer, sendMsgLen, 0) != sendMsgLen){
-			if (DEBUG) printf("send() failed\n"); //DieWithError("send() failed");
-			return false;
+		if (DEBUG) printf("send() failed\n"); //DieWithError("send() failed");
+		else strcpy(globalError,"send() failed\n");
+		return false;
 	}
         
     //------------------------ CLEANUP ------------------------
@@ -177,6 +206,7 @@ bool serverRecv(int servPort, char *fileName){
     // Create socket for incoming connections
     if ((servSock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0){
     	if (DEBUG) printf("socket() failed\n");
+		else strcpy(globalError,"socket() failed\n");
         return false;
         //DieWithError("socket() failed");
     }
@@ -190,67 +220,84 @@ bool serverRecv(int servPort, char *fileName){
     // Bind to the local address
     if (bind(servSock, (struct sockaddr *) &servAddr, sizeof(servAddr)) < 0){
 		if (DEBUG) printf("bind() failed\n");
+		else strcpy(globalError,"bind() failed\n");
 		return false;
     }
 
     // Mark the socket so it will listen for incoming connections
     if (listen(servSock, MAXPENDING) < 0){
-    	if (DEBUG) printf("listen() failed\n");
+    	if (DEBUG) printf("listen() failed\n");	
+		else strcpy(globalError,"listen() failed\n");
     	return false;
     }
 
-    clntLen = sizeof(clntAddr); // Set the size of the in-out parameter
+	while(1){
 
-	// Wait for a client to connect
-	if ((clntSock = accept(servSock, (struct sockaddr *) &clntAddr, &clntLen)) < 0) {
-	    if (DEBUG) printf("accept() failed\n");
-	    return false;
-	}
+		clntLen = sizeof(clntAddr); // Set the size of the in-out parameter
+	
+		// Wait for a client to connect
+		if ((clntSock = accept(servSock, (struct sockaddr *) &clntAddr, &clntLen)) < 0) {
+			if (DEBUG) printf("accept() failed\n");
+			else strcpy(globalError,"accept() failed\n");
+			return false;
+		}
 
-    //------------------------ FILE OPS ------------------------
-   	//open a file write location if filname was set in input parsing...
-   	
-	//get the next valid name of the file.
-   	fileName = nextFileName(fileName);
+		//------------------------ FILE OPS ------------------------
+	   	//open a file write location if filname was set in input parsing...
+	   	
+		//get the next valid name of the file.
+		char *newName = malloc(1000);
+			strcpy(newName,fileName);
+	   	newName = nextFileName(newName);
 
-   	FILE *fp = NULL;
-    if(fileName != NULL) fp = fopen(fileName, "w");
-    if(fp == NULL){
-    	if(DEBUG) printf("file: %s open failed\n",fileName);
-    	return false;
-    }
-    //TODO -- CHECK FOR EXISTING FILE
+	   	FILE *fp = NULL;
+		if(newName != NULL) fp = fopen(newName, "w");
+		if(fp == NULL){
+			if(DEBUG) printf("file: %s open failed\n",newName);
+			else strcpy(globalError,"file failed to open\n");
+			return false;
+		}
 
-    //------------------------ RECEIVE FROM CLIENT ------------------------
-	// servSock is connected to a client!
-    char recvBuffer[SVRRCVBUFSIZE]; //request incoming
-    //int recvMsgSize;
-    int bytesRcvd, totalBytesRcvd;
-    	bytesRcvd = 0;
-    	totalBytesRcvd = 0;
+		//------------------------ RECEIVE FROM CLIENT ------------------------
+		// servSock is connected to a client!
+		char recvBuffer[SVRRCVBUFSIZE]; //request incoming
+		//int recvMsgSize;
+		int bytesRcvd, totalBytesRcvd;
+			bytesRcvd = 0;
+			totalBytesRcvd = 0;
 
-    while (1) { //begin receiving file.
-        /* Receive up to the buffer size (minus 1 to leave space for
-           a null terminator) bytes from the sender */
-        if ((bytesRcvd = recv(clntSock, recvBuffer, SVRRCVBUFSIZE - 1, 0)) <= 0){
-        	if(DEBUG) printf("bytesRcvd: %d\n",bytesRcvd);
-        	if(DEBUG) printf("----- done receiving -----\n");
-            break; //done receiving
-        }
-        
-        totalBytesRcvd += bytesRcvd;   // Keep tally of total bytes 
-        recvBuffer[bytesRcvd] = '\0';  // Terminate the string! 
+		while (1) { //begin receiving file.
+		    /* Receive up to the buffer size (minus 1 to leave space for
+		       a null terminator) bytes from the sender */
+		    if ((bytesRcvd = recv(clntSock, recvBuffer, SVRRCVBUFSIZE - 1, 0)) <= 0){
+		    	if(DEBUG) printf("bytesRcvd: %d\n",bytesRcvd);
+		    	if(DEBUG) printf("----- done receiving -----\n");
+				transfers++;
+		        break; //done receiving
+		    }
+		    
+		    totalBytesRcvd += bytesRcvd;   // Keep tally of total bytes 
+		    recvBuffer[bytesRcvd] = '\0';  // Terminate the string! 
 
-        if(DEBUG) printf("%s\n",recvBuffer);
-        if(fp != NULL) fprintf(fp,"%s",recvBuffer); //print to file if open
-        else return false;
-    }//while receiving 
-
+		    if(DEBUG) printf("%s\n",recvBuffer);
+		    //if(fp != NULL) fprintf(fp,"%s",recvBuffer); //print to file if open
+			if(fp != NULL) fwrite(&recvBuffer,bytesRcvd,1,fp); //print to file if open
+		    else return false;
+		}//while receiving 
+	}//while 1
     //------------------------ CLEANUP ------------------------
     close(servSock);
 	return true;
 
 } //serverRecv
+
+//------------------------ OTHER FUNCTIONS ------------------------
+
+//handles user pressing ctrl-c by printout output and exiting.
+void userCNTCCode() {
+    printf("\nTerminated by CTRL-C.\nTransfers: %d\n",transfers);
+    exit(0);
+}
 
 void DieWithError(char *errorMessage) {
     perror(errorMessage);
