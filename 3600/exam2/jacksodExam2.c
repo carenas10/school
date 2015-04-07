@@ -177,8 +177,8 @@ bool clientSend(char *serverName,int servPort, char *fileName){
 //receiving function used by server. Main calls this repeatedly.
 bool serverRecv(int servPort, char *fileName){
 	//------------------------ set up TCP ------------------------
-    int servSock;               	// Socket ID for server
-    int clntSock;              		// Socket ID for client
+    int servSock;               	// Socket ID for server (RECEIVER)
+    int clntSock;              		// Socket ID for client (SENDER)
     struct sockaddr_in servAddr; 	// Local address
     struct sockaddr_in clntAddr; 	// Client address
     unsigned int clntLen;        	// Length of client address data structure
@@ -238,7 +238,8 @@ bool serverRecv(int servPort, char *fileName){
     while (1) { //begin receiving file.
         /* Receive up to the buffer size (minus 1 to leave space for
            a null terminator) bytes from the sender */
-        if ((bytesRcvd = recv(servSock, recvBuffer, SVRRCVBUFSIZE - 1, 0)) <= 0){
+        if ((bytesRcvd = recv(clntSock, recvBuffer, SVRRCVBUFSIZE - 1, 0)) <= 0){
+        	if(DEBUG) printf("bytesRcvd: %d\n",bytesRcvd);
         	if(DEBUG) printf("----- done receiving -----\n");
             break; //done receiving
         }
