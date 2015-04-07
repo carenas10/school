@@ -1,3 +1,9 @@
+/*	-------- JACKSON DAWKINS --------
+*	jacksodExam2.c (Simple file transfer client/server)
+*	Last-Modified: 4/7/2015
+*	For Dr. Remy, CPSC 3600
+*/
+
 #include <stdio.h>
 #include <sys/socket.h> //for socket
 #include <arpa/inet.h> 	//for sockaddr_in
@@ -14,8 +20,7 @@
 
 #define MAXPENDING 5    //max number of clients. use this? 
 #define SVRRCVBUFSIZE 10000   // Size of receiver's receive buffer
-//#define CLTRCVBUFSIZE 4096   // Size of sender's receive buffer 
-#define MAXBUF 100000
+#define MAXBUF 100000000
 #define DEBUG 0
 
 void DieWithError(char *errorMessage);  // Error handling function
@@ -23,7 +28,6 @@ bool clientSend(char *serverName,int serverPort, char *fileName);
 bool serverRecv(int serverPort, char *fileName);
 char *nextFileName(char *fileName);
 void userCNTCCode();
-
 
 //------------------------ GLOBALS ------------------------
 int transfers;
@@ -176,7 +180,8 @@ bool clientSend(char *serverName,int servPort, char *fileName){
 	int fileSize = fileStat.st_size;
 
     sendMsgLen = fileSize;   	// Determine input length 
-    char sendBuffer[fileSize]; 	//buffer to fill with file to send.
+    //char sendBuffer[fileSize]; 	//buffer to fill with file to send.
+	char *sendBuffer = malloc(fileSize);
     fread(sendBuffer,fileSize,1,fp); //fill
     if(DEBUG) printf("%s\n",sendBuffer);
 
