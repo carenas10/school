@@ -20,6 +20,7 @@
 void DieWithError(char *errorMessage);  // Error handling function
 bool clientSend(char *serverName,int serverPort, char *fileName);
 bool serverRecv(int serverPort, char *fileName);
+char *nextFileName(char *fileName);
 
 /*------------------------ INPUT PARAMETERS ------------------------
 *
@@ -164,16 +165,6 @@ bool clientSend(char *serverName,int servPort, char *fileName){
 }//clientSend
 
 
-
-
-
-
-
-
-
-
-
-
 //receiving function used by server. Main calls this repeatedly.
 bool serverRecv(int servPort, char *fileName){
 	//------------------------ set up TCP ------------------------
@@ -218,11 +209,14 @@ bool serverRecv(int servPort, char *fileName){
 
     //------------------------ FILE OPS ------------------------
    	//open a file write location if filname was set in input parsing...
+   	
+	//get the next valid name of the file.
+   	fileName = nextFileName(fileName);
+
    	FILE *fp = NULL;
-   	//char* append = "1";
     if(fileName != NULL) fp = fopen(fileName, "w");
     if(fp == NULL){
-    	if(DEBUG) printf("file open failed\n");
+    	if(DEBUG) printf("file: %s open failed\n",fileName);
     	return false;
     }
     //TODO -- CHECK FOR EXISTING FILE
@@ -261,4 +255,44 @@ bool serverRecv(int servPort, char *fileName){
 void DieWithError(char *errorMessage) {
     perror(errorMessage);
     exit(1);
+}
+
+//checks if a file exists by trying to open it.
+bool fileExists(char *fileName){
+   	FILE *fp = NULL;
+   	fp = fopen(fileName,"r");
+   	if(fp != NULL){
+   		fclose(fp);
+   		return true;
+   	} else return false;
+}
+
+//uses fileExists to find the next incremented filename available
+char *nextFileName(char *fileName){
+
+	if (!fileExists(fileName)) return fileName;
+
+	//file exists. Create new name and test.
+	int num = 0;
+	char *newName = malloc(1000);
+
+	char *fileBase = malloc(1000);
+	char *fileExt = malloc(10);
+	char *token; //process request piece-by piece
+
+   	// FIRST TOKEN. should be file (no ext)
+   	token = strtok(fileName,".");
+	if (token!=NULL) strcpy(fileBase,token); //set base
+
+	token = strtok(NULL,".");
+	if(token!=NULL) strcpy(fileExt,token); //set ext
+
+	sprintf(newName,"%s.%s",fileBase,fileExt);
+
+	while(fileExists(newName)){
+		sprintf(newName, "%s%d.%s",fileBase,num,fileExt);
+		num++;
+	}
+
+	return newName;
 }
