@@ -8,9 +8,35 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#define FAT1LOC 512		//absolute location of the first FAT table
+#define FAT2LOC 5120	//absolute location of the second FAT table
+#define ROOTLOC 9728	//absolute location of root directory
+#define C2LOC 	16896	//absolute location of Cluster 2
+#define CSIZE	512 	//size of each cluster (B)
+
 #define DEBUG 1
 
+typedef struct twoFatEntries twoFatEntries;
+struct twoFatEntries {
+	char a;
+	unsigned int b : 4;
+	unsigned int c : 4;
+	char d;
+};
+
+typedef struct fatCluster fatCluster;
+struct fatCluster {
+	char cluster[512];
+};
+
+void readDirectory(char *cluster);
+int locationOfCluster(int cluster);
 void prepend(char* str, const char* toPrepend);
+int entryIsDirectory(char *entry);
+unsigned int readFAT(char *input, int pos);
+int startsWith(const char *str, const char *pre);
+
+char *image;
 
 int main(int argc, char *argv[]){
 	//------------------------ PARSE INPUT ------------------------
@@ -47,13 +73,63 @@ int main(int argc, char *argv[]){
 	} else if(DEBUG) printf("%s ALREADY EXISTS.\n",outputDir);
 
 	//------------------------ SET UP ARRAY ------------------------
+	//get image size
+	struct stat fileStat;
+	fstat(fd, &fileStat);
+	int fileSize = fileStat.st_size;
 
+	//allocate space for array.
+	image = malloc(fileSize);
+	if(DEBUG) printf("FILESIZE: %d\n",fileSize);
 
+	//read file to array
+	if(read(fd, image, fileSize) == fileSize){
+		if(DEBUG) printf("FILE READ GOOD!\n");
+	}
 
+	//------------------------ READ ROOT FOLDER ------------------------
+	readDirectory(&image[ROOTLOC]);
 
 
 	//if(DEBUG) printf();
 	return 0;
+}
+
+void readDirectory(char *cluster){
+	int i=0;
+	int loc = 0;
+	for(;i<15;i++){
+		//check for parent and this directory. Dont enter. Will infinite loop.
+		if(startsWith(cluster + loc,".") || startsWith(cluster + loc,"..")){
+			if(DEBUG) printf("\tPARENT/SELF\n");
+			continue;
+		}
+		else if(startsWith(cluster + loc,"\0")){
+			if(DEBUG) printf("\tBLANK\n");
+			break;
+		}
+		else if(entryIsDirectory(cluster + loc)){
+			if(DEBUG) printf("\tDIRECTORY\n");
+			//readDirectory(&image[locationOfCluster(/* CLUSTER NUM */)]);
+		} else {
+			if(DEBUG) printf("\tFILE\n");
+			//output file
+		}
+		loc += 32;
+	}//for
+}
+
+int entryIsDirectory(char *entry){
+	char attributes = *(entry + 11);
+	if(((unsigned int)attributes & 0x10) == 16) return 1;
+	else return 0;
+}
+
+//given 3B, returns fat number in pos 0 or 1.
+unsigned int readFAT(char *input, int pos){
+	twoFatEntries *entry = (twoFatEntries *)input;
+	if (pos == 0) return ((entry->b << 8) | (unsigned int)entry->a); //want left 
+	else return ((((unsigned int)entry->d) << 4) | entry->c); //want right
 }
 
 //Prepends toPrepend onto str. str must have enough space for toPrepend.
@@ -67,3 +143,14 @@ void prepend(char* str, const char* toPrepend) {
         str[i] = toPrepend[i];
     }
 }
+
+//checks if str starts with pre
+int startsWith(const char *str, const char *pre) {
+   if(strncmp(str, pre, strlen(pre)) == 0) return 1;
+   return 0;
+}
+
+int locationOfCluster(int cluster){
+	return ((33 + cluster - 2)*CSIZE);
+}
+
