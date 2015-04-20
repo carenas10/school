@@ -29,7 +29,7 @@ struct fatCluster {
 	char cluster[512];
 };
 
-void readDirectory(char *cluster);
+void readDirectory(char *image, int offset);
 int locationOfCluster(int cluster);
 void prepend(char* str, const char* toPrepend);
 int entryIsDirectory(char *entry);
@@ -88,34 +88,35 @@ int main(int argc, char *argv[]){
 	}
 
 	//------------------------ READ ROOT FOLDER ------------------------
-	readDirectory(&image[ROOTLOC]);
-
+	readDirectory(image,ROOTLOC);
 
 	//if(DEBUG) printf();
 	return 0;
 }
 
-void readDirectory(char *cluster){
+//offset is to cluster start
+void readDirectory(char *image, int offset){
 	int i=0;
-	int loc = 0;
-	for(;i<15;i++){
+	int loc = offset;
+	for(;i<15;i++, loc += 32){
+		printf("%d: %d\t",loc, image[loc]);
 		//check for parent and this directory. Dont enter. Will infinite loop.
-		if(startsWith(cluster + loc,".") || startsWith(cluster + loc,"..")){
+		if(image[loc] == '.'){
 			if(DEBUG) printf("\tPARENT/SELF\n");
 			continue;
-		}
-		else if(startsWith(cluster + loc,"\0")){
+		} else if(image[loc] == 0){
 			if(DEBUG) printf("\tBLANK\n");
-			break;
-		}
-		else if(entryIsDirectory(cluster + loc)){
+			continue;
+		} else if (image[loc] < 0){
+			if(DEBUG) printf("\tDELETED\n");
+			//output file
+		} else if(entryIsDirectory(image + loc)){
 			if(DEBUG) printf("\tDIRECTORY\n");
 			//readDirectory(&image[locationOfCluster(/* CLUSTER NUM */)]);
 		} else {
 			if(DEBUG) printf("\tFILE\n");
 			//output file
 		}
-		loc += 32;
 	}//for
 }
 
