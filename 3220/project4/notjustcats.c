@@ -3,6 +3,7 @@
 #include <fcntl.h>	//for open()
 #include <assert.h>
 #include <string.h>
+#include <stdint.h> //for uint32
 
 #include <sys/types.h> //for stat() and mkdir
 #include <sys/stat.h>
@@ -109,10 +110,15 @@ void readDirectory(char *image, int offset){
 			continue;
 		} else if (image[loc] < 0){
 			if(DEBUG) printf("\tDELETED\n");
+			uint32_t fileSize = *(image + loc + 28);
+			
+			//check filesize. >512, use FAT
+			//<512, print output, minus Zeroes.
 			//output file
 		} else if(entryIsDirectory(image + loc)){
 			if(DEBUG) printf("\tDIRECTORY\n");
-			//readDirectory(&image[locationOfCluster(/* CLUSTER NUM */)]);
+			uint16_t clusterNum = *(image + loc + 26);
+			readDirectory(image, locationOfCluster(clusterNum));
 		} else {
 			if(DEBUG) printf("\tFILE\n");
 			//output file
