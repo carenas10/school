@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdint.h> //for uint32
 #include <sys/mman.h> //for mmap
+#include <unistd.h>  //for access
 
 #include <sys/types.h> //for stat() and mkdir
 #include <sys/stat.h>
@@ -59,22 +60,12 @@ int main(int argc, char *argv[]){
 	if(DEBUG) printf("IMAGE: %s\n",imgName);
 	if(DEBUG) printf("OUTPUT: %s\n",outputDir);
 
-	//------------------------ DIRECTORY ------------------------	
-	//check for . at beginning of dir
-	if(outputDir[0] != '.') prepend(outputDir,".");
-
-	struct stat st = {0};
-	if (stat(outputDir, &st) == -1) { //doesn't exist
-	    mkdir(outputDir, 0700); //make the outut directory
-	    chdir(outputDir); // Change to desired output directory
-	    if(DEBUG) printf("MKDIR: %s\n",outputDir);
-	} else if(DEBUG) printf("%s ALREADY EXISTS.\n",outputDir);
-
-	//------------------------ SET UP ARRAY ------------------------
+	//------------------------ OPEN FILE ------------------------
 	int fd = open(argv[1], O_RDONLY); //open image, read only.
-		assert(fd != -1); //make sure file is open.
+		assert(fd != -1); //make sure file is open.	
 		if(DEBUG) printf("Image is open with FD: %d\n",fd);
 
+	//------------------------ SET UP ARRAY ------------------------
 	//get image size
 	struct stat fileStat;
 	fstat(fd, &fileStat);
@@ -85,10 +76,42 @@ int main(int argc, char *argv[]){
 	image = mmap(NULL, fileSize, PROT_READ, MAP_PRIVATE, fd, 0); 
 	if(DEBUG) printf("FILE READ GOOD!\n");
 
+
+	//------------------------ SET UP DIRECTORY ------------------------	
+	//check for . at beginning of dir
+	if(outputDir[0] != '.') prepend(outputDir,".");
+
+	struct stat st = {0};
+	if (stat(outputDir, &st) == -1) { //doesn't exist
+	    mkdir(outputDir, 0700); //make the outut directory
+	    chdir(outputDir); // Change to desired output directory
+	    if(DEBUG) printf("MKDIR: %s\n",outputDir);
+	} else if(DEBUG) printf("%s ALREADY EXISTS.\n",outputDir);
+
 	//------------------------ READ ROOT FOLDER ------------------------
 	fileIndex = 0;
 	readDirectory(image,ROOTLOC,"/");
 
+	//------------------------ FIX MYSTERY NAMING ------------------------
+
+	int j = 0;
+	char *fname1 = malloc(64);
+	char *fname2 = malloc(64);
+	char *newName = malloc(64);
+
+	for(;j<fileIndex;j++){
+		sprintf(fname1, "file%d.TXT?", j);
+		sprintf(fname2, "file%d.JPG?", j);
+		if(access(fname1,F_OK) != -1) {
+		    // file exists. Rename
+		    sprintf(newName, "file%d.TXT",j);
+		    rename(fname1, newName);
+		} else if (access(fname2,F_OK) != -1){
+		    //file exists. rename
+		   	sprintf(newName, "file%d.JPG",j);
+		    rename(fname2, newName);
+		}
+	}
 
 	return 0;
 }

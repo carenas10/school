@@ -18,4 +18,4 @@ clean:
 	find . -type f -name '*~' -delete
 	rm -rf notjustcats
 	rm -rf project4.tgz
-	rm -rf test file*
+	rm -rf file*
