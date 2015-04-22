@@ -16,7 +16,7 @@
 //#define C2LOC 	16896	//absolute location of Cluster 2
 #define CSIZE	512 	//size of each cluster (B)
 
-#define DEBUG 1
+#define DEBUG 0
 
 typedef struct twoFatEntries twoFatEntries;
 struct twoFatEntries {
@@ -31,14 +31,14 @@ struct fatCluster {
 	char cluster[512];
 };
 
-void readDirectory(char *image, int offset);
+void readDirectory(char *image, int offset, char *currPath);
 int locationOfCluster(int cluster);
 void prepend(char* str, const char* toPrepend);
 int entryIsDirectory(char *entry);
-//unsigned int readFAT(char *input, int pos);
 uint16_t readFat(uint16_t fatIndex);
 int startsWith(const char *str, const char *pre);
 void processFile(uint16_t firstCluster, uint32_t fileSize, char *ext);
+char* getName(char *dirEntry);
 
 char *image;
 int fileIndex;
@@ -87,67 +87,84 @@ int main(int argc, char *argv[]){
 
 	//------------------------ READ ROOT FOLDER ------------------------
 	fileIndex = 0;
-	readDirectory(image,ROOTLOC);
+	readDirectory(image,ROOTLOC,"/");
 
 
 	return 0;
 }
 
+
+//------------------------ MAJOR FUNCTIONS ------------------------
+
 //offset is to cluster start
-void readDirectory(char *image, int offset){
+//recursively checks directories until a '\n' is found, then breaks using "finished"
+void readDirectory(char *image, int offset, char *currPath){
 	int i=0;
 	int loc = offset;
 	int finished = 0;
+
+
 	for(;!finished && i<15;i++, loc += 32){
-		printf("%d: %d\t",loc, image[loc]);
+		if(DEBUG) printf("%d: %d\t",loc, image[loc]);
 		//check for parent and this directory. Dont enter. Will infinite loop.
 		if(image[loc] == '.'){
 			if(DEBUG) printf("\tPARENT/SELF\n");
 			continue;
 		} else if(image[loc] == 0){
-			//if(DEBUG) printf("\tBLANK\n");
 			finished = 1;
 			continue;
 		} else if (image[loc] < 0){
-			if(DEBUG) printf("\tDELETED\n");
 			//find first fat & filesize
 			uint16_t firstFat = *(image + loc + 26);
-			uint32_t fileSize = *(image + loc + 28);
-			char ext[10];
+			int fileSize = *((int*)(image + loc + 28));
+
+			//get extension
+			char ext[4];
 			strncpy(ext, (image + loc + 8), 3);
 
+			//get file path
+			char *filePath = malloc(128);
+			strcat(filePath, currPath);
+			if (strcmp(currPath,"/") != 0) strcat(filePath,"/");
+			strcat(filePath, getName(image + loc));
+			strcat(filePath,".");
+			strcat(filePath, ext);
+
 			processFile(firstFat,fileSize,ext);
+			printf("FILE\tDELETED\t%s\t%d\n",filePath,fileSize);
 		} else if(entryIsDirectory(image + loc)){
 			if(DEBUG) printf("\tDIRECTORY\n");
 			uint16_t clusterNum = *(image + loc + 26);
-			readDirectory(image, locationOfCluster(clusterNum));
+			
+			//determine next deepest path using current + next deepest
+			char *nextPath = malloc(256);
+			strcat(nextPath,currPath);
+			strcat(nextPath,getName(image + loc));
+			
+			readDirectory(image, locationOfCluster(clusterNum), nextPath);
 		} else {
-			if(DEBUG) printf("\tFILE\n");
 			//find first fat & filesize
 			uint16_t firstFat = *(image + loc + 26);
-			uint32_t fileSize = *(image + loc + 28);
-			char ext[10];
+			int fileSize = *((int*)(image + loc + 28));
+
+			//get extension
+			char ext[4];
 			strncpy(ext, (image + loc + 8), 3);
 
+			//get file path
+			char *filePath = malloc(128);
+			strcat(filePath, currPath);
+			if (strcmp(currPath,"/") != 0) strcat(filePath,"/");
+			strcat(filePath, getName(image + loc));
+			strcat(filePath,".");
+			strcat(filePath,ext);
+
 			processFile(firstFat,fileSize,ext);
+			printf("FILE\tNORMAL\t%s\t%d\n",filePath,fileSize);
 		}
 	}//for
 }
 
-//checks a directory entry to see if it is another directory.
-int entryIsDirectory(char *entry){
-	char attributes = *(entry + 11);
-	if(((unsigned int)attributes & 0x10) == 16) return 1;
-	else return 0;
-}
-
-//given 3B, returns fat number in pos 0 or 1.
-/*
-unsigned int readFAT(char *input, int pos){
-	twoFatEntries *entry = (twoFatEntries *)input;
-	if (pos == 0) return ((entry->b << 8) | (unsigned int)entry->a); //want left 
-	else return ((((unsigned int)entry->d) << 4) | entry->c); //want right
-}*/
 
 /* ---- PROCESS FILE ----
 	if filesize > 512
@@ -185,38 +202,62 @@ void processFile(uint16_t firstSector, uint32_t fileSize, char *ext){
 		}
 		currentFat = readFat(currentFat); //find next fat location
 
-		if(currentFat < 0xff0){
+		if(currentFat < 0xff0){ //not end of file
 			currentSector = image + locationOfCluster(currentFat);
 		}
 	}
-
-
-
-	/*
-	if(fileSize > 512){
-
-	} else { //filesize less than 512B
-		fwrite((image + locationOfCluster(firstCluster)), sizeof(char), fileSize, newFile);
-	}*/
 }
 
+//------------------------ HELPER FUNCTIONS ------------------------
+
+//takes an index in the FAT table, and returns value at that index.
 uint16_t readFat(uint16_t index)
 {
 	uint16_t retFat = 0;
 	
-	unsigned char *toDecode = (unsigned char*)(image + FAT1LOC + ((index/2)*3));
+	unsigned char *mystery = (unsigned char*)(image + FAT1LOC + ((index/2)*3));
 
-	unsigned char middlechar = toDecode[1];
-	middlechar >>= (4 * (index % 2));
-	unsigned char otherhalf = toDecode[(index%2)*2];
-	retFat = (uint16_t)middlechar;
+	unsigned char middle = mystery[1];
+	middle >>= (4*(index%2));
+	unsigned char other = mystery[(index%2)*2];
+	retFat = (uint16_t)middle;
+	
 	retFat &= 0x000f;
-	retFat <<= 8 * ((index % 2)%1);
-	otherhalf <<= 4 * (index % 2);
-	retFat |= otherhalf;
+	retFat <<= 8*((index%2)%1);
+	other <<= 4*(index%2);
+	
+	retFat |= other;
 	return retFat;
 }
 
+//finds the location of a cluster, based on its ID
+int locationOfCluster(int cluster){
+	return ((33 + cluster - 2)*CSIZE);
+}
+
+
+//checks a directory entry to see if it points to another directory.
+int entryIsDirectory(char *entry){
+	char attributes = *(entry + 11);
+	if(((unsigned int)attributes & 0x10) == 16) return 1;
+	else return 0;
+}
+
+
+//takes a directory entry and returns a name
+//doesn't matter if deleted or not
+char* getName(char *dirEntry){
+	char *name = malloc(9);
+	name[8] = '\n';
+	strncpy(name,dirEntry, 8);
+	char *spaceLoc = strchr(name, ' '); //find location of first space
+	if(spaceLoc != NULL) *spaceLoc = '\0'; //swap for \n
+	if (name[0] < 0) name[0] = '_'; //fix deleted filenames
+	return name;
+}
+
+
+//------------------------ STRING OPS ------------------------
 
 //Prepends toPrepend onto str. str must have enough space for toPrepend.
 void prepend(char* str, const char* toPrepend) {
@@ -230,13 +271,12 @@ void prepend(char* str, const char* toPrepend) {
     }
 }
 
+
 //checks if str starts with pre
 int startsWith(const char *str, const char *pre) {
    if(strncmp(str, pre, strlen(pre)) == 0) return 1;
    return 0;
 }
 
-int locationOfCluster(int cluster){
-	return ((33 + cluster - 2)*CSIZE);
-}
+
 
