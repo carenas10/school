@@ -93,7 +93,7 @@ int main(int argc, char *argv[]){
 	readDirectory(image,ROOTLOC,"/");
 
 	//------------------------ FIX MYSTERY NAMING ------------------------
-
+/*
 	int j = 0;
 	char *fname1 = malloc(64);
 	char *fname2 = malloc(64);
@@ -112,7 +112,7 @@ int main(int argc, char *argv[]){
 		    rename(fname2, newName);
 		}
 	}
-
+*/
 	return 0;
 }
 
@@ -144,6 +144,7 @@ void readDirectory(char *image, int offset, char *currPath){
 			//get extension
 			char ext[4];
 			strncpy(ext, (image + loc + 8), 3);
+			//ext[3] = '\0';
 
 			//get file path
 			char *filePath = malloc(128);
@@ -203,6 +204,7 @@ void readDirectory(char *image, int offset, char *currPath){
 void processFile(uint16_t firstSector, uint32_t fileSize, char *ext){
 	//get fileName
 	char *fileName = malloc(128);
+	ext[3] = '\0';
 	sprintf(fileName, "file%d.%s", fileIndex, ext);
 	fileIndex ++;
 	if(DEBUG) printf("OUT FILE: %s\n",fileName);
