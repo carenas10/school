@@ -90,6 +90,8 @@ int main(int argc, char *argv[]){
 //offset is to cluster start
 //recursively checks directories until a '\n' is found, then breaks using "finished"
 void readDirectory(char *image, int offset, char *currPath){
+	//char *currPath = malloc(256);
+	//	strcpy(currPath,inputPath);
 	int i=0;
 	int loc = offset;
 	int finished = 0;
@@ -136,6 +138,7 @@ void readDirectory(char *image, int offset, char *currPath){
 			//determine next deepest path using current + next deepest
 			char *nextPath = malloc(256);
 			strcat(nextPath,currPath);
+			if (strcmp(currPath,"/") != 0) strcat(nextPath,"/");
 			strcat(nextPath,getName(image + loc));
 			
 			readDirectory(image, locationOfCluster(clusterNum), nextPath);
@@ -147,6 +150,7 @@ void readDirectory(char *image, int offset, char *currPath){
 			//get extension
 			char ext[4];
 			strncpy(ext, (image + loc + 8), 3);
+			//ext[3] = '\0';
 
 			//get file path
 			char *filePath = malloc(128);
