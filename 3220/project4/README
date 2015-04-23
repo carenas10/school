@@ -1,2 +1,24 @@
-Jackson Dawkins
+Jackson Dawkins (jacksod)
+Austin Fitzpatrick (afitzpa)
 
+CPSC 3220 - Project 4
+FAT Finder (find all files on fat12 and output)
+
+------------------------ DESCRIPTION ------------------------
+This program opens a image and mmaps to an array. It also checks 
+input parameters to see if it needs to make an output directory. 
+
+It then recursively dives into each directory, starting with the root (/)
+Inside the function the does the 'diving', readDirectory(), checks each
+directory entry, one-by-one. If the file is deleted, or visible, it 
+begins processing the file and outputs. The function tests each entry
+using another function to see if the entry is another directory. If the
+entry is a directory, it then calls itself recursively.
+
+------------------------ KNOWN PROBLEMS ------------------------
+When printing to STDOUT, it had a tendency to add a random byte to the
+end of the path. This had to be something from strcat(). We patched this
+by checking if the last byte in each path was outside of normal ascii 
+"printable" character range. This fixed the problem. We probably could've
+dug deeper to find out why this was happening, but our patch works for
+time reasons.

@@ -14,23 +14,9 @@
 #define FAT1LOC 512		//absolute location of the first FAT table
 #define FAT2LOC 5120	//absolute location of the second FAT table
 #define ROOTLOC 9728	//absolute location of root directory
-//#define C2LOC 	16896	//absolute location of Cluster 2
 #define CSIZE	512 	//size of each cluster (B)
 
 #define DEBUG 0
-
-typedef struct twoFatEntries twoFatEntries;
-struct twoFatEntries {
-	char a;
-	unsigned int b : 4;
-	unsigned int c : 4;
-	char d;
-};
-
-typedef struct fatCluster fatCluster;
-struct fatCluster {
-	char cluster[512];
-};
 
 void readDirectory(char *image, int offset, char *currPath);
 int locationOfCluster(int cluster);
@@ -86,33 +72,15 @@ int main(int argc, char *argv[]){
 	    mkdir(outputDir, 0700); //make the outut directory
 	    chdir(outputDir); // Change to desired output directory
 	    if(DEBUG) printf("MKDIR: %s\n",outputDir);
-	} else if(DEBUG) printf("%s ALREADY EXISTS.\n",outputDir);
+	} else {
+		if(DEBUG) printf("%s ALREADY EXISTS.\n",outputDir);
+		chdir(outputDir); // Change to desired output directory
+	}
 
 	//------------------------ READ ROOT FOLDER ------------------------
 	fileIndex = 0;
 	readDirectory(image,ROOTLOC,"/");
 
-	//------------------------ FIX MYSTERY NAMING ------------------------
-/*
-	int j = 0;
-	char *fname1 = malloc(64);
-	char *fname2 = malloc(64);
-	char *newName = malloc(64);
-
-	for(;j<fileIndex;j++){
-		sprintf(fname1, "file%d.TXT?", j);
-		sprintf(fname2, "file%d.JPG?", j);
-		if(access(fname1,F_OK) != -1) {
-		    // file exists. Rename
-		    sprintf(newName, "file%d.TXT",j);
-		    rename(fname1, newName);
-		} else if (access(fname2,F_OK) != -1){
-		    //file exists. rename
-		   	sprintf(newName, "file%d.JPG",j);
-		    rename(fname2, newName);
-		}
-	}
-*/
 	return 0;
 }
 
@@ -147,7 +115,7 @@ void readDirectory(char *image, int offset, char *currPath){
 			//ext[3] = '\0';
 
 			//get file path
-			char *filePath = malloc(128);
+			char *filePath = malloc(256);
 			strcat(filePath, currPath);
 			if (strcmp(currPath,"/") != 0) strcat(filePath,"/");
 			strcat(filePath, getName(image + loc));
@@ -155,6 +123,11 @@ void readDirectory(char *image, int offset, char *currPath){
 			strcat(filePath, ext);
 
 			processFile(firstFat,fileSize,ext);
+	
+			if(filePath[strlen(filePath)-1] < 32) {
+				if(DEBUG) printf("WRONG LAST\n");				
+				filePath[strlen(filePath)-1] = '\0';
+			}			
 			printf("FILE\tDELETED\t%s\t%d\n",filePath,fileSize);
 		} else if(entryIsDirectory(image + loc)){
 			if(DEBUG) printf("\tDIRECTORY\n");
@@ -184,6 +157,12 @@ void readDirectory(char *image, int offset, char *currPath){
 			strcat(filePath,ext);
 
 			processFile(firstFat,fileSize,ext);
+			
+			if(filePath[strlen(filePath)-1] < 32) {
+				if(DEBUG) printf("WRONG LAST\n");				
+				filePath[strlen(filePath)-1] = '\0';
+			}
+			
 			printf("FILE\tNORMAL\t%s\t%d\n",filePath,fileSize);
 		}
 	}//for
@@ -252,6 +231,7 @@ uint16_t readFat(uint16_t index)
 	other <<= 4*(index%2);
 	
 	retFat |= other;
+
 	return retFat;
 }
 
@@ -302,6 +282,4 @@ int startsWith(const char *str, const char *pre) {
    if(strncmp(str, pre, strlen(pre)) == 0) return 1;
    return 0;
 }
-
-
 
