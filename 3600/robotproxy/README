@@ -1,0 +1,25 @@
+Timothy Slaton
+CpSc 3600 - Final Group Robot Proxy Project
+(Group members were Jake Dawkins and Matthew Deangelis)
+
+BUILD:
+	*The project is built by typing 'make'
+
+	*The server is run by typing './robotServer port# robot_IP robot_ID image_ID'
+	 (fill in the parameters appropriately)
+
+	*The client is run by typing './robotClient middleware_IP port robot_ID L N'
+	 (fill in the parameters appropriately)
+
+KNOWN PROBLEMS:
+	*The client does not output the responses to files
+
+	*The client does not issue any GET IMAGE requests. However,
+	 it would be able to successfully issue those requests to the middleware.
+	 It's just not implemented
+
+	*The timeout is not implemented. For this client, it assumes it will not
+	 experience a significant delay
+
+DESIGN:
+	*The design is discussed in the final video.
