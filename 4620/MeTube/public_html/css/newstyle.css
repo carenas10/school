@@ -1,0 +1,201 @@
+* {margin:0;padding:0;} 
+
+body {
+	background-color: #F5F5F5;
+	border-top: 15px solid #EE3B34;
+	border-bottom: 5px solid #EE3B34;
+	/*font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+	font: "Helvetica Neue", Arial, "Liberation Sans", FreeSans, sans-serif;
+}
+
+span.red { /* for styling title */
+	color: #EE3B34;
+}
+
+a {
+	color: #EE3B34;
+}
+
+/*
+	+---------------------------------------------------------------------------+
+	|																			|
+	|							HEADER SPECIFIC STYLES	  						|
+	|																			|
+	+---------------------------------------------------------------------------+
+*/
+
+#lefthead {
+	height: 100px;
+	padding-bottom: 5px;
+}
+
+	#lefthead > h1{
+		padding-top: 10px;
+		height: 50px;
+		font-size: 3.5em;
+		margin-bottom: 0;
+	}
+
+	#lefthead > ul{
+		list-style: 0; 
+		margin-top:10px;
+		margin-bottom: 0px;
+	}
+
+		#lefthead >  ul > li{
+			padding-left: 0px;
+		    display: inline;
+		    margin-bottom: 0px;
+		}
+
+		#lefthead > ul > li:first-child{
+			margin-left: 0;
+			padding-left: 0;
+		}
+
+#righthead {
+	height: 100px;
+	text-align: right;
+	padding-bottom: 5px;
+}
+
+	#upperRightHead {
+		margin-top: 10px;
+		height: 50px;
+		margin-bottom: 0px;
+	}
+
+	/* search box */
+	#righthead > form > input[type=text]{
+		font-size: 1em;
+		height: 30px;
+		width: 80%;
+	}
+
+	.search_button {
+		border-radius: 0;
+		height: 30px;
+		border:none;
+		background-color: #EE3B34;
+		color: white;
+		width: 15%;
+		font-size: 1.2em;
+	}
+
+	.search_button:hover {
+		background-color: #2196F3;
+	}
+/* headlinks are found at the top right of the header. All but logout */
+.headLink:link, .headLink:visited, .headLink:active{
+	font-size: 1.2em;
+	font-weight: bold;
+	color: #EE3B34;
+	text-decoration: underline;
+	margin: 0 5px;
+}
+
+.headLink:hover{
+	background-color: #EE3B34;
+	color: white;
+}
+
+/* mainly for logout button. Makes button look like link */
+.linkButton {
+	background-color: transparent;
+	text-decoration: underline;
+	font-size: 1.2em;
+	font-weight: bold;
+	color: #EE3B34;
+	border: none;
+	cursor: pointer;
+}
+
+	.linkButton:hover {
+		background-color: #EE3B34;
+		color: white;
+	}
+
+/*
+	+---------------------------------------------------------------------------+
+	|																			|
+	|							CONTENT REGION STYLES	  						|
+	|																			|
+	+---------------------------------------------------------------------------+
+*/
+
+#content {
+	min-height: 600px;			/* for sticky footer -- changed */
+	height: auto !important;	/* for sticky footer */
+	height: 100%;				/* for sticky footer */
+	margin: 0 auto ;		/* for sticky footer */ 
+	font-size: 16px;
+}
+
+#content h1 {
+	margin-top: 10px;
+}
+
+/* Used on browse/search.php */ 
+.searchResultsBlock , .favoritesBlock {
+	width:100%; 
+	background-color: white; 
+	margin: 10px 15px; /* Top/Bottom 10 L/R 15 */ 
+	padding: 0 0 5px 0; /* Top/Bottom 5px L/R 0 */ 
+	border-bottom: 2px solid #cccccc;
+}
+
+.searchResultsBlock h2 , .favoritesBlock h2 {
+	width:100%; 
+	background-color:#EE3B34; 
+	color: white;
+}
+
+
+/*
+	+-----------------+
+	|	CONTENT 	  |
+	|	FORM STYLES	  |
+	+-----------------+
+*/
+
+/* small text entry boxes */
+.contentInput{
+	font-size: 1em;
+	height: 30px;
+}
+
+/* submit buttons - red box style*/
+.contentSubmit {
+	border-radius: 0;
+	height: 30px;
+	border:none;
+	background-color: #EE3B34;
+	color: white;
+	min-width: 150px;
+	font-size: 1.2em;
+	padding:0 5px;
+	margin: 5px
+}
+
+.contentSubmit:hover {
+	background-color: #2196F3;
+}
+
+/*
+	+---------------------------------------------------------------------------+
+	|																			|
+	|							FOOTER REGION STYLES	  						|
+	|																			|
+	+---------------------------------------------------------------------------+
+*/
+
+#footer {
+    height: 50px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#footer a {
+	color: #000;
+	text-decoration: none;
+}

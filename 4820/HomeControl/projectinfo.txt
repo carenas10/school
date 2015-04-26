@@ -1,0 +1,46 @@
+-----------------------------------------------------------------------
+Project Info
+-----------------------------------------------------------------------
+
+Repository URL: github.com/jakedawkins/homecontrol
+
+Vincent Blouin (Faculty Leader, vblouin@clemson.edu)
+
+Jackson (Jake) Dawkins
+    jacksod@g.clemson.edu
+    jakedawkins.me
+
+Alex Ross
+    alross@clemson.edu
+    http://alexross.io/
+
+Joey Costa
+    ￼jacosta@g.clemson.edu
+    http://people.cs.clemson.edu/~jacosta/homePage.html
+
+-----------------------------------------------------------------------
+Coding standards for the project (to keep things uniform)
+-----------------------------------------------------------------------
+
+>>  4-space soft tabs (spaces, not tabs)
+>>  spaces between major elements of method declarations/calls
+>>  curly brace at end of declaration, not at beginning of new line
+>>  meaningful variable names
+>>  indented blocks for nested info
+>>  comments before method declarations
+>>  comment at end of method declarations (especially on long methods)
+
+EXAMPLE:
+
+//this method completes some action
+- (void) methodName int:parameter withValue NSString:parameter2 {
+
+    for(int i=0; i<parameter; i++){
+      //for content
+    }
+
+
+    //method code
+    //method code
+
+}//methodName

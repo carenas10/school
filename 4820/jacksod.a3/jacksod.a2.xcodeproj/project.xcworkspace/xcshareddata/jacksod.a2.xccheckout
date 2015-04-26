@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>67C00F86-228E-4C62-8810-56CFD7638DDE</string>
+	<key>IDESourceControlProjectName</key>
+	<string>jacksod.a2</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>D547B41B92F143B87CAB78D4302C961F44AB480F</key>
+		<string>https://github.com/JacksonDawkins/cpsc.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>cpsc4820/jacksod.a3/jacksod.a2.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>D547B41B92F143B87CAB78D4302C961F44AB480F</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/JacksonDawkins/cpsc.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>D547B41B92F143B87CAB78D4302C961F44AB480F</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D547B41B92F143B87CAB78D4302C961F44AB480F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>cpsc</string>
+		</dict>
+	</array>
+</dict>
+</plist>

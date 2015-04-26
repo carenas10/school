@@ -1,0 +1,581 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2348A7EB19E73AF900E95269 /* Codec.m in Sources */ = {isa = PBXBuildFile; fileRef = 2348A7EA19E73AF900E95269 /* Codec.m */; };
+		2348A7EF19E7444100E95269 /* vtk_db.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 2348A7EE19E7444100E95269 /* vtk_db.sqlite */; };
+		2348A7F219E758F000E95269 /* VTKAddSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2348A7F119E758F000E95269 /* VTKAddSettingViewController.m */; };
+		2348A7F519E76FCA00E95269 /* VTKCodecDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2348A7F419E76FCA00E95269 /* VTKCodecDetailViewController.m */; };
+		2348A7F819E77FA900E95269 /* VTKEditSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2348A7F719E77FA900E95269 /* VTKEditSettingViewController.m */; };
+		235D785619D1F7B10049FDE2 /* AboutMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 235D785519D1F7B10049FDE2 /* AboutMeViewController.m */; };
+		235D785919D1FB650049FDE2 /* VTKInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 235D785819D1FB650049FDE2 /* VTKInfoViewController.m */; };
+		235D785C19D1FF000049FDE2 /* VTKAcknowlegmentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 235D785B19D1FF000049FDE2 /* VTKAcknowlegmentsViewController.m */; };
+		23619C9219D2518400DF59BC /* tabbar-bitrate.png in Resources */ = {isa = PBXBuildFile; fileRef = 23619C8E19D2518400DF59BC /* tabbar-bitrate.png */; };
+		23619C9319D2518400DF59BC /* tabbar-info.png in Resources */ = {isa = PBXBuildFile; fileRef = 23619C8F19D2518400DF59BC /* tabbar-info.png */; };
+		23619C9419D2518400DF59BC /* tabbar-standards.png in Resources */ = {isa = PBXBuildFile; fileRef = 23619C9019D2518400DF59BC /* tabbar-standards.png */; };
+		23619C9519D2518400DF59BC /* tabbar-timecode.png in Resources */ = {isa = PBXBuildFile; fileRef = 23619C9119D2518400DF59BC /* tabbar-timecode.png */; };
+		238AC60A19CE370A00E849A2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 238AC60919CE370A00E849A2 /* Foundation.framework */; };
+		238AC60C19CE370A00E849A2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 238AC60B19CE370A00E849A2 /* CoreGraphics.framework */; };
+		238AC60E19CE370A00E849A2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 238AC60D19CE370A00E849A2 /* UIKit.framework */; };
+		238AC61419CE370A00E849A2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 238AC61219CE370A00E849A2 /* InfoPlist.strings */; };
+		238AC61619CE370A00E849A2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 238AC61519CE370A00E849A2 /* main.m */; };
+		238AC61A19CE370A00E849A2 /* VTKAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 238AC61919CE370A00E849A2 /* VTKAppDelegate.m */; };
+		238AC61D19CE370A00E849A2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 238AC61B19CE370A00E849A2 /* Main.storyboard */; };
+		238AC62019CE370A00E849A2 /* VTKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 238AC61F19CE370A00E849A2 /* VTKViewController.m */; };
+		238AC62219CE370A00E849A2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 238AC62119CE370A00E849A2 /* Images.xcassets */; };
+		238AC62919CE370A00E849A2 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 238AC62819CE370A00E849A2 /* XCTest.framework */; };
+		238AC62A19CE370A00E849A2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 238AC60919CE370A00E849A2 /* Foundation.framework */; };
+		238AC62B19CE370A00E849A2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 238AC60D19CE370A00E849A2 /* UIKit.framework */; };
+		238AC63319CE370A00E849A2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 238AC63119CE370A00E849A2 /* InfoPlist.strings */; };
+		238AC63519CE370A00E849A2 /* jacksod_a4Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 238AC63419CE370A00E849A2 /* jacksod_a4Tests.m */; };
+		238AC64019CE494600E849A2 /* VTKTimecodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 238AC63F19CE494600E849A2 /* VTKTimecodeController.m */; };
+		238AC64919CE593600E849A2 /* VTKBitrateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 238AC64819CE593600E849A2 /* VTKBitrateViewController.m */; };
+		2396DB7919E666E800782885 /* database.m in Sources */ = {isa = PBXBuildFile; fileRef = 2396DB7819E666E800782885 /* database.m */; };
+		2396DB7D19E6670D00782885 /* VidSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 2396DB7C19E6670D00782885 /* VidSetting.m */; };
+		2396DB7F19E6BA7A00782885 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2396DB7E19E6BA7A00782885 /* libsqlite3.dylib */; };
+		239FB84F19D03A5200A54463 /* VTKStandardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 239FB84E19D03A5200A54463 /* VTKStandardsViewController.m */; };
+		23DFD1DA19FA175200C7444B /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 23DFD1D919FA175200C7444B /* Settings.bundle */; };
+		23DFD1DD19FA1FAE00C7444B /* VTKLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23DFD1DC19FA1FAE00C7444B /* VTKLoginViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		238AC62C19CE370A00E849A2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 238AC5FE19CE370A00E849A2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 238AC60519CE370A00E849A2;
+			remoteInfo = jacksod.a2;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2348A7EA19E73AF900E95269 /* Codec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Codec.m; sourceTree = "<group>"; };
+		2348A7ED19E73B2100E95269 /* Codec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Codec.h; path = ../Codec.h; sourceTree = "<group>"; };
+		2348A7EE19E7444100E95269 /* vtk_db.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = vtk_db.sqlite; sourceTree = "<group>"; };
+		2348A7F019E758BC00E95269 /* VTKAddSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VTKAddSettingViewController.h; sourceTree = "<group>"; };
+		2348A7F119E758F000E95269 /* VTKAddSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VTKAddSettingViewController.m; sourceTree = "<group>"; };
+		2348A7F319E76F7600E95269 /* VTKCodecDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VTKCodecDetailViewController.h; sourceTree = "<group>"; };
+		2348A7F419E76FCA00E95269 /* VTKCodecDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VTKCodecDetailViewController.m; sourceTree = "<group>"; };
+		2348A7F619E77F9800E95269 /* VTKEditSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VTKEditSettingViewController.h; sourceTree = "<group>"; };
+		2348A7F719E77FA900E95269 /* VTKEditSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VTKEditSettingViewController.m; sourceTree = "<group>"; };
+		235D785419D1F7B10049FDE2 /* AboutMeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutMeViewController.h; sourceTree = "<group>"; };
+		235D785519D1F7B10049FDE2 /* AboutMeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutMeViewController.m; sourceTree = "<group>"; };
+		235D785719D1FB650049FDE2 /* VTKInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTKInfoViewController.h; sourceTree = "<group>"; };
+		235D785819D1FB650049FDE2 /* VTKInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VTKInfoViewController.m; sourceTree = "<group>"; };
+		235D785A19D1FF000049FDE2 /* VTKAcknowlegmentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTKAcknowlegmentsViewController.h; sourceTree = "<group>"; };
+		235D785B19D1FF000049FDE2 /* VTKAcknowlegmentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VTKAcknowlegmentsViewController.m; sourceTree = "<group>"; };
+		23619C8E19D2518400DF59BC /* tabbar-bitrate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar-bitrate.png"; sourceTree = "<group>"; };
+		23619C8F19D2518400DF59BC /* tabbar-info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar-info.png"; sourceTree = "<group>"; };
+		23619C9019D2518400DF59BC /* tabbar-standards.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar-standards.png"; sourceTree = "<group>"; };
+		23619C9119D2518400DF59BC /* tabbar-timecode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar-timecode.png"; sourceTree = "<group>"; };
+		238AC60619CE370A00E849A2 /* jacksod.a4.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jacksod.a4.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		238AC60919CE370A00E849A2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		238AC60B19CE370A00E849A2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		238AC60D19CE370A00E849A2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		238AC61119CE370A00E849A2 /* jacksod.a4-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "jacksod.a4-Info.plist"; sourceTree = "<group>"; };
+		238AC61319CE370A00E849A2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		238AC61519CE370A00E849A2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		238AC61719CE370A00E849A2 /* jacksod.a4-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "jacksod.a4-Prefix.pch"; sourceTree = "<group>"; };
+		238AC61819CE370A00E849A2 /* VTKAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VTKAppDelegate.h; sourceTree = "<group>"; };
+		238AC61919CE370A00E849A2 /* VTKAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VTKAppDelegate.m; sourceTree = "<group>"; };
+		238AC61C19CE370A00E849A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		238AC61E19CE370A00E849A2 /* VTKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VTKViewController.h; sourceTree = "<group>"; };
+		238AC61F19CE370A00E849A2 /* VTKViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VTKViewController.m; sourceTree = "<group>"; };
+		238AC62119CE370A00E849A2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		238AC62719CE370A00E849A2 /* jacksod.a4Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = jacksod.a4Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		238AC62819CE370A00E849A2 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		238AC63019CE370A00E849A2 /* jacksod.a4Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "jacksod.a4Tests-Info.plist"; sourceTree = "<group>"; };
+		238AC63219CE370A00E849A2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		238AC63419CE370A00E849A2 /* jacksod_a4Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = jacksod_a4Tests.m; sourceTree = "<group>"; };
+		238AC63E19CE494600E849A2 /* VTKTimecodeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTKTimecodeController.h; sourceTree = "<group>"; };
+		238AC63F19CE494600E849A2 /* VTKTimecodeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VTKTimecodeController.m; sourceTree = "<group>"; };
+		238AC64719CE593600E849A2 /* VTKBitrateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTKBitrateViewController.h; sourceTree = "<group>"; };
+		238AC64819CE593600E849A2 /* VTKBitrateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VTKBitrateViewController.m; sourceTree = "<group>"; };
+		2396DB7819E666E800782885 /* database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = database.m; sourceTree = "<group>"; };
+		2396DB7A19E666F300782885 /* database.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = database.h; sourceTree = "<group>"; };
+		2396DB7B19E6670D00782885 /* VidSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VidSetting.h; sourceTree = "<group>"; };
+		2396DB7C19E6670D00782885 /* VidSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VidSetting.m; sourceTree = "<group>"; };
+		2396DB7E19E6BA7A00782885 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		239FB84D19D03A5200A54463 /* VTKStandardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTKStandardsViewController.h; sourceTree = "<group>"; };
+		239FB84E19D03A5200A54463 /* VTKStandardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VTKStandardsViewController.m; sourceTree = "<group>"; };
+		23DFD1D919FA175200C7444B /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		23DFD1DB19FA1F4B00C7444B /* VTKLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VTKLoginViewController.h; sourceTree = "<group>"; };
+		23DFD1DC19FA1FAE00C7444B /* VTKLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VTKLoginViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		238AC60319CE370A00E849A2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2396DB7F19E6BA7A00782885 /* libsqlite3.dylib in Frameworks */,
+				238AC60C19CE370A00E849A2 /* CoreGraphics.framework in Frameworks */,
+				238AC60E19CE370A00E849A2 /* UIKit.framework in Frameworks */,
+				238AC60A19CE370A00E849A2 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		238AC62419CE370A00E849A2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				238AC62919CE370A00E849A2 /* XCTest.framework in Frameworks */,
+				238AC62B19CE370A00E849A2 /* UIKit.framework in Frameworks */,
+				238AC62A19CE370A00E849A2 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		238AC5FD19CE370A00E849A2 = {
+			isa = PBXGroup;
+			children = (
+				23DFD1D919FA175200C7444B /* Settings.bundle */,
+				238AC60F19CE370A00E849A2 /* jacksod.a4 */,
+				238AC62E19CE370A00E849A2 /* jacksod.a4Tests */,
+				238AC60819CE370A00E849A2 /* Frameworks */,
+				238AC60719CE370A00E849A2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		238AC60719CE370A00E849A2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				238AC60619CE370A00E849A2 /* jacksod.a4.app */,
+				238AC62719CE370A00E849A2 /* jacksod.a4Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		238AC60819CE370A00E849A2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2396DB7E19E6BA7A00782885 /* libsqlite3.dylib */,
+				238AC60919CE370A00E849A2 /* Foundation.framework */,
+				238AC60B19CE370A00E849A2 /* CoreGraphics.framework */,
+				238AC60D19CE370A00E849A2 /* UIKit.framework */,
+				238AC62819CE370A00E849A2 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		238AC60F19CE370A00E849A2 /* jacksod.a4 */ = {
+			isa = PBXGroup;
+			children = (
+				238AC61B19CE370A00E849A2 /* Main.storyboard */,
+				2348A7EE19E7444100E95269 /* vtk_db.sqlite */,
+				2396DB7A19E666F300782885 /* database.h */,
+				2396DB7819E666E800782885 /* database.m */,
+				2348A7ED19E73B2100E95269 /* Codec.h */,
+				2348A7EA19E73AF900E95269 /* Codec.m */,
+				2396DB7B19E6670D00782885 /* VidSetting.h */,
+				2396DB7C19E6670D00782885 /* VidSetting.m */,
+				23DFD1DB19FA1F4B00C7444B /* VTKLoginViewController.h */,
+				23DFD1DC19FA1FAE00C7444B /* VTKLoginViewController.m */,
+				235D785519D1F7B10049FDE2 /* AboutMeViewController.m */,
+				235D785419D1F7B10049FDE2 /* AboutMeViewController.h */,
+				238AC64719CE593600E849A2 /* VTKBitrateViewController.h */,
+				238AC64819CE593600E849A2 /* VTKBitrateViewController.m */,
+				2348A7F619E77F9800E95269 /* VTKEditSettingViewController.h */,
+				2348A7F719E77FA900E95269 /* VTKEditSettingViewController.m */,
+				2348A7F319E76F7600E95269 /* VTKCodecDetailViewController.h */,
+				2348A7F419E76FCA00E95269 /* VTKCodecDetailViewController.m */,
+				2348A7F019E758BC00E95269 /* VTKAddSettingViewController.h */,
+				2348A7F119E758F000E95269 /* VTKAddSettingViewController.m */,
+				235D785A19D1FF000049FDE2 /* VTKAcknowlegmentsViewController.h */,
+				235D785B19D1FF000049FDE2 /* VTKAcknowlegmentsViewController.m */,
+				235D785719D1FB650049FDE2 /* VTKInfoViewController.h */,
+				235D785819D1FB650049FDE2 /* VTKInfoViewController.m */,
+				239FB84D19D03A5200A54463 /* VTKStandardsViewController.h */,
+				239FB84E19D03A5200A54463 /* VTKStandardsViewController.m */,
+				238AC63E19CE494600E849A2 /* VTKTimecodeController.h */,
+				238AC63F19CE494600E849A2 /* VTKTimecodeController.m */,
+				238AC61E19CE370A00E849A2 /* VTKViewController.h */,
+				238AC61F19CE370A00E849A2 /* VTKViewController.m */,
+				238AC62119CE370A00E849A2 /* Images.xcassets */,
+				238AC61819CE370A00E849A2 /* VTKAppDelegate.h */,
+				238AC61919CE370A00E849A2 /* VTKAppDelegate.m */,
+				238AC61019CE370A00E849A2 /* Supporting Files */,
+			);
+			name = jacksod.a4;
+			path = jacksod.a2;
+			sourceTree = "<group>";
+		};
+		238AC61019CE370A00E849A2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				23619C8E19D2518400DF59BC /* tabbar-bitrate.png */,
+				23619C8F19D2518400DF59BC /* tabbar-info.png */,
+				23619C9019D2518400DF59BC /* tabbar-standards.png */,
+				23619C9119D2518400DF59BC /* tabbar-timecode.png */,
+				238AC61119CE370A00E849A2 /* jacksod.a4-Info.plist */,
+				238AC61219CE370A00E849A2 /* InfoPlist.strings */,
+				238AC61519CE370A00E849A2 /* main.m */,
+				238AC61719CE370A00E849A2 /* jacksod.a4-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		238AC62E19CE370A00E849A2 /* jacksod.a4Tests */ = {
+			isa = PBXGroup;
+			children = (
+				238AC63419CE370A00E849A2 /* jacksod_a4Tests.m */,
+				238AC62F19CE370A00E849A2 /* Supporting Files */,
+			);
+			path = jacksod.a4Tests;
+			sourceTree = "<group>";
+		};
+		238AC62F19CE370A00E849A2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				238AC63019CE370A00E849A2 /* jacksod.a4Tests-Info.plist */,
+				238AC63119CE370A00E849A2 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		238AC60519CE370A00E849A2 /* jacksod.a4 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 238AC63819CE370A00E849A2 /* Build configuration list for PBXNativeTarget "jacksod.a4" */;
+			buildPhases = (
+				238AC60219CE370A00E849A2 /* Sources */,
+				238AC60319CE370A00E849A2 /* Frameworks */,
+				238AC60419CE370A00E849A2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = jacksod.a4;
+			productName = jacksod.a2;
+			productReference = 238AC60619CE370A00E849A2 /* jacksod.a4.app */;
+			productType = "com.apple.product-type.application";
+		};
+		238AC62619CE370A00E849A2 /* jacksod.a4Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 238AC63B19CE370A00E849A2 /* Build configuration list for PBXNativeTarget "jacksod.a4Tests" */;
+			buildPhases = (
+				238AC62319CE370A00E849A2 /* Sources */,
+				238AC62419CE370A00E849A2 /* Frameworks */,
+				238AC62519CE370A00E849A2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				238AC62D19CE370A00E849A2 /* PBXTargetDependency */,
+			);
+			name = jacksod.a4Tests;
+			productName = jacksod.a2Tests;
+			productReference = 238AC62719CE370A00E849A2 /* jacksod.a4Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		238AC5FE19CE370A00E849A2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = VTK;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Jake Dawkins";
+				TargetAttributes = {
+					238AC62619CE370A00E849A2 = {
+						TestTargetID = 238AC60519CE370A00E849A2;
+					};
+				};
+			};
+			buildConfigurationList = 238AC60119CE370A00E849A2 /* Build configuration list for PBXProject "jacksod.a4" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 238AC5FD19CE370A00E849A2;
+			productRefGroup = 238AC60719CE370A00E849A2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				238AC60519CE370A00E849A2 /* jacksod.a4 */,
+				238AC62619CE370A00E849A2 /* jacksod.a4Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		238AC60419CE370A00E849A2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2348A7EF19E7444100E95269 /* vtk_db.sqlite in Resources */,
+				23619C9519D2518400DF59BC /* tabbar-timecode.png in Resources */,
+				238AC62219CE370A00E849A2 /* Images.xcassets in Resources */,
+				23619C9219D2518400DF59BC /* tabbar-bitrate.png in Resources */,
+				238AC61419CE370A00E849A2 /* InfoPlist.strings in Resources */,
+				23619C9319D2518400DF59BC /* tabbar-info.png in Resources */,
+				23619C9419D2518400DF59BC /* tabbar-standards.png in Resources */,
+				23DFD1DA19FA175200C7444B /* Settings.bundle in Resources */,
+				238AC61D19CE370A00E849A2 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		238AC62519CE370A00E849A2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				238AC63319CE370A00E849A2 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		238AC60219CE370A00E849A2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23DFD1DD19FA1FAE00C7444B /* VTKLoginViewController.m in Sources */,
+				238AC61A19CE370A00E849A2 /* VTKAppDelegate.m in Sources */,
+				238AC64919CE593600E849A2 /* VTKBitrateViewController.m in Sources */,
+				2348A7F519E76FCA00E95269 /* VTKCodecDetailViewController.m in Sources */,
+				2348A7F219E758F000E95269 /* VTKAddSettingViewController.m in Sources */,
+				235D785919D1FB650049FDE2 /* VTKInfoViewController.m in Sources */,
+				238AC64019CE494600E849A2 /* VTKTimecodeController.m in Sources */,
+				2396DB7D19E6670D00782885 /* VidSetting.m in Sources */,
+				2348A7F819E77FA900E95269 /* VTKEditSettingViewController.m in Sources */,
+				238AC62019CE370A00E849A2 /* VTKViewController.m in Sources */,
+				235D785619D1F7B10049FDE2 /* AboutMeViewController.m in Sources */,
+				235D785C19D1FF000049FDE2 /* VTKAcknowlegmentsViewController.m in Sources */,
+				2348A7EB19E73AF900E95269 /* Codec.m in Sources */,
+				238AC61619CE370A00E849A2 /* main.m in Sources */,
+				2396DB7919E666E800782885 /* database.m in Sources */,
+				239FB84F19D03A5200A54463 /* VTKStandardsViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		238AC62319CE370A00E849A2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				238AC63519CE370A00E849A2 /* jacksod_a4Tests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		238AC62D19CE370A00E849A2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 238AC60519CE370A00E849A2 /* jacksod.a4 */;
+			targetProxy = 238AC62C19CE370A00E849A2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		238AC61219CE370A00E849A2 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				238AC61319CE370A00E849A2 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		238AC61B19CE370A00E849A2 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				238AC61C19CE370A00E849A2 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		238AC63119CE370A00E849A2 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				238AC63219CE370A00E849A2 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		238AC63619CE370A00E849A2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		238AC63719CE370A00E849A2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		238AC63919CE370A00E849A2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "jacksod.a2/jacksod.a4-Prefix.pch";
+				INFOPLIST_FILE = "jacksod.a2/jacksod.a4-Info.plist";
+				PRODUCT_NAME = jacksod.a4;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		238AC63A19CE370A00E849A2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "jacksod.a2/jacksod.a4-Prefix.pch";
+				INFOPLIST_FILE = "jacksod.a2/jacksod.a4-Info.plist";
+				PRODUCT_NAME = jacksod.a4;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		238AC63C19CE370A00E849A2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/jacksod.a2.app/jacksod.a2";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "jacksod.a2/jacksod.a2-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "jacksod.a2Tests/jacksod.a4Tests-Info.plist";
+				PRODUCT_NAME = jacksod.a4Tests;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		238AC63D19CE370A00E849A2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/jacksod.a2.app/jacksod.a2";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "jacksod.a2/jacksod.a2-Prefix.pch";
+				INFOPLIST_FILE = "jacksod.a2Tests/jacksod.a4Tests-Info.plist";
+				PRODUCT_NAME = jacksod.a4Tests;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		238AC60119CE370A00E849A2 /* Build configuration list for PBXProject "jacksod.a4" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				238AC63619CE370A00E849A2 /* Debug */,
+				238AC63719CE370A00E849A2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		238AC63819CE370A00E849A2 /* Build configuration list for PBXNativeTarget "jacksod.a4" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				238AC63919CE370A00E849A2 /* Debug */,
+				238AC63A19CE370A00E849A2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		238AC63B19CE370A00E849A2 /* Build configuration list for PBXNativeTarget "jacksod.a4Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				238AC63C19CE370A00E849A2 /* Debug */,
+				238AC63D19CE370A00E849A2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 238AC5FE19CE370A00E849A2 /* Project object */;
+}

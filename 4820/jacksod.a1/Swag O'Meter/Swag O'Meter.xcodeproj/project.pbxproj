@@ -1,0 +1,510 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2316DE3319CA9BF50082E976 /* Icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2316DE3219CA9BF50082E976 /* Icon-60@2x.png */; };
+		2316DE3519CA9C010082E976 /* Icon-Small-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2316DE3419CA9C010082E976 /* Icon-Small-40@2x.png */; };
+		2316DE3719CA9C120082E976 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2316DE3619CA9C120082E976 /* Icon-Small@2x.png */; };
+		2328314C19BF4696001C8D35 /* SwagResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2328314B19BF4696001C8D35 /* SwagResultsViewController.m */; };
+		236F445419BAB33D00FAFA6B /* SwagLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 236F445319BAB33D00FAFA6B /* SwagLevel.m */; };
+		2393326419C21B4F0027B6E4 /* SwagInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2393326319C21B4F0027B6E4 /* SwagInfoViewController.m */; };
+		23A2035B19B8EF91003B3992 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23A2035A19B8EF91003B3992 /* Foundation.framework */; };
+		23A2035D19B8EF91003B3992 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23A2035C19B8EF91003B3992 /* CoreGraphics.framework */; };
+		23A2035F19B8EF91003B3992 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23A2035E19B8EF91003B3992 /* UIKit.framework */; };
+		23A2036519B8EF91003B3992 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 23A2036319B8EF91003B3992 /* InfoPlist.strings */; };
+		23A2036719B8EF91003B3992 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 23A2036619B8EF91003B3992 /* main.m */; };
+		23A2036B19B8EF91003B3992 /* SwagOMeterAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 23A2036A19B8EF91003B3992 /* SwagOMeterAppDelegate.m */; };
+		23A2036E19B8EF91003B3992 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23A2036C19B8EF91003B3992 /* Main.storyboard */; };
+		23A2037119B8EF91003B3992 /* SwagOMeterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23A2037019B8EF91003B3992 /* SwagOMeterViewController.m */; };
+		23A2037319B8EF91003B3992 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23A2037219B8EF91003B3992 /* Images.xcassets */; };
+		23A2037A19B8EF92003B3992 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23A2037919B8EF92003B3992 /* XCTest.framework */; };
+		23A2037B19B8EF92003B3992 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23A2035A19B8EF91003B3992 /* Foundation.framework */; };
+		23A2037C19B8EF92003B3992 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23A2035E19B8EF91003B3992 /* UIKit.framework */; };
+		23A2038419B8EF92003B3992 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 23A2038219B8EF92003B3992 /* InfoPlist.strings */; };
+		23A2038619B8EF92003B3992 /* Swag_O_MeterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23A2038519B8EF92003B3992 /* Swag_O_MeterTests.m */; };
+		23E55E5A19C3C47C00C4E07E /* AboutMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23E55E5919C3C47C00C4E07E /* AboutMeViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		23A2037D19B8EF92003B3992 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 23A2034F19B8EF91003B3992 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 23A2035619B8EF91003B3992;
+			remoteInfo = "Swag O'Meter";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2316DE3219CA9BF50082E976 /* Icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@2x.png"; sourceTree = "<group>"; };
+		2316DE3419CA9C010082E976 /* Icon-Small-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-40@2x.png"; sourceTree = "<group>"; };
+		2316DE3619CA9C120082E976 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
+		2328314A19BF4696001C8D35 /* SwagResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwagResultsViewController.h; sourceTree = "<group>"; };
+		2328314B19BF4696001C8D35 /* SwagResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwagResultsViewController.m; sourceTree = "<group>"; };
+		236F445219BAB33D00FAFA6B /* SwagLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwagLevel.h; path = Model/SwagLevel.h; sourceTree = "<group>"; };
+		236F445319BAB33D00FAFA6B /* SwagLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SwagLevel.m; path = Model/SwagLevel.m; sourceTree = "<group>"; };
+		2393326219C21B4F0027B6E4 /* SwagInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwagInfoViewController.h; sourceTree = "<group>"; };
+		2393326319C21B4F0027B6E4 /* SwagInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwagInfoViewController.m; sourceTree = "<group>"; };
+		23A2035719B8EF91003B3992 /* jacksod.a2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jacksod.a2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		23A2035A19B8EF91003B3992 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		23A2035C19B8EF91003B3992 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		23A2035E19B8EF91003B3992 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		23A2036219B8EF91003B3992 /* Swag O'Meter-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Swag O'Meter-Info.plist"; sourceTree = "<group>"; };
+		23A2036419B8EF91003B3992 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		23A2036619B8EF91003B3992 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		23A2036819B8EF91003B3992 /* Swag O'Meter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Swag O'Meter-Prefix.pch"; sourceTree = "<group>"; };
+		23A2036919B8EF91003B3992 /* SwagOMeterAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwagOMeterAppDelegate.h; sourceTree = "<group>"; };
+		23A2036A19B8EF91003B3992 /* SwagOMeterAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SwagOMeterAppDelegate.m; sourceTree = "<group>"; };
+		23A2036D19B8EF91003B3992 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		23A2036F19B8EF91003B3992 /* SwagOMeterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwagOMeterViewController.h; sourceTree = "<group>"; };
+		23A2037019B8EF91003B3992 /* SwagOMeterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SwagOMeterViewController.m; sourceTree = "<group>"; };
+		23A2037219B8EF91003B3992 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		23A2037819B8EF92003B3992 /* Swag O'MeterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Swag O'MeterTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		23A2037919B8EF92003B3992 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		23A2038119B8EF92003B3992 /* Swag O'MeterTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Swag O'MeterTests-Info.plist"; sourceTree = "<group>"; };
+		23A2038319B8EF92003B3992 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		23A2038519B8EF92003B3992 /* Swag_O_MeterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Swag_O_MeterTests.m; sourceTree = "<group>"; };
+		23E55E5819C3C47C00C4E07E /* AboutMeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutMeViewController.h; sourceTree = "<group>"; };
+		23E55E5919C3C47C00C4E07E /* AboutMeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutMeViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		23A2035419B8EF91003B3992 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23A2035D19B8EF91003B3992 /* CoreGraphics.framework in Frameworks */,
+				23A2035F19B8EF91003B3992 /* UIKit.framework in Frameworks */,
+				23A2035B19B8EF91003B3992 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23A2037519B8EF92003B3992 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23A2037A19B8EF92003B3992 /* XCTest.framework in Frameworks */,
+				23A2037C19B8EF92003B3992 /* UIKit.framework in Frameworks */,
+				23A2037B19B8EF92003B3992 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		23A2034E19B8EF91003B3992 = {
+			isa = PBXGroup;
+			children = (
+				236F445219BAB33D00FAFA6B /* SwagLevel.h */,
+				236F445319BAB33D00FAFA6B /* SwagLevel.m */,
+				23A2036019B8EF91003B3992 /* Swag O'Meter */,
+				23A2037F19B8EF92003B3992 /* Swag O'MeterTests */,
+				23A2035919B8EF91003B3992 /* Frameworks */,
+				23A2035819B8EF91003B3992 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		23A2035819B8EF91003B3992 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				23A2035719B8EF91003B3992 /* jacksod.a2.app */,
+				23A2037819B8EF92003B3992 /* Swag O'MeterTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		23A2035919B8EF91003B3992 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				23A2035A19B8EF91003B3992 /* Foundation.framework */,
+				23A2035C19B8EF91003B3992 /* CoreGraphics.framework */,
+				23A2035E19B8EF91003B3992 /* UIKit.framework */,
+				23A2037919B8EF92003B3992 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		23A2036019B8EF91003B3992 /* Swag O'Meter */ = {
+			isa = PBXGroup;
+			children = (
+				23A2036C19B8EF91003B3992 /* Main.storyboard */,
+				23E55E5819C3C47C00C4E07E /* AboutMeViewController.h */,
+				23E55E5919C3C47C00C4E07E /* AboutMeViewController.m */,
+				2393326219C21B4F0027B6E4 /* SwagInfoViewController.h */,
+				2393326319C21B4F0027B6E4 /* SwagInfoViewController.m */,
+				2328314A19BF4696001C8D35 /* SwagResultsViewController.h */,
+				2328314B19BF4696001C8D35 /* SwagResultsViewController.m */,
+				23A2036F19B8EF91003B3992 /* SwagOMeterViewController.h */,
+				23A2037019B8EF91003B3992 /* SwagOMeterViewController.m */,
+				23A2037219B8EF91003B3992 /* Images.xcassets */,
+				23A2036119B8EF91003B3992 /* Supporting Files */,
+			);
+			path = "Swag O'Meter";
+			sourceTree = "<group>";
+		};
+		23A2036119B8EF91003B3992 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2316DE3619CA9C120082E976 /* Icon-Small@2x.png */,
+				2316DE3419CA9C010082E976 /* Icon-Small-40@2x.png */,
+				2316DE3219CA9BF50082E976 /* Icon-60@2x.png */,
+				23A2036919B8EF91003B3992 /* SwagOMeterAppDelegate.h */,
+				23A2036A19B8EF91003B3992 /* SwagOMeterAppDelegate.m */,
+				23A2036219B8EF91003B3992 /* Swag O'Meter-Info.plist */,
+				23A2036319B8EF91003B3992 /* InfoPlist.strings */,
+				23A2036619B8EF91003B3992 /* main.m */,
+				23A2036819B8EF91003B3992 /* Swag O'Meter-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		23A2037F19B8EF92003B3992 /* Swag O'MeterTests */ = {
+			isa = PBXGroup;
+			children = (
+				23A2038519B8EF92003B3992 /* Swag_O_MeterTests.m */,
+				23A2038019B8EF92003B3992 /* Supporting Files */,
+			);
+			path = "Swag O'MeterTests";
+			sourceTree = "<group>";
+		};
+		23A2038019B8EF92003B3992 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				23A2038119B8EF92003B3992 /* Swag O'MeterTests-Info.plist */,
+				23A2038219B8EF92003B3992 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		23A2035619B8EF91003B3992 /* Swag O'Meter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 23A2038919B8EF92003B3992 /* Build configuration list for PBXNativeTarget "Swag O'Meter" */;
+			buildPhases = (
+				23A2035319B8EF91003B3992 /* Sources */,
+				23A2035419B8EF91003B3992 /* Frameworks */,
+				23A2035519B8EF91003B3992 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Swag O'Meter";
+			productName = "Swag O'Meter";
+			productReference = 23A2035719B8EF91003B3992 /* jacksod.a2.app */;
+			productType = "com.apple.product-type.application";
+		};
+		23A2037719B8EF92003B3992 /* Swag O'MeterTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 23A2038C19B8EF92003B3992 /* Build configuration list for PBXNativeTarget "Swag O'MeterTests" */;
+			buildPhases = (
+				23A2037419B8EF92003B3992 /* Sources */,
+				23A2037519B8EF92003B3992 /* Frameworks */,
+				23A2037619B8EF92003B3992 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				23A2037E19B8EF92003B3992 /* PBXTargetDependency */,
+			);
+			name = "Swag O'MeterTests";
+			productName = "Swag O'MeterTests";
+			productReference = 23A2037819B8EF92003B3992 /* Swag O'MeterTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		23A2034F19B8EF91003B3992 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = SwagOMeter;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Jake Dawkins";
+				TargetAttributes = {
+					23A2037719B8EF92003B3992 = {
+						TestTargetID = 23A2035619B8EF91003B3992;
+					};
+				};
+			};
+			buildConfigurationList = 23A2035219B8EF91003B3992 /* Build configuration list for PBXProject "Swag O'Meter" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 23A2034E19B8EF91003B3992;
+			productRefGroup = 23A2035819B8EF91003B3992 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				23A2035619B8EF91003B3992 /* Swag O'Meter */,
+				23A2037719B8EF92003B3992 /* Swag O'MeterTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		23A2035519B8EF91003B3992 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23A2037319B8EF91003B3992 /* Images.xcassets in Resources */,
+				2316DE3519CA9C010082E976 /* Icon-Small-40@2x.png in Resources */,
+				23A2036519B8EF91003B3992 /* InfoPlist.strings in Resources */,
+				2316DE3719CA9C120082E976 /* Icon-Small@2x.png in Resources */,
+				23A2036E19B8EF91003B3992 /* Main.storyboard in Resources */,
+				2316DE3319CA9BF50082E976 /* Icon-60@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23A2037619B8EF92003B3992 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23A2038419B8EF92003B3992 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		23A2035319B8EF91003B3992 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2393326419C21B4F0027B6E4 /* SwagInfoViewController.m in Sources */,
+				236F445419BAB33D00FAFA6B /* SwagLevel.m in Sources */,
+				23A2037119B8EF91003B3992 /* SwagOMeterViewController.m in Sources */,
+				2328314C19BF4696001C8D35 /* SwagResultsViewController.m in Sources */,
+				23E55E5A19C3C47C00C4E07E /* AboutMeViewController.m in Sources */,
+				23A2036B19B8EF91003B3992 /* SwagOMeterAppDelegate.m in Sources */,
+				23A2036719B8EF91003B3992 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23A2037419B8EF92003B3992 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23A2038619B8EF92003B3992 /* Swag_O_MeterTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		23A2037E19B8EF92003B3992 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 23A2035619B8EF91003B3992 /* Swag O'Meter */;
+			targetProxy = 23A2037D19B8EF92003B3992 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		23A2036319B8EF91003B3992 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				23A2036419B8EF91003B3992 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		23A2036C19B8EF91003B3992 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				23A2036D19B8EF91003B3992 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		23A2038219B8EF92003B3992 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				23A2038319B8EF92003B3992 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		23A2038719B8EF92003B3992 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		23A2038819B8EF92003B3992 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		23A2038A19B8EF92003B3992 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Swag O'Meter/Swag O'Meter-Prefix.pch";
+				INFOPLIST_FILE = "Swag O'Meter/Swag O'Meter-Info.plist";
+				PRODUCT_NAME = jacksod.a2;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		23A2038B19B8EF92003B3992 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Swag O'Meter/Swag O'Meter-Prefix.pch";
+				INFOPLIST_FILE = "Swag O'Meter/Swag O'Meter-Info.plist";
+				PRODUCT_NAME = jacksod.a2;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		23A2038D19B8EF92003B3992 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Swag O'Meter.app/Swag O'Meter";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Swag O'Meter/Swag O'Meter-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Swag O'MeterTests/Swag O'MeterTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		23A2038E19B8EF92003B3992 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Swag O'Meter.app/Swag O'Meter";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Swag O'Meter/Swag O'Meter-Prefix.pch";
+				INFOPLIST_FILE = "Swag O'MeterTests/Swag O'MeterTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		23A2035219B8EF91003B3992 /* Build configuration list for PBXProject "Swag O'Meter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				23A2038719B8EF92003B3992 /* Debug */,
+				23A2038819B8EF92003B3992 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		23A2038919B8EF92003B3992 /* Build configuration list for PBXNativeTarget "Swag O'Meter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				23A2038A19B8EF92003B3992 /* Debug */,
+				23A2038B19B8EF92003B3992 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		23A2038C19B8EF92003B3992 /* Build configuration list for PBXNativeTarget "Swag O'MeterTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				23A2038D19B8EF92003B3992 /* Debug */,
+				23A2038E19B8EF92003B3992 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 23A2034F19B8EF91003B3992 /* Project object */;
+}
