@@ -1,0 +1,8 @@
+#!/bin/bash
+#PBS -N gethost
+#PBS -l select=4:ncpus=8:mpiprocs=4:mem=10gb
+#PBS -l walltime=00:30:00
+#PBS -o log1.out
+#PBS -e error.out
+
+pbsdsh hostname

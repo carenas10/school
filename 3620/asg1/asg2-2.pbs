@@ -1,0 +1,18 @@
+#!/bin/bash
+#PBS -N gethost
+#PBS -l select=4:ncpus=8:mpiprocs=4:mem=10gb
+#PBS -l walltime=00:30:00
+#PBS -o log2.out
+#PBS -e error2.out
+
+pbsdsh -n 0
+ssh -p 33594 jacksod@apt070.apt.emulab.net 
+hostname
+
+pbsdsh -n 1
+ssh -p 33595 jacksod@apt070.apt.emulab.net 
+hostname
+
+pbsdsh -n 2
+ssh -p 33596 jacksod@apt070.apt.emulab.net 
+hostname
