@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#PBS -N gethost
+#PBS -l select=1:ncpus=1:mem=1gb,walltime=00:01:00
+#PBS -j oe
+
+module purge
+module add gcc/4.8.1
+
+echo $PBS_O_WORKDIR
+cd $PBS_O_WORKDIR
+./a.out
