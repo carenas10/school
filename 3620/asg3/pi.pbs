@@ -1,0 +1,13 @@
+#!/bin/bash
+#PBS -l select=8:ncpus=24:mpiprocs=16:mem=10gb
+#PBS -l walltime=00:30:00
+#PBS -o log.out
+
+cd "$PBS_O_WORKDIR"
+
+mpirun -np 1 ./a.out 1000000000
+mpirun -np 4 ./a.out 1000000000
+mpirun -np 9 ./a.out 1000000000
+mpirun -np 16 ./a.out 1000000000
+mpirun -np 25 ./a.out 1000000000
+mpirun -np 36 ./a.out 1000000000
