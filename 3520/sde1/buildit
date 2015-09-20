@@ -1,0 +1,5 @@
+#! /bin/bash
+## to build scanner/parser */
+bison -d $1.y
+flex $1.in
+gcc $1.c -lfl -Wall -o $1
