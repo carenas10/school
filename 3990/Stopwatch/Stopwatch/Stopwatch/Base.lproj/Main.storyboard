@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A278b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Stopwatch" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jcu-ik-G9w">
+                                <rect key="frame" x="519" y="551" width="61" height="41"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="STOP">
+                                    <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </state>
+                                <connections>
+                                    <action selector="stopTimer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xKf-fh-lbU"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gzm-Rl-F4g">
+                                <rect key="frame" x="264" y="551" width="72" height="41"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="RESET">
+                                    <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </state>
+                                <connections>
+                                    <action selector="resetTimer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="U2U-Ll-5yi"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D8w-Zq-Qqa">
+                                <rect key="frame" x="20" y="551" width="72" height="41"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="START">
+                                    <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </state>
+                                <connections>
+                                    <action selector="startTimer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="amJ-zY-JWz"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B2X-DI-8HC">
+                                <rect key="frame" x="20" y="265" width="560" height="70"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="KXd-jW-49V"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="64"/>
+                                <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="gzm-Rl-F4g" firstAttribute="height" secondItem="D8w-Zq-Qqa" secondAttribute="height" id="40s-Ty-n4T"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="D8w-Zq-Qqa" secondAttribute="leading" id="Ps0-tD-fW5"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Jcu-ik-G9w" secondAttribute="bottom" constant="8" id="Xys-0M-XQk"/>
+                            <constraint firstItem="B2X-DI-8HC" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="brK-t4-uy5"/>
+                            <constraint firstItem="B2X-DI-8HC" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="dTp-C4-tob"/>
+                            <constraint firstItem="gzm-Rl-F4g" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="nx8-tO-gcz"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="D8w-Zq-Qqa" secondAttribute="bottom" constant="8" id="qzi-J8-4on"/>
+                            <constraint firstItem="gzm-Rl-F4g" firstAttribute="centerY" secondItem="D8w-Zq-Qqa" secondAttribute="centerY" id="tXp-cR-yGA"/>
+                            <constraint firstItem="B2X-DI-8HC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tZE-by-gWd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Jcu-ik-G9w" secondAttribute="trailing" id="uHQ-RB-WiD"/>
+                            <constraint firstItem="B2X-DI-8HC" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="vK5-DX-8xD"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="timeLabel" destination="B2X-DI-8HC" id="7ZT-Z4-KnG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="460" y="399"/>
+        </scene>
+    </scenes>
+</document>

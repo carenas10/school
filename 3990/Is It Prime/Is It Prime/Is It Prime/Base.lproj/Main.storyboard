@@ -40,6 +40,9 @@
                                 <rect key="frame" x="351" y="90" width="37" height="30"/>
                                 <animations/>
                                 <state key="normal" title="TEST"/>
+                                <connections>
+                                    <action selector="testButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="P06-Vj-QGQ"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Result" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JZk-ZD-KhS">
                                 <rect key="frame" x="20" y="134" width="560" height="43"/>
@@ -66,6 +69,10 @@
                             <constraint firstItem="ipe-I9-kXC" firstAttribute="top" secondItem="NQo-7Q-Iv7" secondAttribute="bottom" constant="8" id="z8z-c0-2Sq"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="entryField" destination="avM-80-Iu1" id="bVn-0c-TyT"/>
+                        <outlet property="resultLabel" destination="JZk-ZD-KhS" id="mkh-os-0DY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

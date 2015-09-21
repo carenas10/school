@@ -1,14 +1,24 @@
 //
 //  ViewController.swift
-//  Is It Prime
+//  Stopwatch
 //
-//  Created by Jake Dawkins on 9/19/15.
+//  Created by Jake Dawkins on 9/20/15.
 //  Copyright © 2015 Jake Dawkins. All rights reserved.
 //
 
 import UIKit
 
 class ViewController: UIViewController {
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBAction func startTimer(sender: AnyObject) {
+        
+    }
+    @IBAction func stopTimer(sender: AnyObject) {
+        
+    }
+    @IBAction func resetTimer(sender: AnyObject) {
+        
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
