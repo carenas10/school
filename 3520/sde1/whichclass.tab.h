@@ -48,7 +48,8 @@ extern int yydebug;
     A = 258,
     B = 259,
     C = 260,
-    D = 261
+    D = 261,
+    E = 262
   };
 #endif
 

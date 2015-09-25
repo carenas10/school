@@ -69,7 +69,13 @@
 int yylex(void);
 int yyerror(char *s);
 
-#line 73 "whichclass.tab.c" /* yacc.c:339  */
+int countA = 0;
+int countB = 0;
+int countC = 0;
+int countD = 0;
+int countE = 0;
+
+#line 79 "whichclass.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -107,7 +113,8 @@ extern int yydebug;
     A = 258,
     B = 259,
     C = 260,
-    D = 261
+    D = 261,
+    E = 262
   };
 #endif
 
@@ -127,7 +134,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 131 "whichclass.tab.c" /* yacc.c:358  */
+#line 138 "whichclass.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -367,23 +374,23 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  3
+#define YYFINAL  9
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   1
+#define YYLAST   9
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  7
+#define YYNTOKENS  8
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  2
+#define YYNNTS  10
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  2
+#define YYNRULES  12
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  4
+#define YYNSTATES  18
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   261
+#define YYMAXUTOK   262
 
 #define YYTRANSLATE(YYX)                                                \
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -418,14 +425,15 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6
+       5,     6,     7
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    15,    15
+       0,    21,    21,    24,    27,    31,    42,    50,    57,    58,
+      59,    60,    61
 };
 #endif
 
@@ -434,7 +442,8 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "A", "B", "C", "D", "$accept", "lettera", YY_NULLPTR
+  "$end", "error", "$undefined", "A", "B", "C", "D", "E", "$accept",
+  "production", "lang1or3or4", "lang2", "lang5", "a", "b", "c", "d", "e", YY_NULLPTR
 };
 #endif
 
@@ -443,14 +452,14 @@ static const char *const yytname[] =
    (internal) symbol number NUM (which must be that of a token).  */
 static const yytype_uint16 yytoknum[] =
 {
-       0,   256,   257,   258,   259,   260,   261
+       0,   256,   257,   258,   259,   260,   261,   262
 };
 # endif
 
-#define YYPACT_NINF -4
+#define YYPACT_NINF -8
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-4)))
+  (!!((Yystate) == (-8)))
 
 #define YYTABLE_NINF -1
 
@@ -461,7 +470,8 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -3,    -4,     1,    -4
+      -3,    -8,    -8,     1,    -8,    -8,    -8,    -1,    -2,    -8,
+      -8,     0,    -8,     2,    -2,    -8,    -8,    -8
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -469,19 +479,20 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     2,     0,     1
+       0,     8,    10,     0,     2,     3,     4,     0,     0,     1,
+       9,     0,    11,     0,     6,    12,     7,     5
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -4,    -4
+      -8,    -8,    -8,    -8,    -8,    -8,    -8,    -5,    -7,    -8
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     2
+      -1,     3,     4,     5,     6,     7,    11,     8,    13,    16
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -489,31 +500,34 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-       1,     3
+       1,     9,     2,    10,    12,     2,    14,    17,     0,    15
 };
 
-static const yytype_uint8 yycheck[] =
+static const yytype_int8 yycheck[] =
 {
-       3,     0
+       3,     0,     5,     4,     6,     5,    11,    14,    -1,     7
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     3,     8,     0
+       0,     3,     5,     9,    10,    11,    12,    13,    15,     0,
+       4,    14,     6,    16,    15,     7,    17,    16
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,     7,     8
+       0,     8,     9,     9,     9,    10,    11,    12,    13,    14,
+      15,    16,    17
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     1
+       0,     2,     1,     1,     1,     4,     3,     3,     1,     1,
+       1,     1,     1
 };
 
 
@@ -1190,13 +1204,69 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 16 "whichclass.y" /* yacc.c:1646  */
-    {printf("recognized A\n");}
-#line 1196 "whichclass.tab.c" /* yacc.c:1646  */
+#line 21 "whichclass.y" /* yacc.c:1646  */
+    { 
+	/*printf("counts: %d, %d, %d, %d, %d\n",countA, countB, countC, countD, countE);*/
+}
+#line 1212 "whichclass.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 3:
+#line 24 "whichclass.y" /* yacc.c:1646  */
+    {
+	/*printf("counts: %d, %d, %d, %d, %d\n",countA, countB, countC, countD, countE);*/
+}
+#line 1220 "whichclass.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 4:
+#line 27 "whichclass.y" /* yacc.c:1646  */
+    {
+	/*printf("counts: %d, %d, %d, %d, %d\n",countA, countB, countC, countD, countE);*/
+}
+#line 1228 "whichclass.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 5:
+#line 31 "whichclass.y" /* yacc.c:1646  */
+    {
+	if(countA == countB && countC == countD && countB == countC){
+		/*printf("found lang 3\n");*/
+		printf(">>>> Grammatical Recognizer (SDE1) <<<<<<\nGrammar G3 Recognized\n");
+	} else if(countA == countC && countB == countD && countA != countB){
+		printf("found lang 4\n");
+	} else if(countA != countB && countB != countD){
+		printf("found lang 1\n");
+	} else printf("bruh...\n");
+}
+#line 1243 "whichclass.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 6:
+#line 42 "whichclass.y" /* yacc.c:1646  */
+    {
+	if(countA == countB && countB == countC){
+		printf("found lang 2\n");
+	} else {
+		printf("rejected lang 2\n");
+	}
+}
+#line 1255 "whichclass.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 7:
+#line 50 "whichclass.y" /* yacc.c:1646  */
+    {
+	if(countE == countD+1 && countD == countC+1){
+		printf("found lang 5\n");
+	}
+
+}
+#line 1266 "whichclass.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1200 "whichclass.tab.c" /* yacc.c:1646  */
+#line 1270 "whichclass.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires

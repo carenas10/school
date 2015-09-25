@@ -1,7 +1,32 @@
-%% /* TERMINALS: Capital */
-[ \r\t\n]+ /*whitespace*/
-"a" return A;
-"b" return B;
-"c" return C;
-"d" return D;
+%option nounput
+%option noinput
+
+%%
+
+[ \r\t\n]+ /*whitespace. no action*/
+a+ {
+countA = strlen(yytext);
+return A;
+}
+
+b+ {
+countB = strlen(yytext);
+return B;
+}
+
+c+ {
+countC = strlen(yytext);
+return C;
+}
+
+d+ {
+countD = strlen(yytext);
+return D;
+}
+
+e+ {
+countE = strlen(yytext);
+return E;
+}
+
 %%
