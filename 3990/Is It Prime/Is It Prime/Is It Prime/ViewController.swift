@@ -24,9 +24,6 @@ class ViewController: UIViewController {
     }
     @IBOutlet weak var resultLabel: UILabel!
     
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -40,6 +37,7 @@ class ViewController: UIViewController {
     
     func isItPrime(test:Int) -> Bool {
         var i : Int = 3 //tester
+        if test == 2 {return true}
         if test % 2 == 0 {return false} //even number
         while i < test / 2 + 1 {
             if test % i == 0 {
@@ -49,7 +47,4 @@ class ViewController: UIViewController {
         }
         return true
     }
-
-
 }
-

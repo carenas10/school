@@ -1,0 +1,22 @@
+#!/bin/bash
+#PBS -l select=3:ncpus=16:mpiprocs=16:mem=10gb
+#PBS -l walltime=05:00:00
+#PBS -o log.out
+
+cd "$PBS_O_WORKDIR"
+
+mpicc dynamic_mpi.c
+
+mpirun -np 3 ./a.out
+mpirun -np 5 ./a.out
+mpirun -np 9 ./a.out
+mpirun -np 17 ./a.out
+mpirun -np 33 ./a.out
+
+mpicc static_mpi.c
+
+mpirun -np 3 ./a.out
+mpirun -np 5 ./a.out
+mpirun -np 9 ./a.out
+mpirun -np 17 ./a.out
+mpirun -np 33 ./a.out
