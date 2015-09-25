@@ -1,3 +1,129 @@
 #!/bin/bash
 
 ./buildit whichclass
+
+# g1
+# "----------------G1 TESTS----------------"
+echo "*****************************************************"
+echo "test file name: aaabbcd"
+echo "test file contents:"
+echo "aaabbcd"
+printf "grammar recognizer result:\n\n"
+./whichclass < test_files/aaabbcd
+echo "*****************************************************"
+
+echo "*****************************************************"
+echo "test file name: abbcddd"
+echo "test file contents:"
+echo "abbcddd"
+printf "grammar recognizer result:\n\n"
+./whichclass < test_files/abbcddd
+echo "*****************************************************"
+
+# g2
+# "----------------G2 TESTS----------------"
+echo "*****************************************************"
+echo "test file name: aabbcc"
+echo "test file contents:"
+echo "aabbcc"
+printf "grammar recognizer result:\n\n"
+./whichclass < test_files/aabbcc
+echo "*****************************************************"
+
+echo "*****************************************************"
+echo "test file name: abc"
+echo "test file contents:"
+echo "abc"
+printf "grammar recognizer result:\n\n"
+./whichclass < test_files/abc
+echo "*****************************************************"
+
+# g3
+# "----------------G3 TESTS----------------"
+echo "*****************************************************"
+echo "test file name: aaabbbcccddd"
+echo "test file contents:"
+echo "aaabbbcccddd"
+printf "grammar recognizer result:\n\n"
+./whichclass < test_files/aaabbbcccddd
+echo "*****************************************************"
+
+echo "*****************************************************"
+echo "test file name: abcd"
+echo "test file contents:"
+echo "abcd"
+printf "grammar recognizer result:\n\n"
+./whichclass < test_files/abcd
+echo "*****************************************************"
+
+# g4
+# "----------------G4 TESTS----------------"
+echo "*****************************************************"
+echo "test file name: aaabbbbcccdddd"
+echo "test file contents:"
+echo "aaabbbbcccdddd"
+printf "grammar recognizer result:\n\n"
+./whichclass < test_files/aaabbbbcccdddd
+echo "*****************************************************"
+
+echo "*****************************************************"
+echo "test file name: aabccd"
+echo "test file contents:"
+echo "aabccd"
+printf "grammar recognizer result:\n\n"
+./whichclass < test_files/aabccd
+echo "*****************************************************"
+
+# g5
+# "----------------G5 TESTS----------------"
+echo "*****************************************************"
+echo "test file name: cccddddeeeee"
+echo "test file contents:"
+echo "cccddddeeeee"
+printf "grammar recognizer result:\n\n"
+./whichclass < test_files/cccddddeeeee
+echo "*****************************************************"
+
+echo "*****************************************************"
+echo "test file name: cddeee"
+echo "test file contents:"
+echo "cddeee"
+printf "grammar recognizer result:\n\n"
+./whichclass < test_files/cddeee
+echo "*****************************************************"
+
+# none
+# "----------------INVALID TESTS----------------"
+echo "*****************************************************"
+echo "test file name: cddfeee"
+echo "test file contents:"
+echo "cddfeee"
+printf "grammar recognizer result:\n\n"
+./whichclass < test_files/cddfeee
+echo "*****************************************************"
+
+echo "*****************************************************"
+echo "test file name: ffddee"
+echo "test file contents:"
+echo "ffddee"
+printf "grammar recognizer result:\n\n" 
+./whichclass < test_files/ffddee
+echo "*****************************************************"
+
+echo "*****************************************************"
+echo "test file name: aaabbc"
+echo "test file contents:"
+echo "aaabbc"
+printf "grammar recognizer result:\n\n"
+./whichclass < test_files/aaabbc
+echo "*****************************************************"
+
+echo "*****************************************************"
+echo "test file name: ccddee"
+echo "test file contents:"
+echo "ccddee"
+printf "grammar recognizer result:\n\n"
+./whichclass < test_files/ccddee
+echo "*****************************************************"
+
+./test_files/clean

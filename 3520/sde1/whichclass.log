@@ -1,0 +1,126 @@
+*****************************************************
+test file name: aaabbcd
+test file contents:
+aaabbcd
+grammar recognizer result:
+
+>>>> Grammatical Recognizer (SDE1) <<<<<<
+Grammar G1 Recognized
+*****************************************************
+*****************************************************
+test file name: abbcddd
+test file contents:
+abbcddd
+grammar recognizer result:
+
+>>>> Grammatical Recognizer (SDE1) <<<<<<
+Grammar G1 Recognized
+*****************************************************
+*****************************************************
+test file name: aabbcc
+test file contents:
+aabbcc
+grammar recognizer result:
+
+>>>> Grammatical Recognizer (SDE1) <<<<<<
+Grammar G2 Recognized
+*****************************************************
+*****************************************************
+test file name: abc
+test file contents:
+abc
+grammar recognizer result:
+
+>>>> Grammatical Recognizer (SDE1) <<<<<<
+Grammar G2 Recognized
+*****************************************************
+*****************************************************
+test file name: aaabbbcccddd
+test file contents:
+aaabbbcccddd
+grammar recognizer result:
+
+>>>> Grammatical Recognizer (SDE1) <<<<<<
+Grammar G3 Recognized
+*****************************************************
+*****************************************************
+test file name: abcd
+test file contents:
+abcd
+grammar recognizer result:
+
+>>>> Grammatical Recognizer (SDE1) <<<<<<
+Grammar G3 Recognized
+*****************************************************
+*****************************************************
+test file name: aaabbbbcccdddd
+test file contents:
+aaabbbbcccdddd
+grammar recognizer result:
+
+>>>> Grammatical Recognizer (SDE1) <<<<<<
+Grammar G4 Recognized
+*****************************************************
+*****************************************************
+test file name: aabccd
+test file contents:
+aabccd
+grammar recognizer result:
+
+>>>> Grammatical Recognizer (SDE1) <<<<<<
+Grammar G4 Recognized
+*****************************************************
+*****************************************************
+test file name: cccddddeeeee
+test file contents:
+cccddddeeeee
+grammar recognizer result:
+
+>>>> Grammatical Recognizer (SDE1) <<<<<<
+Grammar G5 Recognized
+*****************************************************
+*****************************************************
+test file name: cddeee
+test file contents:
+cddeee
+grammar recognizer result:
+
+>>>> Grammatical Recognizer (SDE1) <<<<<<
+Grammar G5 Recognized
+*****************************************************
+*****************************************************
+test file name: cddfeee
+test file contents:
+cddfeee
+grammar recognizer result:
+
+>>>> Grammatical Recognizer (SDE1) <<<<<<
+’Sorry,input string not in any of the recognized grammars (None of the Above)’
+*****************************************************
+*****************************************************
+test file name: ffddee
+test file contents:
+ffddee
+grammar recognizer result:
+
+>>>> Grammatical Recognizer (SDE1) <<<<<<
+’Sorry,input string not in any of the recognized grammars (None of the Above)’
+*****************************************************
+*****************************************************
+test file name: aaabbc
+test file contents:
+aaabbc
+grammar recognizer result:
+
+>>>> Grammatical Recognizer (SDE1) <<<<<<
+’Sorry,input string not in any of the recognized grammars (None of the Above)’
+*****************************************************
+*****************************************************
+test file name: ccddee
+test file contents:
+ccddee
+grammar recognizer result:
+
+>>>> Grammatical Recognizer (SDE1) <<<<<<
+’Sorry,input string not in any of the recognized grammars (None of the Above)’
+*****************************************************

@@ -29,4 +29,10 @@ countE = strlen(yytext);
 return E;
 }
 
+. { 
+printf(">>>> Grammatical Recognizer (SDE1) <<<<<<\n’Sorry,input string not in any of the recognized grammars (None of the Above)’\n"); 
+//yyterminate(); 
+exit(1);
+}
+
 %%

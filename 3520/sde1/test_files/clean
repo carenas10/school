@@ -1,0 +1,1 @@
+rm -f lex.yy.c whichclass  whichclass.tab.c  whichclass.tab.h
