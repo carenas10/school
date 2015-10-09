@@ -1,0 +1,12 @@
+#!/bin/bash
+#PBS -l select=4:ncpus=8:mpiprocs=8:mem=10gb:interconnect=mx
+#PBS -l walltime=05:00:00
+#PBS -o log.out
+
+cd "$PBS_O_WORKDIR"
+
+mpicc total_wordcount_mpi.c
+
+mpirun -np 32 ./a.out ~/
+mpirun -np 16 ./a.out ~/
+mpirun -np 8 ./a.out ~/
