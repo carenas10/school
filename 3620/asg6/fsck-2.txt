@@ -1,0 +1,17 @@
+Status: HEALTHY
+Total size:		36869804207 B
+Total dirs:		8
+Total files:	1455
+Total symlinks:					0
+Total blocks (validated):		1559 (avg. block size 23649649 B)
+Minimally replicated blocks:	1559 (100.0 %)
+Over-replicated blocks:			0 (0.0 %)
+Under-replicated blocks:		1538 (98.652985 %)
+Mis-replicated blocks:			0 (0.0 %)
+Default replication factor:		3
+Average block replication:		2.0134702
+Corrupt blocks:					0
+Missing replicas:				1538 (32.884327 %)
+Number of data-nodes:			4
+Number of racks:				1
+FSCK ended at Thu Oct 15 22:33:17 EDT 2015 in 292 milliseconds
