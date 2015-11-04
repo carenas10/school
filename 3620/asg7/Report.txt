@@ -1,0 +1,52 @@
+Assignment 7 Project Report
+
+Spencer Provost - Part 1
+Abrar Basha - Part 2
+Jackson Dawkins - Part 4
+Sarah Malick - Part 3
+
+
+We took the design of Word Count Combiner and change the implimentation to serve this assignment.
+Each json object of tweet data was parsed (depending on the part) and then combined by the 
+reduce part of the map reduce model.
+
+Part 1 The map function took out the actual tweet from the object and then mapped the words to be counted.
+
+Part 2 We extracted the data desired to make the table and then generated a row in the table from that data.
+	Then that row was mapped and reduced into all of the other rows.
+
+Part 3 Similar to part 1, but we extracted the hashtag field of each tweet and then continued on with the map
+	functionality with only the hashtags from each tweet.
+
+Part 4 We used a hash map to compile the mass of data needed to create the word frequency table.
+
+Optimization - We modeled all parts from the combiner model, so we didnt need additional optimization.
+
+
+
+Run Time Report:
+
+32 Nodes 
+
+Part 1 Unique Words : 
+		Total time spent by all maps in occupied slots (ms)=1131884448
+		Total time spent by all reduces in occupied slots (ms)=13372176
+
+Part 2 Flatten : 
+		Total time spent by all maps in occupied slots (ms)=1105018304
+		Total time spent by all reduces in occupied slots (ms)=8567696
+
+Part 3 Unique Hashtags : 
+		Total time spent by all maps in occupied slots (ms)=1077396544
+		Total time spent by all reduces in occupied slots (ms)=7659456
+
+Part 4 Unique Tweets Count: 
+		Total time spent by all maps in occupied slots (ms)=1191675104
+		Total time spent by all reduces in occupied slots (ms)=10212768
+
+
+
+* We also have a number one ("1") on the end of some tables to show that it was added correctly. For error checking to the user.
+The "1" indicates that the output is unique (for the instance of a tweet ID it should be one indicating the tweet is unique)
+
+
