@@ -27,7 +27,7 @@ repeated_in/2
 	method: check if repeated in tail OR head is L and L is member of Tail
 	method: check if L is Head and if member of tail OR repeated in tail
 */
-repeated_in(L,RS) :- [H|T] = RS, (repeated_in(L,T); (L is H, is_member(L,T))),!. 
+repeated_in(L,RS) :- [H|T] = RS, (repeated_in(L,T); (L = H, is_member(L,T))),!. 
 
 /*
 at_most_one/2
@@ -61,9 +61,9 @@ exactly/3
 	N: Number of Occurrences
 	C: Element to count occurrences of
 */
-exactly(L,N,C) :- [] = L, N is 0,!. 									%% CASE: empty list
-exactly(L,N,C) :- [H|T] = L, H =:= C, exactly(T,NUM,C), N is 1 + NUM,!. %% CASE: head is C
-exactly(L,N,C) :- [H|T] = L, H =\= C, exactly(T,N,C),!. 				%% CASE: head is not C
+exactly(L,N,C) :- [] = L, C = C, N is 0,!. 								%% CASE: empty list
+exactly(L,N,C) :- [H|T] = L, H = C, exactly(T,NUM,C), N is 1 + NUM,!. 	%% CASE: head is C
+exactly(L,N,C) :- [H|T] = L, not(H = C), exactly(T,NUM,C), N is NUM,!. 		%% CASE: head is not C
 
 /*
 exactly_2_of_each/3

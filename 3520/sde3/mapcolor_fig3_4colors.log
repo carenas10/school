@@ -1,0 +1,1065 @@
+//------------------------ case5 ------------------------
+
+?- ['mapcolor_fig3_4colors.pro'].
+%  sde3_auxiliary_predicates.pro compiled 0.00 sec, 15 clauses
+% mapcolor_fig3_4colors.pro compiled 0.00 sec, 27 clauses
+true.
+
+?- case5.
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green blue green green white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green blue green red white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green blue green green white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green blue green red white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green blue green green red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green blue green white red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green blue green green red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green blue green white red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green blue white green red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green blue white white red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green white green blue red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green white green green red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green white green blue red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green white green green red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green white green red blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green white green green blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green white green red blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green white green green blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green white blue blue red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green white blue green red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue green blue red white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue green blue blue white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue green blue red white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue green blue blue white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue green blue white red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue green blue blue red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue green blue white red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue green blue blue red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue green white white red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue green white blue red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue white green blue red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue white green green red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue white blue red green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue white blue blue green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue white blue red green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue white blue blue green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue white blue blue red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue white blue green red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue white blue blue red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue white blue green red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white green blue white red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white green blue blue red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white green white white red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white green white blue red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white green white white red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white green white blue red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white green white white blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white green white red blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white green white white blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white green white red blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white blue green green red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white blue green white red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white blue white green red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white blue white white red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white blue white green red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white blue white white red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white blue white white green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white blue white red green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white blue white white green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white blue white red green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white green blue red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white green green red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white green blue red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white green green red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white green red blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white green green blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white green red blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white green green blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white red red blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white red green blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green red green green white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green red green blue white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green red green green white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green red green blue white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green red green green blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green red green white blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green red green green blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green red green white blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green red white green blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green red white white blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green white white red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green white blue red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green white white red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green white blue red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green white white blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green white red blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green white white blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green white red blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green red white blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green red red blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red green green blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red green white blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red white green blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red white white blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red white green blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red white white blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red white blue green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red white white green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red white blue green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red white white green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white red white green blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white red white white blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white red white green blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white red white white blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white red white blue green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white red white white green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white red white blue green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white red white white green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white red blue blue green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white red blue white green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white blue white green red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white blue white white red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white blue white green red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white blue white white red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white blue white white green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white blue white red green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white blue white white green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white blue white red green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white blue red white green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white blue red red green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red white red red green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red white red blue green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red white red red green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red white red blue green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red white red red blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red white red green blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red white red red blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red white red green blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red white blue red green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red white blue blue green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red blue white white green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red blue white red green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red blue red white green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red blue red red green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red blue red white green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red blue red red green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red blue red green white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red blue red red white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red blue red green white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red blue red red white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red green white white blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red green white red blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red green red white blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red green red red blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red green red white blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red green red red blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red green red red white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red green red blue white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red green red red white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red green red blue white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white green red blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white green green blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white red red green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white red blue green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white red red green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white red blue green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white red red blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white red green blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white red red blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white red green blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue red white green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue red red green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue red white green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue red red green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue red green white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue red red white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue red green white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue red red white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue green green white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue green red white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red green red white blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red green red red blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red green red white blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red green red red blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red green red red white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red green red blue white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red green red red white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red green red blue white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red green blue red white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red green blue blue white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white red red green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white red blue green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white blue red green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white blue blue green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white blue red green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white blue blue green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white blue blue red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white blue green red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white blue blue red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white blue green red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue red white blue green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue red white white green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue red blue blue green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue red blue white green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue red blue blue green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue red blue white green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue red blue green white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue red blue blue white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue red blue green white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue red blue blue white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red blue blue green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red blue white green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red blue blue green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red blue white green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red blue green white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red blue blue white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red blue green white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red blue blue white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red green green white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red green blue white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green red red white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green red blue white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green blue red white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green blue blue white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green blue red white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green blue blue white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green blue white red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green blue blue red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green blue white red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green blue blue red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green red blue green white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green red blue blue white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green red green green white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green red green blue white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green red green green white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green red green blue white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green red green green blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green red green white blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green red green green blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green red green white blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue red green white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue red red white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue green green white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue green red white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue green green white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue green red white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue green green red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue green white red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue green green red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue green white red blue
+false.
+
+//------------------------ case5_atmost_1green ------------------------
+
+?- ['mapcolor_fig3_4colors.pro'].
+%  sde3_auxiliary_predicates.pro compiled 0.00 sec, 1 clauses
+% mapcolor_fig3_4colors.pro compiled 0.00 sec, 14 clauses
+true.
+
+?- case5_atmost_1green.
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green blue white white red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green white blue blue red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue green blue red white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue green blue blue white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue green blue white red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue green blue blue red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue white green blue red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue white blue red green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue white blue blue green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue white blue red green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue white blue blue green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue white blue blue red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue white blue blue red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue white blue green red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white green white white red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white green white blue red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white green white white blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white green white red blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white blue green white red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white blue white green red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white blue white white red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white blue white white red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white blue white white green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white blue white red green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white blue white white green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white blue white red green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white red red blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green red white white blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green white white red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green white blue red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green white white blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green white red blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red green white blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red white green blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red white white blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red white white blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red white blue green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red white white green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red white blue green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red white white green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white red white white blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white blue white white red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red white red red blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red blue red red white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red green red white blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red green red red blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red green red red white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red green red blue white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white green red blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white red red green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white red blue green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white red red green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white red blue green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white red red blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white red red blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white red green blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue red white green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue red red green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue red white green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue red red green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue red red white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue red green white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue red red white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue green red white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red green red white blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red green red red blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red green red red white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red green red blue white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white blue blue red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue red blue blue white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red blue blue green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red blue white green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red blue blue green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red blue white green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red blue blue white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red blue green white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red blue blue white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red green blue white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green blue red white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green blue blue white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green blue white red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green blue blue red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green red blue blue white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue red red white blue
+false.
+
+//------------------------ case5_exactly_1red ------------------------
+
+?- ['mapcolor_fig3_4colors.pro'].
+%  sde3_auxiliary_predicates.pro compiled 0.00 sec, 15 clauses
+% mapcolor_fig3_4colors.pro compiled 0.00 sec, 33 clauses
+true.
+
+?- case5_exactly_1red.
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green blue green green white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green white green green blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue green blue blue white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue white blue blue green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white green white white blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white blue white white green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white green blue red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white green green red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white green blue red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white green green red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white green red blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white green green blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white red green blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green red green green white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green red green blue white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green red green green blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green red green white blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green white white red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green white blue red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green white white red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green white blue red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green white white blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green white red blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green red white blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red white green blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red white white blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red white blue green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red white white green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white red white green blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white red white white blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white red white blue green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white red white white green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white blue white green red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white blue white white red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white blue white green red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white blue white white red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white blue white white green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white blue white red green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white blue red white green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red white blue blue green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red blue white white green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red green white white blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white green green blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue green green white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red green blue blue white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white red blue green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white blue red green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white blue blue green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white blue blue red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white blue green red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white blue blue red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white blue green red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue red blue blue green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue red blue white green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue red blue green white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue red blue blue white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red blue blue green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red blue white green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red blue green white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red blue blue white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green red blue white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green blue red white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green blue blue white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green blue white red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green blue blue red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green blue white red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green blue blue red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green red green green white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green red green blue white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green red green green blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green red green white blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue red green white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue green green white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue green red white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue green green red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue green white red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue green green red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue green white red blue
+false.
+
+//------------------------ case5_exactly_3_green ------------------------
+
+?- ['mapcolor_fig3_4colors.pro'].
+%  sde3_auxiliary_predicates.pro compiled 0.00 sec, 15 clauses
+% mapcolor_fig3_4colors.pro compiled 0.01 sec, 33 clauses
+true.
+
+?- case5_exactly_3_green.
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green blue green green white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green blue green green white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green blue green green red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green blue green green red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green white green green red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green white green green red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green white green green blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green white green green blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white green green red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white green green red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white green green blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white green green blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green red green green white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green red green green white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green red green green blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green red green green blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white red white green blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white blue white green red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red white red green blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red blue red green white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white blue green red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue red blue green white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green red green green white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green red green green white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green red green green blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green red green green blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue green green white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue green green white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue green green red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue green green red blue
+false.
+
+//------------------------ case5_exactly_2_blue_white ------------------------
+
+?- ['mapcolor_fig3_4colors.pro'].
+%  sde3_auxiliary_predicates.pro compiled 0.00 sec, 15 clauses
+% mapcolor_fig3_4colors.pro compiled 0.01 sec, 33 clauses
+true.
+
+?- case5_exactly_2_blue_white.
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green blue white white red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green white blue blue red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue green blue white red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue white green blue red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue white blue red green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue white blue green red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white green white blue red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white blue green white red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white blue white green red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white blue white red green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white green blue red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white green red blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white green green blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white red red blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white red green blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green red green white blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green red white white blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green white blue red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green white red blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green white red blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green red white blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red green white blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red white green blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red white green blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red white blue green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white red white blue green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white blue white green red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white blue white red green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white blue red white green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red white blue blue green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red blue white white green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red green white white blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red green red white blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white green red blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white green green blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white red blue green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white red red blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white red green blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue red white green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue red green white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue red red white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue green green white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue green red white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red green red blue white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red green blue blue white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white red blue green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white blue red green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white blue green red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue red blue white green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red blue white green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red blue green white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red blue green white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red green blue white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green red blue white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green blue red white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green blue red white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green blue white red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green red blue blue white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green red green blue white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue red green white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue red red white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue green green white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue green red white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue green white red blue
+false.
+
+//------------------------ case5_exactly_3_blue_2_white_2_green ------------------------
+
+?- ['mapcolor_fig3_4colors.pro'].
+%  sde3_auxiliary_predicates.pro compiled 0.00 sec, 15 clauses
+% mapcolor_fig3_4colors.pro compiled 0.00 sec, 33 clauses
+true.
+
+?- case5_exactly_3_blue_2_white_2_green.
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white blue blue green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green blue blue white green
+false.
+
+//------------------------ case5_exactly_4_blue_2_white_2_green ------------------------
+
+?- ['mapcolor_fig3_4colors.pro'].
+%  sde3_auxiliary_predicates.pro compiled 0.00 sec, 15 clauses
+% mapcolor_fig3_4colors.pro compiled 0.00 sec, 33 clauses
+true.
+
+?- case5_exactly_4_blue_2_white_2_green.
+false.

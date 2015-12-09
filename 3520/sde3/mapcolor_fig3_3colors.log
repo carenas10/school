@@ -1,0 +1,19 @@
+?- ['mapcolor_fig3_3colors.pro'].
+%  sde3_auxiliary_predicates.pro compiled 0.00 sec, 15 clauses
+% mapcolor_fig3_3colors.pro compiled 0.01 sec, 24 clauses
+true.
+
+?- case4.
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green blue green green red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue green blue blue red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green red green green blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red blue red red green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red green red red blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue red blue blue green red
+false.

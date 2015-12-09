@@ -1,0 +1,55 @@
+?- ['mapcolor_fig1_4colors.pro'].
+%  sde3_auxiliary_predicates.pro compiled 0.00 sec, 15 clauses
+% mapcolor_fig1_4colors.pro compiled 0.01 sec, 27 clauses
+true.
+
+?- case3.
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green white blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+blue red white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red blue
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white red green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue white
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white blue green
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green red
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+white green blue
+false.

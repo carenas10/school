@@ -1,0 +1,181 @@
+//------------------------ is_member ------------------------
+
+?- is_member(1,[1,2,3]).
+true .
+
+?- is_member(1,[2,3]).
+false.
+
+?- is_member(1,[2,3,1]).
+true .
+
+?- is_member(1,[1,2,3,1]).
+true .
+
+?- is_member(1,[]).
+false.
+
+//------------------------ print_list ------------------------
+
+?- print_list([1,2,3,4,4]).
+1 2 3 4 4
+true.
+
+?- print_list([1,2,3,4]).
+1 2 3 4
+true.
+
+?- print_list([]).
+true.
+
+?- print_list([1,2,3,4,5,6,7,8,9,8,7,6,5,4,3,2,1]).
+1 2 3 4 5 6 7 8 9 8 7 6 5 4 3 2 1
+true.
+
+//------------------------ repeated_in ------------------------
+
+?- repeated_in(4,[1,2,3,4]).
+false.
+
+?- repeated_in(4,[1,2,3,4,4]).
+true.
+
+?- repeated_in(1,[1,2,1,3,4,4]).
+true.
+
+?- repeated_in(2,[1,2,1,3,4,4]).
+false.
+
+?- repeated_in(2,[]).
+false.
+
+//------------------------ at_most_one ------------------------
+
+?- at_most_one(1,[1,2,3,4,5]).
+true.
+
+?- at_most_one(0,[1,2,3,4,5]).
+true.
+
+?- at_most_one(0,[1,2,3,4,5,1]).
+true.
+
+?- at_most_one(0,[1,2,3,4,5,0]).
+true.
+
+?- at_most_one(0,[1,2,3,4,5,0,0]).
+false.
+
+?- at_most_one(1,[1,2,3,4,1,5,0,0]).
+false.
+
+?- at_most_one(1,[]).
+true.
+
+//------------------------ at_least_one ------------------------
+
+?- at_least_one(1,[]).
+false.
+
+?- at_least_one(1,[1]).
+true.
+
+?- at_least_one(1,[1,1]).
+true.
+
+?- at_least_one(1,[1,1,0]).
+true.
+
+?- at_least_one(0,[1,1,0]).
+true.
+
+//------------------------ exactly_one ------------------------
+
+?- exactly_one(1,[]).
+false.
+
+?- exactly_one(1,[1]).
+true.
+
+?- exactly_one(1,[1,1]).
+false.
+
+?- exactly_one(1,[0,1,1]).
+false.
+
+?- exactly_one(1,[0,1]).
+true.
+
+//------------------------ write_sols_general ------------------------
+?- write_solns_general([green, red, orange, blue, green]).
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green red orange blue green
+true.
+
+?- write_solns_general([green, green, green, green]).
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+green green green green
+true.
+
+?- write_solns_general([]).
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+true.
+
+?- write_solns_general([red, red, orange, blue, red]).
+A coloring solution with colors in order of regions (Ri, i=1,2...) is:
+red red orange blue red
+true.
+
+//------------------------ exactly ------------------------
+
+?- exactly([1,2,3,4,1,1],3,1).
+true.
+
+?- exactly([1,2,3,4,1,1],2,1).
+false.
+
+?- exactly([2,3,4],0,1).
+true.
+
+?- exactly([2,3,4],1,1).
+false.
+
+//------------------------ exactly_2_of_each ------------------------
+
+?- exactly_2_of_each([1,1,2,2,3,4,5],1,2).
+true.
+
+?- exactly_2_of_each([1,2,2,3,4,5],1,2).
+false.
+
+?- exactly_2_of_each([1,1,2,3,4,5],1,2).
+false.
+
+?- exactly_2_of_each([1,1,2,3,4,5,2],1,2).
+true.
+
+?- exactly_2_of_each([1,1,2,3,4,5,2,1],1,2).
+false.
+
+?- exactly_2_of_each([1,1,2,3,4,5,2,2],1,2).
+false.
+
+//------------------------ exactly_N_of_each ------------------------
+
+?- exactly_N_of_each([1,2,2,3,3,3],1,1,2,2,3,3).
+true.
+
+?- exactly_N_of_each([1,2,2,3,3,3],2,1,2,2,3,3).
+false.
+
+?- exactly_N_of_each([1,2,2,3,3,3],1,1,1,2,3,3).
+false.
+
+?- exactly_N_of_each([1,2,2,3,3,3],1,1,2,2,1,3).
+false.
+
+?- exactly_N_of_each([1,2,2,3,3,3],0,1,2,2,3,3).
+false.
+
+?- exactly_N_of_each([],0,1,0,2,0,3).
+true.
