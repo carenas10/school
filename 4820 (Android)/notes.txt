@@ -1,0 +1,3 @@
+Short message (Toast)
+	Toast.makeText(getApplicationContext(),"Hi, Jake", Toast.LENGTH_LONG).show();
+
