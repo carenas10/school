@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -28,7 +28,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:textSize="50sp"
-        android:gravity="center_horizontal" />
+        android:gravity="center_horizontal"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="match_parent"
@@ -41,72 +42,92 @@
         android:gravity="right"
         android:textSize="20sp" />
 
-    <EditText
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editTitle"
-        android:hint="@string/EnterTimerName"
         android:layout_below="@+id/nextTimerName"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="107dp" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:id="@+id/linearOne">
 
-    <Button
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTitle"
+            android:hint="@string/EnterTimerName" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/FiveMinutes"
+            android:id="@+id/button"
+            android:onClick="newTimer" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/TenMinutes"
+            android:id="@+id/button2"
+            android:onClick="newTimer" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/FiveMinutes"
-        android:id="@+id/button"
-        android:layout_below="@+id/editTitle"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:onClick="newTimer" />
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/linearOne"
+        android:id="@+id/linearTwo">
 
-    <Button
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/editTime"
+            android:hint="@string/TimeInMinutes" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Custom"
+            android:id="@+id/button3"
+            android:onClick="newTimer" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/TenMinutes"
-        android:id="@+id/button2"
-        android:layout_below="@+id/editTitle"
-        android:layout_toRightOf="@+id/button"
-        android:onClick="newTimer" />
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/linearTwo"
+        android:layout_marginTop="50dp"
+        android:id="@+id/timerControlLayout">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Custom"
-        android:id="@+id/button3"
-        android:layout_below="@+id/editTitle"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/button2"
-        android:onClick="newTimer" />
+        <ImageButton
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:id="@+id/playPauseButton"
+            android:src="@drawable/play"
+            android:background="#00efefef"
+            android:scaleType="fitCenter"
+            android:onClick="playPauseTimer"
+            android:contentDescription="@string/PlayPauseBtn"
+             />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/nextButton"
-        android:src="@drawable/next"
-        android:background="#00ffffff"
-        android:scaleType="fitCenter"
-        android:layout_alignRight="@+id/button3"
-        android:layout_alignLeft="@+id/button3"
-        android:layout_below="@+id/button"
-        android:onClick="nextTimer"
-        android:contentDescription="@string/NextTimerBtn" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/playPauseButton"
-        android:src="@drawable/play"
-        android:background="#00efefef"
-        android:scaleType="fitCenter"
-        android:layout_alignTop="@+id/nextButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/button"
-        android:layout_alignEnd="@+id/button"
-        android:onClick="playPauseTimer"
-        android:contentDescription="@string/PlayPauseBtn" />
+        <ImageButton
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:id="@+id/nextButton"
+            android:src="@drawable/next"
+            android:background="#00ffffff"
+            android:scaleType="fitCenter"
+            android:onClick="nextTimer"
+            android:contentDescription="@string/NextTimerBtn"
+             />
+    </LinearLayout>
 
 </RelativeLayout>

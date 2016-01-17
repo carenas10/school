@@ -2,9 +2,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.jakedawkins.onething.MainActivity">
+
+    <!-- info button markup -->
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:id="@string/action_info"
+        android:icon="@drawable/ic_dialog_info"
+        android:title="@string/action_info"
+        android:onClick="toInfoActivity"
+        app:showAsAction="ifRoom"/>
+
+
 </menu>

@@ -1,15 +1,25 @@
+/*
+
+ */
+
 package com.jakedawkins.onething;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.concurrent.TimeUnit;
 import android.widget.Toast;
@@ -17,6 +27,24 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
+    //queue of timers
+    ArrayList<TimerTuple> timerList = null;
+
+    private TextView display = null;
+    private static final String FORMAT = "%02d:%02d";
+    private CountDownTimer timer = null;
+
+    private boolean isRunning;
+    private boolean timerIsDisplayed;
+
+    private long timeLeft;
+    private EditText editTitle;
+    private EditText editTime;
+
+    private TextView currentTitle;
+    private TextView nextTitle;
+
 
     public class TimerTuple {
         protected long time;
@@ -47,78 +75,75 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //queue of timers
-    ArrayList<TimerTuple> timerList = null;
-    private TextView display = null;
-    private static final String FORMAT = "%02d:%02d";
-    private CountDownTimer timer = null;
-
-    private boolean isRunning;
-    private boolean timerIsDisplayed;
-
-    private long timeLeft;
-    private EditText editTitle;
 
     //user clicks button to add a timer to the queue
     public void newTimer(View view){
-        Log.i("dbg","in newTimer");
+        //hide the keyboard first
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.
+                INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
+        String message = "";
+
         //check to make sure the name box has a name for the new timer
         if(editTitle.getText().toString().length() == 0){
-            Log.i("dbg len","length 0");
-            String message = "You must enter a title";//toast error
+            message = "You must enter a title";//toast the error
         } else {
-            Log.i("dbg len","length !0");
+
             //if there is a title, find out which time button they pressed
             long time = 0;
 
-            if(view.getId() == R.id.button) time = 300000;
-            else if(view.getId() == R.id.button2) time = 600000;
-            else { //custom button
-                time = 10000;
+            if(view.getId() == R.id.button){ //5 minute button
+                time = 300000;
             }
-            Log.i("dbg time",Long.toString(time));
+            else if(view.getId() == R.id.button2){ //10 minute button
+                time = 600000;
+            }
+            else if(view.getId() == R.id.button3){ //custom button
+                time = 60000 * Integer.parseInt(editTime.getText().toString());
+            }
 
             String title = editTitle.getText().toString();
-            Log.i("dbg title",title);
+            editTitle.setText("");
 
-            //add the new timer to the queue
-            Log.i("dbg list",Integer.toString(timerList.size()));
-            timerList.add(new TimerTuple(time, title));
-            Log.i("dbg list", Integer.toString(timerList.size()));
-            if(timerList.size() == 1 && !timerIsDisplayed){
+            if(timerIsDisplayed){
+                if(timerList.size() == 0) nextTitle.setText("NEXT: " + title);
+                timerList.add(new TimerTuple(time, title));
+            } else {
                 timeLeft = time;
+                currentTitle.setText(title);
                 display.setText(""+String.format(FORMAT,
-                        TimeUnit.MILLISECONDS.toMinutes(time) - TimeUnit.HOURS.toMinutes(
-                                TimeUnit.MILLISECONDS.toHours(time)),
+                        TimeUnit.MILLISECONDS.toMinutes(time),
                         TimeUnit.MILLISECONDS.toSeconds(time) - TimeUnit.MINUTES.toSeconds(
                                 TimeUnit.MILLISECONDS.toMinutes(time))));
+                timerIsDisplayed = true;
             }
 
-            String message = "Timer added to queue";
+            message = "Timer added to queue";
         }
 
-
-
-
         //toast the user
+        Toast.makeText(getApplicationContext(),message, Toast.LENGTH_SHORT).show();
     }
 
     //user hits button to advance the queue
     public void nextTimer(View view){
-        //no more timers
-        if(timerList.size() == 0){
-            //no timers left. toast the user
-            display.setText("DONE");
-            Toast.makeText(getApplicationContext(),"There are no more timers", Toast.LENGTH_LONG).show();
-            isRunning = false;
-            timerIsDisplayed = false;
-        }
-
         //stop current timer, if there is one running
         if(isRunning) {
             timer.cancel();
             isRunning = false;
             timerIsDisplayed = true;
+            timeLeft = 0;
+            ImageView playPauseButton = (ImageView)findViewById(R.id.playPauseButton);
+            playPauseButton.setImageResource(R.drawable.play);
+        }
+
+        //no more timers
+        if(timerList.size() == 0){
+            //no timers left. toast the user
+            display.setText("DONE");
+            currentTitle.setText("");
+            Toast.makeText(getApplicationContext(),"There are no more timers", Toast.LENGTH_SHORT).show();
         }
 
         //if there is another timer on the queue
@@ -126,30 +151,40 @@ public class MainActivity extends AppCompatActivity {
         else {
             TimerTuple nextTimer = timerList.remove(0);
             timeLeft = nextTimer.getTime();
+            currentTitle.setText(nextTimer.getName());
             display.setText(""+String.format(FORMAT,
-                    TimeUnit.MILLISECONDS.toMinutes(timeLeft) - TimeUnit.HOURS.toMinutes(
-                            TimeUnit.MILLISECONDS.toHours(timeLeft)),
+                    TimeUnit.MILLISECONDS.toMinutes(timeLeft),
                     TimeUnit.MILLISECONDS.toSeconds(timeLeft) - TimeUnit.MINUTES.toSeconds(
                             TimeUnit.MILLISECONDS.toMinutes(timeLeft))));
 
             //startTimer(nextTimer.getTime());
             timerIsDisplayed = true;
+
+            //set next title text
+            if(timerList.size() != 0) nextTitle.setText("NEXT: " + timerList.get(0).getName());
+            else nextTitle.setText("");
         }
 
     }
 
     public void playPauseTimer(View view){
+        ImageView playPauseButton = (ImageView)findViewById(R.id.playPauseButton);
 
         if(this.isRunning){
             //to pause: cancel the running timer.
             //time left already logged on tick
             timer.cancel();
             isRunning = false;
-        } else {
+            playPauseButton.setImageResource(R.drawable.play);
+
+        } else if (!this.isRunning && timeLeft > 0) {
             //if the counter is paused, resume by starting a new timer
             //with last logged remaining time
             startTimer(timeLeft);
             isRunning = true;
+            playPauseButton.setImageResource(R.drawable.pause);
+        } else {
+            Toast.makeText(getApplicationContext(),"You must make a timer first", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -169,10 +204,9 @@ public class MainActivity extends AppCompatActivity {
 
                 //ouput time left to user
                 display.setText(""+String.format(FORMAT,
-                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
-                                TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
-                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
-                                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                        TimeUnit.MILLISECONDS.toMinutes(timeLeft),
+                        TimeUnit.MILLISECONDS.toSeconds(timeLeft) - TimeUnit.MINUTES.toSeconds(
+                                TimeUnit.MILLISECONDS.toMinutes(timeLeft))));
             }
 
             public void onFinish(){
@@ -184,6 +218,11 @@ public class MainActivity extends AppCompatActivity {
         this.timerIsDisplayed = true;
     }
 
+    public void toInfoActivity(MenuItem item){
+        startActivity(new Intent(getApplicationContext(), InfoActivity.class));
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -192,10 +231,20 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         display =  (TextView)findViewById(R.id.timerDisplay);
+
+        currentTitle = (TextView)findViewById(R.id.runningTimerName);
+        nextTitle = (TextView)findViewById(R.id.nextTimerName);
+
+        currentTitle.setText("");
+        nextTitle.setText("");
+
         timerList =  new ArrayList<TimerTuple>();
         isRunning = false;
         timeLeft = 0;
+
         editTitle = (EditText)findViewById(R.id.editTitle);
+        editTime = (EditText)findViewById(R.id.editTime);
+
         timerIsDisplayed = false;
     }
 
@@ -213,11 +262,17 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        Log.i("info","button pressed");
 
         return super.onOptionsItemSelected(item);
+    }
+
+    //used to hide the keyboard
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.
+                INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        return true;
     }
 }
