@@ -27,6 +27,7 @@
         - Resizing Images: resizing images stackoverflow.com/questions/6267733/android-resizing-imageview-in-xml\n\n
         - Enabling Up Button Navigation: developer.android.com/training/appbar/up-action.html\n\n
         - Starting Another Activity: developer.android.com/training/basics/firstapp/starting-activity.html\n\n
-        - Rob Percival (CodeStars): http://codestars.usefedora.com/courses/the-complete-android-developer-course
+        - Rob Percival (CodeStars): http://codestars.usefedora.com/courses/the-complete-android-developer-course\n\n
+        - Hiding Keyboard: https://stackoverflow.com/questions/8697499/hide-keyboard-when-user-taps-anywhere-else-on-the-screen-in-android
     </string>
 </resources>
