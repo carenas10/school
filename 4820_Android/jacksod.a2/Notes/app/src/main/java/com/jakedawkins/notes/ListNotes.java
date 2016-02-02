@@ -14,6 +14,11 @@ import com.jakedawkins.notes.Note;
 
 import java.util.ArrayList;
 
+
+/*
+https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
+ */
+
 public class ListNotes extends AppCompatActivity {
 
     //get singleton notes list
