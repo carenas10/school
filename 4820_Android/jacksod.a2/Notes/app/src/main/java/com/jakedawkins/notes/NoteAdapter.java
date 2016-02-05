@@ -36,7 +36,7 @@ public class NoteAdapter extends ArrayAdapter<Note> {
 
         // Populate the data into the template view using the data object
         noteText.setText(note.getText());
-        noteTags.setText(note.tagsToString());
+        noteTags.setText(note.tagsToHashtags());
 
         // Return the completed view to render on screen
         return convertView;

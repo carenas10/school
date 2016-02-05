@@ -40,6 +40,16 @@ public class Note {
         return stringOfTags;
     }
 
+    public String tagsToHashtags(){
+        String stringOfTags = "";
+
+        for(int i=0; i<this.tags.size(); i++){
+            stringOfTags += "#" + this.tags.get(i) + " ";
+        }
+
+        return stringOfTags;
+    }
+
 
 
 }

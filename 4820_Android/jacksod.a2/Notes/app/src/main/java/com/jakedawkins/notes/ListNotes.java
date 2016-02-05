@@ -1,28 +1,30 @@
 package com.jakedawkins.notes;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import com.jakedawkins.notes.Note;
-
 import java.util.ArrayList;
 
-
-/*
-https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
- */
 
 public class ListNotes extends AppCompatActivity {
 
     //get singleton notes list
     ArrayList<Note> notes = AllNotes.getInstance().getNotes();
+    NoteAdapter adapter;
+
+
+    //launches new view for new note entry
+    public void newNote(View view){
+        Intent intent = new Intent(this, NewNote.class);
+        startActivity(intent);
+    }
 
 
     @Override
@@ -32,32 +34,22 @@ public class ListNotes extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        //sample data
-        Note note1 = new Note(); Note note2 = new Note(); Note note3 = new Note();
-        note1.setText("test1"); note2.setText("test2"); note3.setText("test3");
-        note1.addTag("tag1"); note1.addTag("tag2"); note1.addTag("tag3");
-        note2.addTag("tag1"); note2.addTag("tag2");
-        note3.addTag("tag1");
-        notes.add(note1); notes.add(note2); notes.add(note3);
-
         //fill notes table
         ListView listView = (ListView)findViewById(R.id.listView);
 
         //set up note adapter
-        NoteAdapter adapter = new NoteAdapter(this, notes);
+        adapter = new NoteAdapter(this, notes);
 
         //link adapter to listView
         listView.setAdapter(adapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(ListNotes.this, EditNote.class);
+                intent.putExtra("edit_index",position);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -78,7 +70,14 @@ public class ListNotes extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        //reload the listview with new data
+        adapter.notifyDataSetChanged();
     }
 }

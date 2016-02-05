@@ -16,7 +16,7 @@ public class AllNotes {
     }
 
     public void addNote(Note newNote){
-        this.notes.add(newNote);
+        this.notes.add(0,newNote);
     }
 
     private static final AllNotes allNotes = new AllNotes();
