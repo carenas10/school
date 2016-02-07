@@ -1,11 +1,25 @@
 <resources>
     <string name="app_name">Notes</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_new_note">NewNote</string>
+    <string name="title_activity_new_note">New Note</string>
     <string name="zero">0</string>
     <string name="textEntry">Enter note text</string>
     <string name="tagsEntry">Enter tags, separated by a space</string>
     <string name="save">Save</string>
     <string name="delete">Delete</string>
-    <string name="title_activity_edit_note">EditNote</string>
+    <string name="title_activity_edit_note">Edit Note</string>
+    <string name="search">Search</string>
+    <string name="info">Info</string>
+    <string name="title_activity_info">Info</string>
+    <string name="author">
+    	Developed by Jake Dawkins
+    	\nhttp://jakedawkins.com
+    </string>
+    <string name="instructions_title">Instructions</string>
+    <string name="instructions_content">
+    	To create a new note, tap the plus at the bottom of the main window. 
+    	\nTo edit a note, tap the note in the main window
+    </string>
+    <string name="ack_title">Acknowledgments</string>
+    <string name="ack_content">Back Navigation:\nhttps://developer.android.com/training/implementing-navigation/temporal.html \n\nStarting Another Activity:\nhttps://developer.android.com/training/basics/firstapp/starting-activity.html#RespondToButton \n\nLive Character Count:\nhttps://stackoverflow.com/questions/3013791/live-character-count-for-edittext \n\nCustom ArrayAdapter:\nhttps://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView \n\nPersistent Data:\nhttps://stackoverflow.com/questions/4878159/whats-the-best-way-to-share-data-between-activities \n\nRegular Expressions:\nhttp://www.tutorialspoint.com/java/java_regular_expressions.htm \n\nClickable ListView Items:\nhttps://stackoverflow.com/questions/19662233/how-open-new-activity-clicking-an-item-in-listview \n</string>
 </resources>

@@ -12,13 +12,22 @@
     tools:context="com.jakedawkins.notes.EditNote"
     tools:showIn="@layout/activity_edit_note">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/imageView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/note" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/zero"
         android:id="@+id/characterCount"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/imageView"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -51,6 +60,7 @@
         android:id="@+id/deleteButton"
         android:onClick="deleteNote"
         android:layout_below="@+id/enterTags"
+        android:layout_marginTop="10dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:background="#ad0000"
@@ -63,6 +73,9 @@
         android:id="@+id/saveButton"
         android:onClick="saveNote"
         android:layout_below="@+id/deleteButton"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimary"
+        android:textColor="#ffffff"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

@@ -36,7 +36,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jakedawkins.notes.ListNotes" />
         </activity>
-
+        <activity
+            android:name=".InfoActivity"
+            android:label="@string/title_activity_info"
+            android:parentActivityName=".ListNotes"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jakedawkins.notes.ListNotes" />
+        </activity>
     </application>
 
 </manifest>
