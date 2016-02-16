@@ -40,7 +40,7 @@ public class SearchActivity extends AppCompatActivity {
      */
     public void search(){
         EditText searchBox = (EditText)findViewById(R.id.searchBox);
-        String query = searchBox.getText().toString();
+        String query = searchBox.getText().toString().replaceAll("'","''");
 
         ///c identifies tags (priority)
         Cursor c = AllNotes.getInstance().getDB().rawQuery("SELECT DISTINCT notes.id FROM notes JOIN tags_notes ON notes.id=tags_notes.note_id JOIN tags ON tags.id=tags_notes.tag_id WHERE notes.textContent LIKE '%" + query + "%' OR tags.name LIKE '%" + query + "%' ORDER BY notes.id DESC", null);
