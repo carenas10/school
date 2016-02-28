@@ -195,6 +195,11 @@ public class AllNotes {
     public void deleteNote(int index){
         Note note = this.getNotes().remove(index);
 
+        if (note.getPicturePath() != null && note.getPicturePath().length() != 0) {
+            File noteFilePath = new File(note.getPicturePath());
+            noteFilePath.delete();
+        }
+
         this.db.execSQL("DELETE FROM notes WHERE id=" + Integer.toString(note.getID()));
         this.db.execSQL("DELETE FROM tags_notes WHERE note_id=" + Integer.toString(note.getID()));
     }
