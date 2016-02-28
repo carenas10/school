@@ -137,7 +137,7 @@ public class AllNotes {
                     newNote.setPicturePath("");
                 }
 
-                //add path to DB
+                ///add image path to DB
                 this.db.execSQL("UPDATE notes SET imagePath='" + newNote.getPicturePath() + "' WHERE id='" + newNote.getID() + "'");
             }
         }//end if
@@ -195,6 +195,7 @@ public class AllNotes {
     public void deleteNote(int index){
         Note note = this.getNotes().remove(index);
 
+        ///delete note from local storage
         if (note.getPicturePath() != null && note.getPicturePath().length() != 0) {
             File noteFilePath = new File(note.getPicturePath());
             noteFilePath.delete();

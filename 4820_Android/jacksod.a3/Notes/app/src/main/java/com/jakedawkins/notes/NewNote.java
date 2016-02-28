@@ -98,8 +98,11 @@ public class NewNote extends AppCompatActivity {
             toast.show();
         }
 
-        //add the image
-        note.setBitmap(this.bitmap);
+        ///add the image bitmap to the note for saving
+        if(this.bitmap != null){
+            note.setBitmap(this.bitmap);
+        }
+
 
         AllNotes.getInstance().addNewNote(note);
         finish(); ///return back to the previous activity
@@ -127,7 +130,7 @@ public class NewNote extends AppCompatActivity {
         this.addPhotoButton = (Button)findViewById(R.id.newPhotoButton);
         this.newImage = (ImageView)findViewById(R.id.newImage);
 
-        //hide the image/button layout
+        ///hide the image/button layout
         this.linear = (LinearLayout)findViewById(R.id.linearImageAndButtonView);
         this.linear.setVisibility(View.INVISIBLE);
         this.linear.getLayoutParams().height = 0;
@@ -135,12 +138,14 @@ public class NewNote extends AppCompatActivity {
 
     //---------------- PHOTO METHODS ----------------
 
+    ///user presses add photo button
     public void newPhoto(View view){
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(i, 1);
     }
 
     //TODO -- why doesn't this work until after typing something
+    ///removes the photo from the note
     public void removePhoto(View view){
         //hide the image/button layout
         this.linear.setVisibility(View.INVISIBLE);
@@ -151,8 +156,11 @@ public class NewNote extends AppCompatActivity {
 
         this.addPhotoButton.setVisibility(View.VISIBLE);
         this.addPhotoButton.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
+
+        this.bitmap = null;
     }
 
+    ///after the image picker returns
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);

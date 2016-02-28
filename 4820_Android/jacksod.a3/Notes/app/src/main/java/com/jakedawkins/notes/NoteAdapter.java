@@ -42,7 +42,7 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         noteText.setText(note.getText());
         noteTags.setText(note.tagsToHashtags());
 
-        //hide the image icon
+        ///hide the image icon if no image with note
         if(note.getPicturePath() == null){
             imageIcon.setVisibility(View.GONE);
         }

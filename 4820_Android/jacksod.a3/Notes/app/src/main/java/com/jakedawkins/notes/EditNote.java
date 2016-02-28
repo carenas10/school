@@ -151,7 +151,7 @@ public class EditNote extends AppCompatActivity {
         enterTextContent.setText(AllNotes.getInstance().getNotes().get(index).getText());
         enterTags.setText(AllNotes.getInstance().getNotes().get(index).tagsToString());
 
-        //load up the image
+        ///load up the image
         this.noteImage = (ImageView)findViewById(R.id.noteImage);
         if(AllNotes.getInstance().getNotes().get(index).getPicturePath() != null && !AllNotes.getInstance().getNotes().get(index).getPicturePath().equals("")){
             Log.i("IMAGE PATH", AllNotes.getInstance().getNotes().get(index).getPicturePath());

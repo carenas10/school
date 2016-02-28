@@ -21,8 +21,12 @@
     	\nTo edit a note, tap the note in the main window
     </string>
     <string name="ack_title">Acknowledgments</string>
-    <string name="ack_content">Back Navigation:\nhttps://developer.android.com/training/implementing-navigation/temporal.html \n\nStarting Another Activity:\nhttps://developer.android.com/training/basics/firstapp/starting-activity.html#RespondToButton \n\nLive Character Count:\nhttps://stackoverflow.com/questions/3013791/live-character-count-for-edittext \n\nCustom ArrayAdapter:\nhttps://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView \n\nPersistent Data:\nhttps://stackoverflow.com/questions/4878159/whats-the-best-way-to-share-data-between-activities \n\nRegular Expressions:\nhttp://www.tutorialspoint.com/java/java_regular_expressions.htm \n\nClickable ListView Items:\nhttps://stackoverflow.com/questions/19662233/how-open-new-activity-clicking-an-item-in-listview \n</string>
+    <string name="ack_content">Changing Launcher Icon:\nhttp://stackoverflow.com/questions/26615889/how-to-change-the-launcher-logo-of-an-app-in-android-studio\n\nIcon Template for Sketch 3:\nhttp://www.sketchappsources.com/resource/download-477.html\n\nRemoving View Programmatically:\nhttp://stackoverflow.com/questions/3805599/add-delete-view-from-layout\n\nHandling Images in SQLite:\nhttp://www.codeproject.com/Articles/995286/Saving-an-image-in-a-SQLite-database-in-your-Andro\n</string>
     <string name="title_activity_search">Search</string>
     <string name="addAPhoto">Add a Photo</string>
     <string name="remove">Remove</string>
+    <string name="something_new_title">Something New</string>
+    <string name="something_new">Adding an image to a note. The app saves the image locally with a path in the Database.</string>
+    <string name="issues_title">Known Issues</string>
+    <string name="issues">The image icons in lists of notes don\'t show for the first item in the list.</string>
 </resources>
