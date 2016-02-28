@@ -58,6 +58,8 @@ public class ListNotes extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        AllNotes.getInstance().setContext(getApplicationContext());
+
         ///load up the db and retrieve notes
         SQLiteDatabase db = this.openOrCreateDatabase("notes", MODE_PRIVATE, null);
         AllNotes.getInstance().setUpDB(db);

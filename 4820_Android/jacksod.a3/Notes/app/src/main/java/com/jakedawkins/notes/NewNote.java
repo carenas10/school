@@ -2,18 +2,27 @@ package com.jakedawkins.notes;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.text.TextWatcher;
 import android.text.Editable;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,6 +31,11 @@ public class NewNote extends AppCompatActivity {
     private EditText enterTextContent;
     private EditText enterTags;
     private TextView charCount;
+    private LinearLayout linear;
+    private Button addPhotoButton;
+    private Bitmap bitmap;
+    private ImageView newImage;
+
 
     ///to count the number of characters and display to the top right
     private final TextWatcher textCounter = new TextWatcher() {
@@ -84,6 +98,9 @@ public class NewNote extends AppCompatActivity {
             toast.show();
         }
 
+        //add the image
+        note.setBitmap(this.bitmap);
+
         AllNotes.getInstance().addNewNote(note);
         finish(); ///return back to the previous activity
     }
@@ -107,6 +124,61 @@ public class NewNote extends AppCompatActivity {
             enterTextContent.addTextChangedListener(textCounter);
         enterTags = (EditText)findViewById(R.id.enterTags);
         charCount = (TextView)findViewById(R.id.characterCount);
+        this.addPhotoButton = (Button)findViewById(R.id.newPhotoButton);
+        this.newImage = (ImageView)findViewById(R.id.newImage);
+
+        //hide the image/button layout
+        this.linear = (LinearLayout)findViewById(R.id.linearImageAndButtonView);
+        this.linear.setVisibility(View.INVISIBLE);
+        this.linear.getLayoutParams().height = 0;
+    }
+
+    //---------------- PHOTO METHODS ----------------
+
+    public void newPhoto(View view){
+        Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, 1);
+    }
+
+    //TODO -- why doesn't this work until after typing something
+    public void removePhoto(View view){
+        //hide the image/button layout
+        this.linear.setVisibility(View.INVISIBLE);
+        this.linear.getLayoutParams().height = 0;
+        Log.i("height", Integer.toString(this.linear.getLayoutParams().height));
+
+        //show the add photo button
+
+        this.addPhotoButton.setVisibility(View.VISIBLE);
+        this.addPhotoButton.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //Image picker
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null){
+            //location of selected image
+            Uri selectedImage = data.getData();
+
+            try {
+                //make a bitmap from the URI
+                this.bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+
+                this.newImage.setImageBitmap(this.bitmap);
+
+                //make the linear layout visible and expand
+                this.linear.setVisibility(View.VISIBLE);
+                this.linear.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
+
+                //hide the add photo button
+                this.addPhotoButton.setVisibility(View.INVISIBLE);
+                this.addPhotoButton.getLayoutParams().height = 0;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     //---------------- helper ----------------
@@ -130,5 +202,6 @@ public class NewNote extends AppCompatActivity {
 
         return matcher.matches();
     }
+
 
 }

@@ -12,61 +12,102 @@
     tools:context="com.jakedawkins.notes.NewNote"
     tools:showIn="@layout/activity_new_note">
 
-    <ImageView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/imageView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/note" />
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView3" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/zero"
-        android:id="@+id/characterCount"
-        android:layout_below="@id/imageView"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/imageView"
+                android:src="@drawable/note" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:id="@+id/enterTextContent"
-        android:layout_below="@+id/characterCount"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:maxLength="256"
-        android:hint="@string/textEntry" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/zero"
+                android:id="@+id/characterCount"
+                android:layout_gravity="end" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/enterTags"
-        android:layout_below="@+id/enterTextContent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:maxLength="100"
-        android:hint="@string/tagsEntry" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/enterTextContent"
+                android:maxLength="256"
+                android:hint="@string/textEntry" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/save"
-        android:id="@+id/saveButton"
-        android:onClick="saveNote"
-        android:layout_below="@+id/enterTags"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorPrimary"
-        android:textColor="#ffffff"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/enterTags"
+                android:maxLength="100"
+                android:hint="@string/tagsEntry" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearImageAndButtonView"
+                android:layout_marginTop="10dp"
+                >
+
+                <ImageView
+                    android:layout_height="wrap_content"
+                    android:id="@+id/newImage"
+                    android:layout_width="0px"
+                    android:layout_weight="1"
+                    android:maxHeight="100dp"
+                    android:maxWidth="100dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/note"
+                    android:layout_gravity="center"
+                    />
+
+                <Button
+                    android:layout_width="0px"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:text="@string/remove"
+                    android:id="@+id/button"
+                    android:textColor="#ffffff"
+                    android:background="#ad0000"
+                    android:onClick="removePhoto"
+                    />
+            </LinearLayout>
+            
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/addAPhoto"
+                android:id="@+id/newPhotoButton"
+                android:onClick="newPhoto"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="#ffffff"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/save"
+                android:id="@+id/saveButton"
+                android:onClick="saveNote"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="#ffffff"
+                />
 
 
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

@@ -2,6 +2,8 @@ package com.jakedawkins.notes;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -9,8 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +27,7 @@ public class EditNote extends AppCompatActivity {
     private EditText enterTags;
     private TextView charCount;
     private int index;
+    private ImageView noteImage;
 
     ///to count the number of characters and display to the top right
     private final TextWatcher textCounter = new TextWatcher() {
@@ -145,6 +150,18 @@ public class EditNote extends AppCompatActivity {
         ///set up the textfields
         enterTextContent.setText(AllNotes.getInstance().getNotes().get(index).getText());
         enterTags.setText(AllNotes.getInstance().getNotes().get(index).tagsToString());
+
+        //load up the image
+        this.noteImage = (ImageView)findViewById(R.id.noteImage);
+        if(AllNotes.getInstance().getNotes().get(index).getPicturePath() != null && !AllNotes.getInstance().getNotes().get(index).getPicturePath().equals("")){
+            Log.i("IMAGE PATH", AllNotes.getInstance().getNotes().get(index).getPicturePath());
+            Bitmap bitmap = BitmapFactory.decodeFile(AllNotes.getInstance().getNotes().get(index).getPicturePath());
+            this.noteImage.setImageBitmap(bitmap);
+        }
+
+
+
+
     }
 
     //---------------- helper ----------------

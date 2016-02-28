@@ -1,5 +1,7 @@
 package com.jakedawkins.notes;
 
+import android.graphics.Bitmap;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,6 +17,8 @@ public class Note {
     private String created;
     private String updated;
     private ArrayList<String> tags;
+    private String picturePath;
+    private Bitmap bitmap;
 
     public Note(){
         this.id = -1;
@@ -56,6 +60,14 @@ public class Note {
         this.updated = now();
     }
 
+    public void setPicturePath(String picturePath) {
+        this.picturePath = picturePath;
+    }
+
+    public void setBitmap(Bitmap bitmap){
+        this.bitmap = bitmap;
+    }
+
     //---------------- GETTERS ----------------
 
     public String getText(){
@@ -79,6 +91,14 @@ public class Note {
      */
     public ArrayList<String> getTags(){
         return this.tags;
+    }
+
+    public String getPicturePath(){
+        return this.picturePath;
+    }
+
+    public Bitmap getBitmap(){
+        return this.bitmap;
     }
 
     //---------------- HELPERS ----------------

@@ -12,72 +12,77 @@
     tools:context="com.jakedawkins.notes.EditNote"
     tools:showIn="@layout/activity_edit_note">
 
-    <ImageView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/imageView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/note" />
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView2" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/zero"
-        android:id="@+id/characterCount"
-        android:layout_below="@id/imageView"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:id="@+id/enterTextContent"
-        android:layout_below="@+id/characterCount"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:maxLength="256"
-        android:hint="@string/textEntry" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/imageView"
+                android:src="@drawable/note" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/enterTags"
-        android:layout_below="@+id/enterTextContent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:maxLength="100"
-        android:hint="@string/tagsEntry" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/zero"
+                android:id="@+id/characterCount"
+                android:layout_gravity="right"
+                />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/delete"
-        android:id="@+id/deleteButton"
-        android:onClick="deleteNote"
-        android:layout_below="@+id/enterTags"
-        android:layout_marginTop="10dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="#ad0000"
-        android:textColor="#f5f5f5" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/enterTextContent"
+                android:maxLength="256"
+                android:hint="@string/textEntry" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/save"
-        android:id="@+id/saveButton"
-        android:onClick="saveNote"
-        android:layout_below="@+id/deleteButton"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorPrimary"
-        android:textColor="#ffffff"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/enterTags"
+                android:maxLength="100"
+                android:hint="@string/tagsEntry" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/noteImage"
+                android:layout_gravity="center"
+                android:maxHeight="150dp"
+                android:adjustViewBounds="true"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/delete"
+                android:id="@+id/deleteButton"
+                android:onClick="deleteNote"
+                android:layout_marginTop="10dp"
+                android:background="#ad0000"
+                android:textColor="#f5f5f5" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/save"
+                android:id="@+id/saveButton"
+                android:onClick="saveNote"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+    </ScrollView>
 
 
 </RelativeLayout>

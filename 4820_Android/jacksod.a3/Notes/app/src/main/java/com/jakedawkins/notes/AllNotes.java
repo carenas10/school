@@ -1,7 +1,13 @@
 package com.jakedawkins.notes;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.util.Log;
+
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +20,7 @@ public class AllNotes {
     private SQLiteDatabase db = null;
     private int editIndex = 0;
     private static final AllNotes allNotes = new AllNotes();
-
+    private Context context;
 
     //---------------- GETTERS ----------------
 
@@ -48,13 +54,17 @@ public class AllNotes {
     public void setUpDB(SQLiteDatabase db){
         this.db = db;
 
-        this.db.execSQL("CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY, textContent TEXT NOT NULL, created TEXT NOT NULL, updated TEXT)");
+        this.db.execSQL("CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY, textContent TEXT NOT NULL, created TEXT NOT NULL, updated TEXT, imagePath TEXT)");
         this.db.execSQL("CREATE TABLE IF NOT EXISTS tags(id INTEGER PRIMARY KEY, name TEXT NOT NULL)");
         this.db.execSQL("CREATE TABLE IF NOT EXISTS tags_notes(id INTEGER PRIMARY KEY, tag_id INTEGER NOT NULL, note_id INTEGER NOT NULL, FOREIGN KEY (tag_id) REFERENCES tags(id), FOREIGN KEY (note_id) REFERENCES notes(id))");
     }
 
     public void setEditIndex(int editIndex){
         this.editIndex = editIndex;
+    }
+
+    public void setContext(Context context){
+        this.context = context;
     }
 
     //---------------- HELPERS ----------------
@@ -74,7 +84,6 @@ public class AllNotes {
      *   \param newNote| already initialized note. Needs to have text, created, tags
      */
     public void addNewNote(Note newNote){
-
 
         ///add to db if initialized
         if(this.db != null){
@@ -109,6 +118,28 @@ public class AllNotes {
                     this.db.execSQL("INSERT INTO tags_notes(tag_id, note_id) VALUES(" + Integer.toString(tagID) + "," + newNote.getID() + ")");
                 }
             }//end for
+
+            if(newNote.getBitmap() != null){
+                //add image to internal storage
+                File internalStorage = context.getDir("ReportPictures", Context.MODE_PRIVATE);
+                File reportFilePath = new File(internalStorage, newNote.getID() + ".png");
+                newNote.setPicturePath(reportFilePath.toString());
+
+                //compress and output
+                FileOutputStream fos = null;
+                try {
+                    fos = new FileOutputStream(reportFilePath);
+                    newNote.getBitmap().compress(Bitmap.CompressFormat.PNG, 100 /*quality*/, fos);
+                    fos.close();
+                }
+                catch (Exception ex) {
+                    Log.i("DATABASE", "Problem updating picture", ex);
+                    newNote.setPicturePath("");
+                }
+
+                //add path to DB
+                this.db.execSQL("UPDATE notes SET imagePath='" + newNote.getPicturePath() + "' WHERE id='" + newNote.getID() + "'");
+            }
         }//end if
 
         this.notes.add(0,newNote);
@@ -179,6 +210,7 @@ public class AllNotes {
 
         int textContentIndex = c.getColumnIndex("textContent");
         int idIndex = c.getColumnIndex("id");
+        int imagePathIndex = c.getColumnIndex("imagePath");
 
         ///remove all notes from local list
         AllNotes.getInstance().getNotes().clear();
@@ -189,6 +221,7 @@ public class AllNotes {
             note = new Note();
             note.setID(Integer.parseInt(c.getString(idIndex)));
             note.setText(c.getString(textContentIndex));
+            note.setPicturePath(c.getString(imagePathIndex));
             AllNotes.getInstance().addNote(note);
         }
 
@@ -217,6 +250,7 @@ public class AllNotes {
 
         int textContentIndex = c.getColumnIndex("textContent");
         int idIndex = c.getColumnIndex("id");
+        int imagePathIndex = c.getColumnIndex("imagePath");
 
         Note note = null;
 
@@ -226,6 +260,7 @@ public class AllNotes {
                 note = new Note();
                 note.setID(Integer.parseInt(c.getString(idIndex)));
                 note.setText(c.getString(textContentIndex));
+                note.setPicturePath(c.getString(imagePathIndex));
             }
         }
         c.close();
