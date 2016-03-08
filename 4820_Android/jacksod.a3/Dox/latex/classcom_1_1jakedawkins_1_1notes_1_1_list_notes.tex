@@ -1,0 +1,103 @@
+\hypertarget{classcom_1_1jakedawkins_1_1notes_1_1_list_notes}{}\section{com.\+jakedawkins.\+notes.\+List\+Notes Class Reference}
+\label{classcom_1_1jakedawkins_1_1notes_1_1_list_notes}\index{com.\+jakedawkins.\+notes.\+List\+Notes@{com.\+jakedawkins.\+notes.\+List\+Notes}}
+Inheritance diagram for com.\+jakedawkins.\+notes.\+List\+Notes\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcom_1_1jakedawkins_1_1notes_1_1_list_notes}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classcom_1_1jakedawkins_1_1notes_1_1_list_notes_a18e83462a551ec45bde3a6040267fdc8}{new\+Note} (View view)
+\item 
+boolean \hyperlink{classcom_1_1jakedawkins_1_1notes_1_1_list_notes_a6b4df66f8083efa67bae77294b2c6a6b}{to\+Info\+Activity} (Menu\+Item item)
+\item 
+boolean \hyperlink{classcom_1_1jakedawkins_1_1notes_1_1_list_notes_a013f2dd604c69ac335dd0b2e3d95e2ed}{to\+Search\+Activity} (Menu\+Item item)
+\item 
+boolean \hyperlink{classcom_1_1jakedawkins_1_1notes_1_1_list_notes_ac97485ae407d36a55b0c2994bbaaa228}{on\+Create\+Options\+Menu} (Menu menu)
+\item 
+void \hyperlink{classcom_1_1jakedawkins_1_1notes_1_1_list_notes_a78c2ab7f4a94ab8efbe36b1c9be81b60}{on\+Resume} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classcom_1_1jakedawkins_1_1notes_1_1_list_notes_a39a41b19881da4d8ac90ac3bacbf95a1}{on\+Create} (Bundle saved\+Instance\+State)
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\index{com\+::jakedawkins\+::notes\+::\+List\+Notes@{com\+::jakedawkins\+::notes\+::\+List\+Notes}!new\+Note@{new\+Note}}
+\index{new\+Note@{new\+Note}!com\+::jakedawkins\+::notes\+::\+List\+Notes@{com\+::jakedawkins\+::notes\+::\+List\+Notes}}
+\subsubsection[{\texorpdfstring{new\+Note(\+View view)}{newNote(View view)}}]{\setlength{\rightskip}{0pt plus 5cm}void com.\+jakedawkins.\+notes.\+List\+Notes.\+new\+Note (
+\begin{DoxyParamCaption}
+\item[{View}]{view}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classcom_1_1jakedawkins_1_1notes_1_1_list_notes_a18e83462a551ec45bde3a6040267fdc8}{}\label{classcom_1_1jakedawkins_1_1notes_1_1_list_notes_a18e83462a551ec45bde3a6040267fdc8}
+Launches a new activity for creating a new note
+
+
+\begin{DoxyParams}{Parameters}
+{\em view$\vert$} & button clicked \\
+\hline
+\end{DoxyParams}
+\index{com\+::jakedawkins\+::notes\+::\+List\+Notes@{com\+::jakedawkins\+::notes\+::\+List\+Notes}!on\+Create@{on\+Create}}
+\index{on\+Create@{on\+Create}!com\+::jakedawkins\+::notes\+::\+List\+Notes@{com\+::jakedawkins\+::notes\+::\+List\+Notes}}
+\subsubsection[{\texorpdfstring{on\+Create(\+Bundle saved\+Instance\+State)}{onCreate(Bundle savedInstanceState)}}]{\setlength{\rightskip}{0pt plus 5cm}void com.\+jakedawkins.\+notes.\+List\+Notes.\+on\+Create (
+\begin{DoxyParamCaption}
+\item[{Bundle}]{saved\+Instance\+State}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\hypertarget{classcom_1_1jakedawkins_1_1notes_1_1_list_notes_a39a41b19881da4d8ac90ac3bacbf95a1}{}\label{classcom_1_1jakedawkins_1_1notes_1_1_list_notes_a39a41b19881da4d8ac90ac3bacbf95a1}
+load up the db and retrieve notes
+
+fill notes table
+
+set up note adapter
+
+link adapter to list\+View \index{com\+::jakedawkins\+::notes\+::\+List\+Notes@{com\+::jakedawkins\+::notes\+::\+List\+Notes}!on\+Create\+Options\+Menu@{on\+Create\+Options\+Menu}}
+\index{on\+Create\+Options\+Menu@{on\+Create\+Options\+Menu}!com\+::jakedawkins\+::notes\+::\+List\+Notes@{com\+::jakedawkins\+::notes\+::\+List\+Notes}}
+\subsubsection[{\texorpdfstring{on\+Create\+Options\+Menu(\+Menu menu)}{onCreateOptionsMenu(Menu menu)}}]{\setlength{\rightskip}{0pt plus 5cm}boolean com.\+jakedawkins.\+notes.\+List\+Notes.\+on\+Create\+Options\+Menu (
+\begin{DoxyParamCaption}
+\item[{Menu}]{menu}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classcom_1_1jakedawkins_1_1notes_1_1_list_notes_ac97485ae407d36a55b0c2994bbaaa228}{}\label{classcom_1_1jakedawkins_1_1notes_1_1_list_notes_ac97485ae407d36a55b0c2994bbaaa228}
+Inflate the menu; this adds items to the action bar if it is present. \index{com\+::jakedawkins\+::notes\+::\+List\+Notes@{com\+::jakedawkins\+::notes\+::\+List\+Notes}!on\+Resume@{on\+Resume}}
+\index{on\+Resume@{on\+Resume}!com\+::jakedawkins\+::notes\+::\+List\+Notes@{com\+::jakedawkins\+::notes\+::\+List\+Notes}}
+\subsubsection[{\texorpdfstring{on\+Resume()}{onResume()}}]{\setlength{\rightskip}{0pt plus 5cm}void com.\+jakedawkins.\+notes.\+List\+Notes.\+on\+Resume (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classcom_1_1jakedawkins_1_1notes_1_1_list_notes_a78c2ab7f4a94ab8efbe36b1c9be81b60}{}\label{classcom_1_1jakedawkins_1_1notes_1_1_list_notes_a78c2ab7f4a94ab8efbe36b1c9be81b60}
+gets called whenever a user leaves the view (to another app/view) \index{com\+::jakedawkins\+::notes\+::\+List\+Notes@{com\+::jakedawkins\+::notes\+::\+List\+Notes}!to\+Info\+Activity@{to\+Info\+Activity}}
+\index{to\+Info\+Activity@{to\+Info\+Activity}!com\+::jakedawkins\+::notes\+::\+List\+Notes@{com\+::jakedawkins\+::notes\+::\+List\+Notes}}
+\subsubsection[{\texorpdfstring{to\+Info\+Activity(\+Menu\+Item item)}{toInfoActivity(MenuItem item)}}]{\setlength{\rightskip}{0pt plus 5cm}boolean com.\+jakedawkins.\+notes.\+List\+Notes.\+to\+Info\+Activity (
+\begin{DoxyParamCaption}
+\item[{Menu\+Item}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classcom_1_1jakedawkins_1_1notes_1_1_list_notes_a6b4df66f8083efa67bae77294b2c6a6b}{}\label{classcom_1_1jakedawkins_1_1notes_1_1_list_notes_a6b4df66f8083efa67bae77294b2c6a6b}
+Launches a new activity for viewing information
+
+
+\begin{DoxyParams}{Parameters}
+{\em item$\vert$} & button clicked \\
+\hline
+\end{DoxyParams}
+\index{com\+::jakedawkins\+::notes\+::\+List\+Notes@{com\+::jakedawkins\+::notes\+::\+List\+Notes}!to\+Search\+Activity@{to\+Search\+Activity}}
+\index{to\+Search\+Activity@{to\+Search\+Activity}!com\+::jakedawkins\+::notes\+::\+List\+Notes@{com\+::jakedawkins\+::notes\+::\+List\+Notes}}
+\subsubsection[{\texorpdfstring{to\+Search\+Activity(\+Menu\+Item item)}{toSearchActivity(MenuItem item)}}]{\setlength{\rightskip}{0pt plus 5cm}boolean com.\+jakedawkins.\+notes.\+List\+Notes.\+to\+Search\+Activity (
+\begin{DoxyParamCaption}
+\item[{Menu\+Item}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classcom_1_1jakedawkins_1_1notes_1_1_list_notes_a013f2dd604c69ac335dd0b2e3d95e2ed}{}\label{classcom_1_1jakedawkins_1_1notes_1_1_list_notes_a013f2dd604c69ac335dd0b2e3d95e2ed}
+Launches a new activity for searching notes
+
+
+\begin{DoxyParams}{Parameters}
+{\em item$\vert$} & button clicked \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/jake/git/school/4820\+\_\+\+Android/jacksod.\+a3/\+Notes/app/src/main/java/com/jakedawkins/notes/List\+Notes.\+java\end{DoxyCompactItemize}

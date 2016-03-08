@@ -1,0 +1,173 @@
+\hypertarget{classcom_1_1jakedawkins_1_1notes_1_1_all_notes}{}\section{com.\+jakedawkins.\+notes.\+All\+Notes Class Reference}
+\label{classcom_1_1jakedawkins_1_1notes_1_1_all_notes}\index{com.\+jakedawkins.\+notes.\+All\+Notes@{com.\+jakedawkins.\+notes.\+All\+Notes}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Array\+List$<$ \hyperlink{classcom_1_1jakedawkins_1_1notes_1_1_note}{Note} $>$ {\bfseries get\+Notes} ()\hypertarget{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_a05ecf5ae85a83a06dc79a53164baef33}{}\label{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_a05ecf5ae85a83a06dc79a53164baef33}
+
+\item 
+S\+Q\+Lite\+Database {\bfseries get\+DB} ()\hypertarget{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_a65f8d4eb7450a8eb0c40999927247278}{}\label{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_a65f8d4eb7450a8eb0c40999927247278}
+
+\item 
+int {\bfseries get\+Edit\+Index} ()\hypertarget{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_af3ed3c2fc66a386f2aa754e042138ba2}{}\label{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_af3ed3c2fc66a386f2aa754e042138ba2}
+
+\item 
+void \hyperlink{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_a5d9c47ea94857ade8b12afbbcfb1cf59}{set\+Up\+DB} (S\+Q\+Lite\+Database db)
+\item 
+void {\bfseries set\+Edit\+Index} (int edit\+Index)\hypertarget{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_a5d72f57021275e9e5e992d14edc705b5}{}\label{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_a5d72f57021275e9e5e992d14edc705b5}
+
+\item 
+void {\bfseries set\+Context} (Context context)\hypertarget{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_afd32cd5d762c4f45b5159e80c9a9a532}{}\label{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_afd32cd5d762c4f45b5159e80c9a9a532}
+
+\item 
+void \hyperlink{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_af0c95096cc82197830dbdda04341e847}{add\+Note} (\hyperlink{classcom_1_1jakedawkins_1_1notes_1_1_note}{Note} new\+Note)
+\item 
+void \hyperlink{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_a5b306d331235e918d53ccefa4cabf215}{add\+New\+Note} (\hyperlink{classcom_1_1jakedawkins_1_1notes_1_1_note}{Note} new\+Note)
+\item 
+void \hyperlink{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_a3eca7407e26aacd8d11caba15c281023}{update\+Note} (int index)
+\item 
+void \hyperlink{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_adef736c6a1858c7da38f611fea43830b}{delete\+Note} (int index)
+\item 
+boolean \hyperlink{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_ab55640c37afede82f89707c6074de156}{load\+Notes\+From\+Local\+DB} ()
+\item 
+\hyperlink{classcom_1_1jakedawkins_1_1notes_1_1_note}{Note} \hyperlink{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_a649cb0f406724be550dd3d440914282b}{fetch\+Note} (int id)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classcom_1_1jakedawkins_1_1notes_1_1_all_notes}{All\+Notes} \hyperlink{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_a98cff0be372433b577b4cb54f31f087c}{get\+Instance} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Created by Jake on 2/1/16.
+
+Singleton class to hold all notes and the database instance for the app 
+
+\subsection{Member Function Documentation}
+\index{com\+::jakedawkins\+::notes\+::\+All\+Notes@{com\+::jakedawkins\+::notes\+::\+All\+Notes}!add\+New\+Note@{add\+New\+Note}}
+\index{add\+New\+Note@{add\+New\+Note}!com\+::jakedawkins\+::notes\+::\+All\+Notes@{com\+::jakedawkins\+::notes\+::\+All\+Notes}}
+\subsubsection[{\texorpdfstring{add\+New\+Note(\+Note new\+Note)}{addNewNote(Note newNote)}}]{\setlength{\rightskip}{0pt plus 5cm}void com.\+jakedawkins.\+notes.\+All\+Notes.\+add\+New\+Note (
+\begin{DoxyParamCaption}
+\item[{{\bf Note}}]{new\+Note}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_a5b306d331235e918d53ccefa4cabf215}{}\label{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_a5b306d331235e918d53ccefa4cabf215}
+adds note to the local singleton list as well as the S\+Q\+Lite DB
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Note$\vert$} & already initialized note. Needs to have text, created, tags \\
+\hline
+\end{DoxyParams}
+add to db if initialized
+
+get id of new note
+
+add tags
+
+if no results, add new tag to db
+
+get id of tag and add association to new\+Note
+
+add image path to DB \index{com\+::jakedawkins\+::notes\+::\+All\+Notes@{com\+::jakedawkins\+::notes\+::\+All\+Notes}!add\+Note@{add\+Note}}
+\index{add\+Note@{add\+Note}!com\+::jakedawkins\+::notes\+::\+All\+Notes@{com\+::jakedawkins\+::notes\+::\+All\+Notes}}
+\subsubsection[{\texorpdfstring{add\+Note(\+Note new\+Note)}{addNote(Note newNote)}}]{\setlength{\rightskip}{0pt plus 5cm}void com.\+jakedawkins.\+notes.\+All\+Notes.\+add\+Note (
+\begin{DoxyParamCaption}
+\item[{{\bf Note}}]{new\+Note}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_af0c95096cc82197830dbdda04341e847}{}\label{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_af0c95096cc82197830dbdda04341e847}
+adds note to the local singleton list only
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Note$\vert$} & already initialized note. Needs to have text, created, tags \\
+\hline
+\end{DoxyParams}
+\index{com\+::jakedawkins\+::notes\+::\+All\+Notes@{com\+::jakedawkins\+::notes\+::\+All\+Notes}!delete\+Note@{delete\+Note}}
+\index{delete\+Note@{delete\+Note}!com\+::jakedawkins\+::notes\+::\+All\+Notes@{com\+::jakedawkins\+::notes\+::\+All\+Notes}}
+\subsubsection[{\texorpdfstring{delete\+Note(int index)}{deleteNote(int index)}}]{\setlength{\rightskip}{0pt plus 5cm}void com.\+jakedawkins.\+notes.\+All\+Notes.\+delete\+Note (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_adef736c6a1858c7da38f611fea43830b}{}\label{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_adef736c6a1858c7da38f611fea43830b}
+removes note with given index from both singleton list and S\+Q\+Lite DB
+
+
+\begin{DoxyParams}{Parameters}
+{\em index$\vert$} & index of note to be removed \\
+\hline
+\end{DoxyParams}
+delete note from local storage \index{com\+::jakedawkins\+::notes\+::\+All\+Notes@{com\+::jakedawkins\+::notes\+::\+All\+Notes}!fetch\+Note@{fetch\+Note}}
+\index{fetch\+Note@{fetch\+Note}!com\+::jakedawkins\+::notes\+::\+All\+Notes@{com\+::jakedawkins\+::notes\+::\+All\+Notes}}
+\subsubsection[{\texorpdfstring{fetch\+Note(int id)}{fetchNote(int id)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Note} com.\+jakedawkins.\+notes.\+All\+Notes.\+fetch\+Note (
+\begin{DoxyParamCaption}
+\item[{int}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_a649cb0f406724be550dd3d440914282b}{}\label{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_a649cb0f406724be550dd3d440914282b}
+add notes
+
+add tags to notes \index{com\+::jakedawkins\+::notes\+::\+All\+Notes@{com\+::jakedawkins\+::notes\+::\+All\+Notes}!get\+Instance@{get\+Instance}}
+\index{get\+Instance@{get\+Instance}!com\+::jakedawkins\+::notes\+::\+All\+Notes@{com\+::jakedawkins\+::notes\+::\+All\+Notes}}
+\subsubsection[{\texorpdfstring{get\+Instance()}{getInstance()}}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf All\+Notes} com.\+jakedawkins.\+notes.\+All\+Notes.\+get\+Instance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\hypertarget{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_a98cff0be372433b577b4cb54f31f087c}{}\label{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_a98cff0be372433b577b4cb54f31f087c}
+Singleton instance of this class \begin{DoxyReturn}{Returns}
+all\+Notes$\vert$ class variable 
+\end{DoxyReturn}
+\index{com\+::jakedawkins\+::notes\+::\+All\+Notes@{com\+::jakedawkins\+::notes\+::\+All\+Notes}!load\+Notes\+From\+Local\+DB@{load\+Notes\+From\+Local\+DB}}
+\index{load\+Notes\+From\+Local\+DB@{load\+Notes\+From\+Local\+DB}!com\+::jakedawkins\+::notes\+::\+All\+Notes@{com\+::jakedawkins\+::notes\+::\+All\+Notes}}
+\subsubsection[{\texorpdfstring{load\+Notes\+From\+Local\+D\+B()}{loadNotesFromLocalDB()}}]{\setlength{\rightskip}{0pt plus 5cm}boolean com.\+jakedawkins.\+notes.\+All\+Notes.\+load\+Notes\+From\+Local\+DB (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_ab55640c37afede82f89707c6074de156}{}\label{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_ab55640c37afede82f89707c6074de156}
+take notes from local S\+Q\+Lite DB and add them to the singleton notes list
+
+\begin{DoxyReturn}{Returns}
+boolean$\vert$ true if operation is success. False if null db. 
+\end{DoxyReturn}
+remove all notes from local list
+
+add notes
+
+add tags to notes \index{com\+::jakedawkins\+::notes\+::\+All\+Notes@{com\+::jakedawkins\+::notes\+::\+All\+Notes}!set\+Up\+DB@{set\+Up\+DB}}
+\index{set\+Up\+DB@{set\+Up\+DB}!com\+::jakedawkins\+::notes\+::\+All\+Notes@{com\+::jakedawkins\+::notes\+::\+All\+Notes}}
+\subsubsection[{\texorpdfstring{set\+Up\+D\+B(\+S\+Q\+Lite\+Database db)}{setUpDB(SQLiteDatabase db)}}]{\setlength{\rightskip}{0pt plus 5cm}void com.\+jakedawkins.\+notes.\+All\+Notes.\+set\+Up\+DB (
+\begin{DoxyParamCaption}
+\item[{S\+Q\+Lite\+Database}]{db}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_a5d9c47ea94857ade8b12afbbcfb1cf59}{}\label{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_a5d9c47ea94857ade8b12afbbcfb1cf59}
+Sets up the local S\+Q\+Lite db if needed. No initial checking necessary. Does not harm data.
+
+
+\begin{DoxyParams}{Parameters}
+{\em db$\vert$} & already created database to add tables to \\
+\hline
+\end{DoxyParams}
+\index{com\+::jakedawkins\+::notes\+::\+All\+Notes@{com\+::jakedawkins\+::notes\+::\+All\+Notes}!update\+Note@{update\+Note}}
+\index{update\+Note@{update\+Note}!com\+::jakedawkins\+::notes\+::\+All\+Notes@{com\+::jakedawkins\+::notes\+::\+All\+Notes}}
+\subsubsection[{\texorpdfstring{update\+Note(int index)}{updateNote(int index)}}]{\setlength{\rightskip}{0pt plus 5cm}void com.\+jakedawkins.\+notes.\+All\+Notes.\+update\+Note (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_a3eca7407e26aacd8d11caba15c281023}{}\label{classcom_1_1jakedawkins_1_1notes_1_1_all_notes_a3eca7407e26aacd8d11caba15c281023}
+updates note on the S\+Q\+Lite DB.
+
+
+\begin{DoxyParams}{Parameters}
+{\em index$\vert$} & index of the note in the local singleton list to update on the DB. \\
+\hline
+\end{DoxyParams}
+only update db if initialized
+
+add tags
+
+if no results, add new tag to db
+
+get id of tag and add association to new\+Note 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/jake/git/school/4820\+\_\+\+Android/jacksod.\+a3/\+Notes/app/src/main/java/com/jakedawkins/notes/All\+Notes.\+java\end{DoxyCompactItemize}

@@ -54,7 +54,7 @@ public class AllNotes {
     public void setUpDB(SQLiteDatabase db){
         this.db = db;
 
-        this.db.execSQL("CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY, textContent TEXT NOT NULL, created TEXT NOT NULL, updated TEXT, imagePath TEXT)");
+        this.db.execSQL("CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY, textContent TEXT NOT NULL, created TEXT NOT NULL, updated TEXT, imagePath TEXT, toSync INTEGER DEFAULT 0, toDelete INTEGER DEFAULT 0, remoteID INTEGER DEFAULT 0)");
         this.db.execSQL("CREATE TABLE IF NOT EXISTS tags(id INTEGER PRIMARY KEY, name TEXT NOT NULL)");
         this.db.execSQL("CREATE TABLE IF NOT EXISTS tags_notes(id INTEGER PRIMARY KEY, tag_id INTEGER NOT NULL, note_id INTEGER NOT NULL, FOREIGN KEY (tag_id) REFERENCES tags(id), FOREIGN KEY (note_id) REFERENCES notes(id))");
     }
@@ -87,7 +87,7 @@ public class AllNotes {
 
         ///add to db if initialized
         if(this.db != null){
-            this.db.execSQL("INSERT INTO notes(textContent, created) VALUES('" + newNote.getText().replaceAll("'","''") + "','" + newNote.getCreated() + "')");
+            this.db.execSQL("INSERT INTO notes(textContent, created, toSync) VALUES('" + newNote.getText().replaceAll("'","''") + "','" + newNote.getCreated() + "', 1)");
 
             ///get id of new note
             Cursor c = this.db.rawQuery("SELECT id FROM notes WHERE textContent='" + newNote.getText().replaceAll("'","''") + "' AND created='" + newNote.getCreated() + "'", null);
@@ -158,7 +158,7 @@ public class AllNotes {
         if(this.db != null){
             note.updateNow(); //set updated timedate stamp
 
-            this.db.execSQL("UPDATE notes SET textContent='" + note.getText().replaceAll("'","''") + "', updated='" + note.getUpdated() + "' WHERE id=" + note.getID());
+            this.db.execSQL("UPDATE notes SET textContent='" + note.getText().replaceAll("'","''") + "', updated='" + note.getUpdated() + "', toSync=1 WHERE id=" + note.getID());
 
             this.db.execSQL("DELETE FROM tags_notes WHERE note_id=" + note.getID());
 
@@ -201,7 +201,8 @@ public class AllNotes {
             noteFilePath.delete();
         }
 
-        this.db.execSQL("DELETE FROM notes WHERE id=" + Integer.toString(note.getID()));
+        //deleting from DB and of image happens once synced
+        this.db.execSQL("UPDATE notes SET toDelete = 1 WHERE id=" + Integer.toString(note.getID()));
         this.db.execSQL("DELETE FROM tags_notes WHERE note_id=" + Integer.toString(note.getID()));
     }
 
@@ -212,7 +213,7 @@ public class AllNotes {
      */
     public boolean loadNotesFromLocalDB(){
         if(this.db == null) return false;
-        Cursor c = this.db.rawQuery("SELECT * FROM notes", null);
+        Cursor c = this.db.rawQuery("SELECT * FROM notes WHERE toDelete=0", null);
 
         int textContentIndex = c.getColumnIndex("textContent");
         int idIndex = c.getColumnIndex("id");
