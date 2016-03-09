@@ -19,6 +19,7 @@ public class Note {
     private ArrayList<String> tags;
     private String picturePath;
     private Bitmap bitmap;
+    private int remoteID;
 
     public Note(){
         this.id = -1;
@@ -26,6 +27,7 @@ public class Note {
         this.created = "";
         this.updated = "";
         this.tags = new ArrayList<String>();
+        this.remoteID = 0;
     }
 
     //---------------- SETTERS ----------------
@@ -68,6 +70,8 @@ public class Note {
         this.bitmap = bitmap;
     }
 
+    public void setRemoteID(int remoteID){ this.remoteID = remoteID; }
+
     //---------------- GETTERS ----------------
 
     public String getText(){
@@ -100,6 +104,8 @@ public class Note {
     public Bitmap getBitmap(){
         return this.bitmap;
     }
+
+    public int getRemoteID(){ return this.remoteID; }
 
     //---------------- HELPERS ----------------
 

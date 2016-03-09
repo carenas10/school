@@ -89,14 +89,22 @@ public class AllNotes {
 
         ///add to db if initialized
         if(this.db != null){
-            this.db.execSQL("INSERT INTO notes(textContent, created, toSync) VALUES('" + newNote.getText().replaceAll("'","''") + "','" + newNote.getCreated() + "', 1)");
+            //check if this is a new note or a note being synced
+            if(newNote.getRemoteID() == 0){ //new note
+                this.db.execSQL("INSERT INTO notes(textContent, created, toSync) VALUES('" + newNote.getText().replaceAll("'","''") + "','" + newNote.getCreated() + "', 1)");
+            } else { //sync down note
+                //Log.i("ADD_NEW_NOTE-SQL","INSERT INTO notes(textContent, created, updated, remoteID) VALUES('" + newNote.getText().replaceAll("'","''") + "','" + newNote.getCreated() + "','" + newNote.getUpdated() + "','" + newNote.getRemoteID() + "')");
+                this.db.execSQL("INSERT INTO notes(textContent, created, updated, remoteID) VALUES('" + newNote.getText().replaceAll("'","''") + "','" + newNote.getCreated() + "','" + newNote.getUpdated() + "','" + newNote.getRemoteID() + "')");
+            }
 
             ///get id of new note
             Cursor c = this.db.rawQuery("SELECT id FROM notes WHERE textContent='" + newNote.getText().replaceAll("'","''") + "' AND created='" + newNote.getCreated() + "'", null);
+
             if (c.getCount() > 0){
                 int idIndex = c.getColumnIndex("id");
                 c.moveToFirst();
                 newNote.setID(Integer.parseInt(c.getString(idIndex)));
+                //Log.i("ADD_NEW_NOTE-ID", Integer.toString(newNote.getID()));
             }
             c.close();
 
@@ -144,7 +152,9 @@ public class AllNotes {
             }
         }//end if
 
-        this.notes.add(0,newNote);
+        //this.notes.add(0,newNote);
+        AllNotes.getInstance().getNotes().add(0,newNote);
+        Log.i("NOTES_SIZE",Integer.toString(this.notes.size()));
     }
 
     /*!
@@ -206,6 +216,30 @@ public class AllNotes {
         //deleting from DB and of image happens once synced
         this.db.execSQL("UPDATE notes SET toDelete = 1 WHERE id=" + Integer.toString(note.getID()));
         this.db.execSQL("DELETE FROM tags_notes WHERE note_id=" + Integer.toString(note.getID()));
+    }
+
+    /*!
+     *  delete marked notes in DB
+     */
+    public void deleteMarkedNotes(){
+        Cursor c = this.db.rawQuery("SELECT id FROM notes WHERE toDelete=1",null);
+        int idIndex = c.getColumnIndex("id");
+
+        for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
+            int id = c.getInt(idIndex);
+            this.db.execSQL("DELETE FROM notes WHERE id=" + id);
+            this.db.execSQL("DELETE FROM tags_notes WHERE note_id=" + id);
+        }
+    }
+
+    /*!
+     *  delete all notes in local db and singleton list
+     */
+    public void deleteAllNotes(){
+        this.db.execSQL("DELETE FROM notes");
+        this.db.execSQL("DELETE FROM tags");
+        this.db.execSQL("DELETE FROM tags_notes");
+        this.notes.clear();
     }
 
     /*!

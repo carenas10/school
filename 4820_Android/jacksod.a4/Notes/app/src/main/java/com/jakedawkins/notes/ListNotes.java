@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 public class ListNotes extends AppCompatActivity {
 
     ArrayList<Note> notes = AllNotes.getInstance().getNotes();
-    NoteAdapter adapter;
+    public NoteAdapter adapter;
 
 
     /*!
@@ -61,17 +62,21 @@ public class ListNotes extends AppCompatActivity {
         AllNotes.getInstance().setContext(getApplicationContext());
         RemoteDB.getInstance().setContext(getApplicationContext());
 
+        ///notes table
+        ListView listView = (ListView)findViewById(R.id.listView);
 
         ///load up the db and retrieve notes
         SQLiteDatabase db = this.openOrCreateDatabase("notes", MODE_PRIVATE, null);
         AllNotes.getInstance().setUpDB(db);
-        AllNotes.getInstance().loadNotesFromLocalDB();
 
-        ///fill notes table
-        ListView listView = (ListView)findViewById(R.id.listView);
+        ///delete old notes
+        AllNotes.getInstance().deleteAllNotes();
 
         ///set up note adapter
-        adapter = new NoteAdapter(this, notes);
+        adapter = new NoteAdapter(this, this.notes);
+
+        //syncDown must be called after adapter is set
+        RemoteDB.getInstance().syncDown(adapter);
 
         ///link adapter to listView
         listView.setAdapter(adapter);
@@ -83,8 +88,6 @@ public class ListNotes extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        RemoteDB.getInstance().test();
     }
 
     @Override

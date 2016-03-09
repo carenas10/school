@@ -46,16 +46,44 @@ public class RemoteDB {
     }
 
     //------------------------ API CALLS ------------------------
-    public void test(){
+
+    //load notes from remote
+    public void syncDown(final NoteAdapter adapter){
         if (requestQueue == null) instantiateRequestQueue();
+
+        Log.i("METHOD","syncDown Called");
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,this.baseURL + "users/1/notes",null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            ///convert data section of response to array of json objects
                             JSONArray jsonArray = response.getJSONArray("data");
-                            Log.i("jsonArray:", jsonArray.toString(4));
+
+                            ///parse each note
+                            for(int i=0; i<jsonArray.length(); i++){
+                                JSONObject JSONNote = jsonArray.getJSONObject(i);
+
+                                String text = JSONNote.getString("text");
+                                String updated = JSONNote.getString("updated");
+                                String created = JSONNote.getString("created");
+                                int remoteID = JSONNote.getInt("id");
+
+                                Note newNote = new Note();
+                                newNote.setText(text);
+                                newNote.setCreated(created);
+                                newNote.setUpdated(updated);
+                                newNote.setRemoteID(remoteID);
+
+                                AllNotes.getInstance().addNewNote(newNote);
+
+                                //Log.i("NOTE",text + ", " + created + ", " + updated + ", " + remoteID);
+                            }
+                            
+                            if(adapter != null){
+                                adapter.notifyDataSetChanged();
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -70,11 +98,13 @@ public class RemoteDB {
         this.requestQueue.add(jsonObjectRequest);
     }
 
-    //check server status
-
-    //load notes from remote
-
     //sync notes from local
+    public void syncUp(){
+
+    }
 
     //log in
+    public void login(){
+
+    }
 }

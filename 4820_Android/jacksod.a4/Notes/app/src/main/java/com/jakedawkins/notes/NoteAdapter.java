@@ -17,10 +17,11 @@ import java.util.ArrayList;
  */
 public class NoteAdapter extends ArrayAdapter<Note> {
 
-    ArrayList<Note> notes = AllNotes.getInstance().getNotes();
+    ArrayList<Note> notes; //= AllNotes.getInstance().getNotes();
 
     public NoteAdapter(Context context, ArrayList<Note> notes){
         super(context, 0, notes);
+        this.notes = notes;
     }
 
     @Override
