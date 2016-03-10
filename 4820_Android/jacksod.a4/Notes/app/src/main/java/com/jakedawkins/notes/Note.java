@@ -20,6 +20,8 @@ public class Note {
     private String picturePath;
     private Bitmap bitmap;
     private int remoteID;
+    private int toSync;
+    private int toDelete;
 
     public Note(){
         this.id = -1;
@@ -28,6 +30,8 @@ public class Note {
         this.updated = "";
         this.tags = new ArrayList<String>();
         this.remoteID = 0;
+        this.toDelete = 0;
+        this.toSync = 0;
     }
 
     //---------------- SETTERS ----------------
@@ -72,6 +76,10 @@ public class Note {
 
     public void setRemoteID(int remoteID){ this.remoteID = remoteID; }
 
+    public void setToSync(int toSync){ this.toSync = toSync; }
+
+    public void setToDelete(int toDelete){ this.toDelete = toDelete; }
+
     //---------------- GETTERS ----------------
 
     public String getText(){
@@ -106,6 +114,10 @@ public class Note {
     }
 
     public int getRemoteID(){ return this.remoteID; }
+
+    public int getToSync(){ return this.toSync; }
+
+    public int getToDelete(){ return this.toDelete; }
 
     //---------------- HELPERS ----------------
 

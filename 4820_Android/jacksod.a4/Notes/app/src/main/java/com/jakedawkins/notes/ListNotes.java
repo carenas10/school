@@ -70,7 +70,11 @@ public class ListNotes extends AppCompatActivity {
         AllNotes.getInstance().setUpDB(db);
 
         ///delete old notes
-        AllNotes.getInstance().deleteAllNotes();
+        if(RemoteDB.getInstance().toSyncCount() == 0){
+            AllNotes.getInstance().deleteAllNotes();
+        } else {
+            RemoteDB.getInstance().syncUp();
+        }
 
         ///set up note adapter
         adapter = new NoteAdapter(this, this.notes);
@@ -104,5 +108,7 @@ public class ListNotes extends AppCompatActivity {
     public void onResume(){
         super.onResume();
         adapter.notifyDataSetChanged();
+        //Log.i("RESUME","SYNC UP CALLED");
+        //RemoteDB.getInstance().syncUp();
     }
 }

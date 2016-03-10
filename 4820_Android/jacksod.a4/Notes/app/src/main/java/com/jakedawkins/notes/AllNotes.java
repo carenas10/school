@@ -72,15 +72,6 @@ public class AllNotes {
     //---------------- HELPERS ----------------
 
     /*!
-     *  adds note to the local singleton list only
-     *
-     *  \param newNote| already initialized note. Needs to have text, created, tags
-     */
-    public void addNote(Note newNote){
-        this.notes.add(0, newNote);
-    }
-
-    /*!
      *   adds note to the local singleton list as well as the SQLite DB
      *
      *   \param newNote| already initialized note. Needs to have text, created, tags
@@ -93,18 +84,15 @@ public class AllNotes {
             if(newNote.getRemoteID() == 0){ //new note
                 this.db.execSQL("INSERT INTO notes(textContent, created, toSync) VALUES('" + newNote.getText().replaceAll("'","''") + "','" + newNote.getCreated() + "', 1)");
             } else { //sync down note
-                //Log.i("ADD_NEW_NOTE-SQL","INSERT INTO notes(textContent, created, updated, remoteID) VALUES('" + newNote.getText().replaceAll("'","''") + "','" + newNote.getCreated() + "','" + newNote.getUpdated() + "','" + newNote.getRemoteID() + "')");
                 this.db.execSQL("INSERT INTO notes(textContent, created, updated, remoteID) VALUES('" + newNote.getText().replaceAll("'","''") + "','" + newNote.getCreated() + "','" + newNote.getUpdated() + "','" + newNote.getRemoteID() + "')");
             }
 
             ///get id of new note
             Cursor c = this.db.rawQuery("SELECT id FROM notes WHERE textContent='" + newNote.getText().replaceAll("'","''") + "' AND created='" + newNote.getCreated() + "'", null);
-
             if (c.getCount() > 0){
                 int idIndex = c.getColumnIndex("id");
                 c.moveToFirst();
                 newNote.setID(Integer.parseInt(c.getString(idIndex)));
-                //Log.i("ADD_NEW_NOTE-ID", Integer.toString(newNote.getID()));
             }
             c.close();
 
@@ -152,9 +140,7 @@ public class AllNotes {
             }
         }//end if
 
-        //this.notes.add(0,newNote);
-        AllNotes.getInstance().getNotes().add(0,newNote);
-        Log.i("NOTES_SIZE",Integer.toString(this.notes.size()));
+        AllNotes.getInstance().getNotes().add(0, newNote);
     }
 
     /*!
@@ -163,14 +149,63 @@ public class AllNotes {
      *  \param index| index of the note in the local singleton list to update on the DB.
      */
     public void updateNote(int index){
-        ///only update db if initialized
-
         Note note = AllNotes.getInstance().getNotes().get(index);
 
+        ///only update db if initialized
         if(this.db != null){
             note.updateNow(); //set updated timedate stamp
 
-            this.db.execSQL("UPDATE notes SET textContent='" + note.getText().replaceAll("'","''") + "', updated='" + note.getUpdated() + "', toSync=1 WHERE id=" + note.getID());
+            this.db.execSQL("UPDATE notes SET " +
+                    "textContent='" + note.getText().replaceAll("'","''") + "', " +
+                    "updated='" + note.getUpdated() + "', " +
+                    "toSync=" + note.getToSync() + ", " +
+                    "toDelete=" + note.getToDelete() + ", " +
+                    "remoteID=" + note.getRemoteID() + " " +
+                    "WHERE id=" + note.getID());
+
+            this.db.execSQL("DELETE FROM tags_notes WHERE note_id=" + note.getID());
+
+            ///add tags
+            for (int i = 0; i < note.getTags().size(); i++) {
+                String tag = note.getTags().get(i);
+
+                ///if no results, add new tag to db
+                Cursor c = this.db.rawQuery("SELECT * FROM tags WHERE name='" + tag + "'", null);
+                if (c.getCount() == 0){
+                    this.db.execSQL("INSERT INTO tags(name) VALUES('" + tag + "')");
+                    c = this.db.rawQuery("SELECT * FROM tags WHERE name='" + tag + "'", null);
+                }
+
+                ///get id of tag and add association to newNote
+                if (c.getCount() > 0 && note.getID() != -1){
+                    c.moveToFirst();
+                    int idIndex = c.getColumnIndex("id");
+                    int tagID = c.getInt(idIndex);
+
+                    this.db.execSQL("INSERT INTO tags_notes(tag_id, note_id) VALUES(" + Integer.toString(tagID) + "," + note.getID() + ")");
+                }
+                c.close();
+            }//end for
+        }//end if
+    }
+
+    /*!
+     *  updates note on the SQLite DB.
+     *
+     *  \param index| index of the note in the local singleton list to update on the DB.
+     */
+    public void updateNote(Note note){
+        ///only update db if initialized
+        if(this.db != null){
+            note.updateNow(); //set updated timedate stamp
+
+            this.db.execSQL("UPDATE notes SET " +
+                    "textContent='" + note.getText().replaceAll("'","''") + "', " +
+                    "updated='" + note.getUpdated() + "', " +
+                    "toSync=" + note.getToSync() + ", " +
+                    "toDelete=" + note.getToDelete() + ", " +
+                    "remoteID=" + note.getRemoteID() + " " +
+                    "WHERE id=" + note.getID());
 
             this.db.execSQL("DELETE FROM tags_notes WHERE note_id=" + note.getID());
 
@@ -219,6 +254,25 @@ public class AllNotes {
     }
 
     /*!
+     *  removes note with given index from both singleton list and SQLite DB
+     *
+     *  \param index| index of note to be removed
+     */
+    public void deleteNote(Note note){
+
+        ///delete note from local storage
+        if (note.getPicturePath() != null && note.getPicturePath().length() != 0) {
+            File noteFilePath = new File(note.getPicturePath());
+            noteFilePath.delete();
+        }
+
+        //deleting from DB and of image happens once synced
+        this.db.execSQL("UPDATE notes SET toDelete = 1 WHERE id=" + Integer.toString(note.getID()));
+        this.db.execSQL("DELETE FROM tags_notes WHERE note_id=" + Integer.toString(note.getID()));
+    }
+
+
+    /*!
      *  delete marked notes in DB
      */
     public void deleteMarkedNotes(){
@@ -254,6 +308,11 @@ public class AllNotes {
         int textContentIndex = c.getColumnIndex("textContent");
         int idIndex = c.getColumnIndex("id");
         int imagePathIndex = c.getColumnIndex("imagePath");
+        int createdIndex = c.getColumnIndex("created");
+        int updatedIndex = c.getColumnIndex("updated");
+        int toSyncIndex = c.getColumnIndex("toSync");
+        int toDeleteIndex = c.getColumnIndex("toDelete");
+        int remoteIDIndex = c.getColumnIndex("remoteID");
 
         ///remove all notes from local list
         AllNotes.getInstance().getNotes().clear();
@@ -265,7 +324,12 @@ public class AllNotes {
             note.setID(Integer.parseInt(c.getString(idIndex)));
             note.setText(c.getString(textContentIndex));
             note.setPicturePath(c.getString(imagePathIndex));
-            AllNotes.getInstance().addNote(note);
+            note.setCreated(c.getString(createdIndex));
+            note.setUpdated(c.getString(updatedIndex));
+            note.setToSync(c.getInt(toSyncIndex));
+            note.setToDelete(c.getInt(toDeleteIndex));
+            note.setRemoteID(c.getInt(remoteIDIndex));
+            AllNotes.getInstance().getNotes().add(0, note);
         }
 
         c.close();
@@ -294,7 +358,11 @@ public class AllNotes {
         int textContentIndex = c.getColumnIndex("textContent");
         int idIndex = c.getColumnIndex("id");
         int imagePathIndex = c.getColumnIndex("imagePath");
-
+        int createdIndex = c.getColumnIndex("created");
+        int updatedIndex = c.getColumnIndex("updated");
+        int toSyncIndex = c.getColumnIndex("toSync");
+        int toDeleteIndex = c.getColumnIndex("toDelete");
+        int remoteIDIndex = c.getColumnIndex("remoteID");
         Note note = null;
 
         ///add notes
@@ -304,6 +372,11 @@ public class AllNotes {
                 note.setID(Integer.parseInt(c.getString(idIndex)));
                 note.setText(c.getString(textContentIndex));
                 note.setPicturePath(c.getString(imagePathIndex));
+                note.setRemoteID(c.getInt(remoteIDIndex));
+                note.setCreated(c.getString(createdIndex));
+                note.setUpdated(c.getString(updatedIndex));
+                note.setToSync(c.getInt(toSyncIndex));
+                note.setToDelete(c.getInt(toDeleteIndex));
             }
         }
         c.close();

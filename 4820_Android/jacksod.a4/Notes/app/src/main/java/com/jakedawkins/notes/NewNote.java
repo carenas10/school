@@ -103,8 +103,8 @@ public class NewNote extends AppCompatActivity {
             note.setBitmap(this.bitmap);
         }
 
-
         AllNotes.getInstance().addNewNote(note);
+        RemoteDB.getInstance().syncUpAdd(note);
         finish(); ///return back to the previous activity
     }
 
