@@ -51,8 +51,6 @@ public class RemoteDB {
     public void syncDown(final NoteAdapter adapter){
         if (requestQueue == null) instantiateRequestQueue();
 
-        Log.i("METHOD","syncDown Called");
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,this.baseURL + "users/1/notes",null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -77,10 +75,8 @@ public class RemoteDB {
                                 newNote.setRemoteID(remoteID);
 
                                 AllNotes.getInstance().addNewNote(newNote);
-
-                                //Log.i("NOTE",text + ", " + created + ", " + updated + ", " + remoteID);
                             }
-                            
+
                             if(adapter != null){
                                 adapter.notifyDataSetChanged();
                             }
