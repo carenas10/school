@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class NoteAdapter extends ArrayAdapter<Note> {
 
-    ArrayList<Note> notes; //= AllNotes.getInstance().getNotes();
+    ArrayList<Note> notes;
 
     public NoteAdapter(Context context, ArrayList<Note> notes){
         super(context, 0, notes);
@@ -42,7 +42,6 @@ public class NoteAdapter extends ArrayAdapter<Note> {
 
         ///Populate the data into the template view using the data object
         noteText.setText(note.getText());
-        //noteTags.setText(note.tagsToHashtags());
 
         ///hide the image icon if no image with note
         if(note.getPicturePath() == null){

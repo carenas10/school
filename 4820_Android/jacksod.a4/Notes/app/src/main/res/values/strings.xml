@@ -35,4 +35,7 @@
     <string name="password">password</string>
     <string name="login">Login</string>
     <string name="newUser">New User</string>
+    <string name="title_activity_view_note">ViewNoteActivity</string>
+    <string name="edit">Edit</string>
+    <string name="textContent">Text Content</string>
 </resources>

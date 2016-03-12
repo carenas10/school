@@ -28,6 +28,7 @@ public class AllNotes {
 
     /*!
      *  Singleton instance of this class
+     *
      *  \return allNotes| class variable
      */
     public static AllNotes getInstance(){
@@ -173,7 +174,6 @@ public class AllNotes {
             this.db.execSQL("DELETE FROM tags_notes WHERE note_id=" + note.getID());
 
             //temp set tags from text content
-            //TODO -- move this
             note.setTags(findHashTags(note.getText()));
 
             ///add tags
@@ -221,7 +221,6 @@ public class AllNotes {
             this.db.execSQL("DELETE FROM tags_notes WHERE note_id=" + note.getID());
 
             //temp set tags from text content
-            //TODO -- move this
             note.setTags(findHashTags(note.getText()));
 
             ///add tags

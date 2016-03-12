@@ -67,6 +67,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jakedawkins.notes.ListNotes" />
         </activity>
+        <activity
+            android:name=".ViewNoteActivity"
+            android:label="@string/title_activity_view_note"
+            android:parentActivityName=".ListNotes"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jakedawkins.notes.ListNotes" />
+        </activity>
     </application>
 
 </manifest>

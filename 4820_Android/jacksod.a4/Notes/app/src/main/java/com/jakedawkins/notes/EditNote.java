@@ -62,38 +62,17 @@ public class EditNote extends AppCompatActivity {
                     .setMessage("You must enter text for the note")
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            // continue with delete
+
                         }
                     })
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
-            /*
-            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    // do nothing
-                }
-            })*/
             return;
         }
 
         Note note = AllNotes.getInstance().getNotes().get(index);
-        //String[] tags = enterTags.getText().toString().split(" ");
 
         note.setText(enterTextContent.getText().toString());
-
-        ///set tags
-        /*note.getTags().clear();
-        for(int i=0; i<tags.length; i++){
-            if(this.checkTag(tags[i])){
-                note.addTag(tags[i]);
-            }
-        }
-
-        ///let user know not all tags were valid
-        if(enterTags.getText().toString().length() > 0 && note.getTags().size() < tags.length){
-            Toast toast = Toast.makeText(getApplicationContext(), "Some tags were invalid and not added", Toast.LENGTH_SHORT);
-            toast.show();
-        }*/
 
         AllNotes.getInstance().getNotes().set(index,note);
         AllNotes.getInstance().updateNote(index);
@@ -162,27 +141,4 @@ public class EditNote extends AppCompatActivity {
             this.noteImage.setImageBitmap(bitmap);
         }
     }
-
-    //---------------- helper ----------------
-
-    /*!
-     *  checks a string to see if it is alphanumeric or _
-     *  Also checks for max length of 16 chars
-     *
-     *  \param tag | String of tag to check for validity
-     *
-     *  \return boolean | true if valid tag, false otherwise
-     */
-    private boolean checkTag(String tag){
-        if(tag.length() > 16) return false;
-
-        ///check for alphanumeric and underscores
-        String regex = "^\\w+$";
-
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(tag);
-
-        return matcher.matches();
-    }
-
 }

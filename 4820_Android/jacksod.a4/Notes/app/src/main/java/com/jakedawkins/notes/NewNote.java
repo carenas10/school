@@ -36,7 +36,6 @@ public class NewNote extends AppCompatActivity {
     private Bitmap bitmap;
     private ImageView newImage;
 
-
     ///to count the number of characters and display to the top right
     private final TextWatcher textCounter = new TextWatcher() {
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -47,10 +46,10 @@ public class NewNote extends AppCompatActivity {
             charCount.setText(String.valueOf(s.length()));
 
 
-            if(s.length() > 250){
+            if (s.length() > 250) {
                 charCount.setTextColor(Color.RED);
             } else {
-                charCount.setTextColor(Color.rgb(0,160,0));
+                charCount.setTextColor(Color.rgb(0, 160, 0));
             }
         }
 
@@ -63,45 +62,28 @@ public class NewNote extends AppCompatActivity {
      *
      * \param View | button pressed
      */
-    public void saveNote(View view){
-        if(enterTextContent.getText().toString().length() == 0){
+    public void saveNote(View view) {
+        if (enterTextContent.getText().toString().length() == 0) {
             new AlertDialog.Builder(this)
-                .setTitle("No Note Added")
-                .setMessage("You must enter text for the note")
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // continue with delete
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+                    .setTitle("No Note Added")
+                    .setMessage("You must enter text for the note")
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
             return;
         }
 
-
         Note note = new Note();
-        //String[] tags = enterTags.getText().toString().split(" ");
 
         note.setText(enterTextContent.getText().toString());
         note.createNow();
 
-        ///set tags
-        /*
-        for(int i=0; i<tags.length; i++){
-            if(this.checkTag(tags[i])){
-                note.addTag(tags[i]);
-            }
-        }*/
-
-        ///let user know not all tags were valid
-/*        if(enterTags.getText().toString().length() > 0 && note.getTags().size() < tags.length){
-            Toast toast = Toast.makeText(getApplicationContext(), "Some tags were invalid and not added", Toast.LENGTH_SHORT);
-            toast.show();
-        }
-*/
-
         ///add the image bitmap to the note for saving
-        if(this.bitmap != null){
+        if (this.bitmap != null) {
             note.setBitmap(this.bitmap);
         }
 
@@ -121,20 +103,20 @@ public class NewNote extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
 
         ///Enable the Up button
-        if (ab != null){
+        if (ab != null) {
             ab.setDisplayHomeAsUpEnabled(true);
         }
 
-        enterTextContent = (EditText)findViewById(R.id.enterTextContent);
-            enterTextContent.addTextChangedListener(textCounter);
-        enterTags = (EditText)findViewById(R.id.enterTags);
-            enterTags.setVisibility(View.INVISIBLE);
-        charCount = (TextView)findViewById(R.id.characterCount);
-        this.addPhotoButton = (Button)findViewById(R.id.newPhotoButton);
-        this.newImage = (ImageView)findViewById(R.id.newImage);
+        enterTextContent = (EditText) findViewById(R.id.enterTextContent);
+        enterTextContent.addTextChangedListener(textCounter);
+        enterTags = (EditText) findViewById(R.id.enterTags);
+        enterTags.setVisibility(View.INVISIBLE);
+        charCount = (TextView) findViewById(R.id.characterCount);
+        this.addPhotoButton = (Button) findViewById(R.id.newPhotoButton);
+        this.newImage = (ImageView) findViewById(R.id.newImage);
 
         ///hide the image/button layout
-        this.linear = (LinearLayout)findViewById(R.id.linearImageAndButtonView);
+        this.linear = (LinearLayout) findViewById(R.id.linearImageAndButtonView);
         this.linear.setVisibility(View.INVISIBLE);
         this.linear.getLayoutParams().height = 0;
     }
@@ -142,14 +124,14 @@ public class NewNote extends AppCompatActivity {
     //---------------- PHOTO METHODS ----------------
 
     ///user presses add photo button
-    public void newPhoto(View view){
+    public void newPhoto(View view) {
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(i, 1);
     }
 
     //TODO -- why doesn't this work until after typing something
     ///removes the photo from the note
-    public void removePhoto(View view){
+    public void removePhoto(View view) {
         //hide the image/button layout
         this.linear.setVisibility(View.INVISIBLE);
         this.linear.getLayoutParams().height = 0;
@@ -165,11 +147,11 @@ public class NewNote extends AppCompatActivity {
 
     ///after the image picker returns
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         //Image picker
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null){
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
             //location of selected image
             Uri selectedImage = data.getData();
 
@@ -191,28 +173,4 @@ public class NewNote extends AppCompatActivity {
             }
         }
     }
-
-    //---------------- helper ----------------
-
-    /*!
-     *  checks a string to see if it is alphanumeric or _
-     *  Also checks for max length of 16 chars
-     *
-     *  \param tag | String of tag to check for validity
-     *
-     *  \return boolean | true if valid tag, false otherwise
-     */
-    private boolean checkTag(String tag){
-        if(tag.length() > 16) return false;
-
-        ///check for alphanumeric and underscores
-        String regex = "^\\w+$";
-
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(tag);
-
-        return matcher.matches();
-    }
-
-
 }

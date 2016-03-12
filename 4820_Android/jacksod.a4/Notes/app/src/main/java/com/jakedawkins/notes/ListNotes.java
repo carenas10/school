@@ -116,7 +116,7 @@ public class ListNotes extends AppCompatActivity {
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ListNotes.this, EditNote.class);
+                Intent intent = new Intent(ListNotes.this, ViewNoteActivity.class);
                 AllNotes.getInstance().setEditIndex(position);
                 startActivity(intent);
             }

@@ -27,8 +27,8 @@ import java.util.concurrent.TimeoutException;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText usernameField;// = (EditText)findViewById(R.id.username);
-    EditText passwordfield;// = (EditText)findViewById(R.id.password);
+    EditText usernameField;
+    EditText passwordfield;
 
     public void loginPressed(View view){
         String username = usernameField.getText().toString();
@@ -68,42 +68,5 @@ public class LoginActivity extends AppCompatActivity {
 
         usernameField = (EditText)findViewById(R.id.username);
         passwordfield = (EditText)findViewById(R.id.password);
-    }
-
-    //DO NOT USE
-    public boolean login(){
-        final String username = usernameField.getText().toString();
-        final String password = passwordfield.getText().toString();
-        String URL = RemoteDB.getInstance().getBaseURL() + "users/" + username;
-        Log.i("URL",URL);
-
-        RequestFuture<String> future = RequestFuture.newFuture();
-        StringRequest request = new StringRequest(Request.Method.POST, URL, future, future)        {
-            @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("username", username);
-                params.put("password", password);
-                return params;
-            }
-        };
-        RemoteDB.getInstance().getRequestQueue().add(request);
-
-        try {
-            //blocks for max of 3 seconds
-            String response = future.get(3, TimeUnit.SECONDS);
-            Log.i("LOGIN_RESPONSE_SYNC",response);
-            return true;
-        } catch (InterruptedException e) {
-            // exception handling
-        } catch (ExecutionException e) {
-            // exception handling
-            Log.i("EXECUTION_EXCEPTION","In Login()");
-        } catch (TimeoutException e){
-            Log.i("TIMEOUT","Login Timed out");
-
-        }
-        return false;
     }
 }
