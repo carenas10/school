@@ -37,11 +37,12 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         ///Lookup view for data population
         TextView noteText = (TextView) convertView.findViewById(R.id.noteText);
         TextView noteTags = (TextView) convertView.findViewById(R.id.noteTags);
+            noteTags.setVisibility(View.INVISIBLE);
         ImageView imageIcon = (ImageView) convertView.findViewById(R.id.imageIcon);
 
         ///Populate the data into the template view using the data object
         noteText.setText(note.getText());
-        noteTags.setText(note.tagsToHashtags());
+        //noteTags.setText(note.tagsToHashtags());
 
         ///hide the image icon if no image with note
         if(note.getPicturePath() == null){

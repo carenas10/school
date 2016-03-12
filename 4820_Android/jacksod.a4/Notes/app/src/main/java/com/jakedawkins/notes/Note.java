@@ -80,6 +80,8 @@ public class Note {
 
     public void setToDelete(int toDelete){ this.toDelete = toDelete; }
 
+    public void setTags(ArrayList<String> tags){ this.tags = tags; }
+
     //---------------- GETTERS ----------------
 
     public String getText(){

@@ -77,12 +77,12 @@ public class EditNote extends AppCompatActivity {
         }
 
         Note note = AllNotes.getInstance().getNotes().get(index);
-        String[] tags = enterTags.getText().toString().split(" ");
+        //String[] tags = enterTags.getText().toString().split(" ");
 
         note.setText(enterTextContent.getText().toString());
 
         ///set tags
-        note.getTags().clear();
+        /*note.getTags().clear();
         for(int i=0; i<tags.length; i++){
             if(this.checkTag(tags[i])){
                 note.addTag(tags[i]);
@@ -93,7 +93,7 @@ public class EditNote extends AppCompatActivity {
         if(enterTags.getText().toString().length() > 0 && note.getTags().size() < tags.length){
             Toast toast = Toast.makeText(getApplicationContext(), "Some tags were invalid and not added", Toast.LENGTH_SHORT);
             toast.show();
-        }
+        }*/
 
         AllNotes.getInstance().getNotes().set(index,note);
         AllNotes.getInstance().updateNote(index);
@@ -145,6 +145,7 @@ public class EditNote extends AppCompatActivity {
         enterTextContent = (EditText)findViewById(R.id.enterTextContent);
             enterTextContent.addTextChangedListener(textCounter);
         enterTags = (EditText)findViewById(R.id.enterTags);
+        enterTags.setVisibility(View.INVISIBLE);
         charCount = (TextView)findViewById(R.id.characterCount);
 
         index = AllNotes.getInstance().getEditIndex();
@@ -160,10 +161,6 @@ public class EditNote extends AppCompatActivity {
             Bitmap bitmap = BitmapFactory.decodeFile(AllNotes.getInstance().getNotes().get(index).getPicturePath());
             this.noteImage.setImageBitmap(bitmap);
         }
-
-
-
-
     }
 
     //---------------- helper ----------------

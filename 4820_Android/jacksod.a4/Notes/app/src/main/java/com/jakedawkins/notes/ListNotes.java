@@ -136,8 +136,17 @@ public class ListNotes extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        AllNotes.getInstance().deleteAllNotes();
+        refresh(null);
+    }
+
+    public void refresh(MenuItem item){
+        ///delete old notes
+        if(RemoteDB.getInstance().toSyncCount() == 0){
+            AllNotes.getInstance().deleteAllNotes();
+        } else {
+            RemoteDB.getInstance().syncUp();
+            AllNotes.getInstance().deleteAllNotes();
+        }
         RemoteDB.getInstance().syncDown(adapter);
-        adapter.notifyDataSetChanged();
     }
 }

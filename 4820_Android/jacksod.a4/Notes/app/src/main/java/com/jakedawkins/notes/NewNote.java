@@ -80,23 +80,25 @@ public class NewNote extends AppCompatActivity {
 
 
         Note note = new Note();
-        String[] tags = enterTags.getText().toString().split(" ");
+        //String[] tags = enterTags.getText().toString().split(" ");
 
         note.setText(enterTextContent.getText().toString());
         note.createNow();
 
         ///set tags
+        /*
         for(int i=0; i<tags.length; i++){
             if(this.checkTag(tags[i])){
                 note.addTag(tags[i]);
             }
-        }
+        }*/
 
         ///let user know not all tags were valid
-        if(enterTags.getText().toString().length() > 0 && note.getTags().size() < tags.length){
+/*        if(enterTags.getText().toString().length() > 0 && note.getTags().size() < tags.length){
             Toast toast = Toast.makeText(getApplicationContext(), "Some tags were invalid and not added", Toast.LENGTH_SHORT);
             toast.show();
         }
+*/
 
         ///add the image bitmap to the note for saving
         if(this.bitmap != null){
@@ -126,6 +128,7 @@ public class NewNote extends AppCompatActivity {
         enterTextContent = (EditText)findViewById(R.id.enterTextContent);
             enterTextContent.addTextChangedListener(textCounter);
         enterTags = (EditText)findViewById(R.id.enterTags);
+            enterTags.setVisibility(View.INVISIBLE);
         charCount = (TextView)findViewById(R.id.characterCount);
         this.addPhotoButton = (Button)findViewById(R.id.newPhotoButton);
         this.newImage = (ImageView)findViewById(R.id.newImage);

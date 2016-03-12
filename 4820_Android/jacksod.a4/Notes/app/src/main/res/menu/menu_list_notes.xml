@@ -17,8 +17,14 @@
         android:title="@string/info"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_refresh"
         android:orderInCategory="102"
+        android:title="Refresh"
+        android:onClick="refresh"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="103"
         android:title="Logout"
         android:onClick="logUserOut"
         app:showAsAction="ifRoom" />

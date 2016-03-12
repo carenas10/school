@@ -9,6 +9,8 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Jake on 2/1/16.
@@ -96,6 +98,10 @@ public class AllNotes {
             }
             c.close();
 
+            //temp set tags from text content
+            //TODO -- move this
+            newNote.setTags(findHashTags(newNote.getText()));
+
             ///add tags
             for (int i = 0; i < newNote.getTags().size(); i++) {
                 String tag = newNote.getTags().get(i);
@@ -166,6 +172,10 @@ public class AllNotes {
 
             this.db.execSQL("DELETE FROM tags_notes WHERE note_id=" + note.getID());
 
+            //temp set tags from text content
+            //TODO -- move this
+            note.setTags(findHashTags(note.getText()));
+
             ///add tags
             for (int i = 0; i < note.getTags().size(); i++) {
                 String tag = note.getTags().get(i);
@@ -209,6 +219,10 @@ public class AllNotes {
                     "WHERE id=" + note.getID());
 
             this.db.execSQL("DELETE FROM tags_notes WHERE note_id=" + note.getID());
+
+            //temp set tags from text content
+            //TODO -- move this
+            note.setTags(findHashTags(note.getText()));
 
             ///add tags
             for (int i = 0; i < note.getTags().size(); i++) {
@@ -396,6 +410,18 @@ public class AllNotes {
         }
 
         return note;
+    }
+
+    //------------------------ HELPERS ------------------------
+    public static ArrayList<String> findHashTags(String input){
+        Pattern MY_PATTERN = Pattern.compile("#(\\w+)");
+        Matcher mat = MY_PATTERN.matcher(input);
+        ArrayList<String> tags =new ArrayList<String>();
+        while (mat.find()) {
+            tags.add(mat.group(1));
+        }
+
+        return tags;
     }
 
 }
