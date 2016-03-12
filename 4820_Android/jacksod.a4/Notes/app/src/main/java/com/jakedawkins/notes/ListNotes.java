@@ -1,6 +1,7 @@
 package com.jakedawkins.notes;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -41,6 +42,22 @@ public class ListNotes extends AppCompatActivity {
         return true;
     }
 
+    public boolean logUserOut(MenuItem item){
+        SharedPreferences settings = getSharedPreferences("UserInfoPrefs", 0);
+
+        // We need an Editor object to make preference changes.
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt("userID", -1);
+        editor.commit();
+
+        RemoteDB.getInstance().logOut();
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+
+        return true;
+    }
+
     /*!
      *  Launches a new activity for searching notes
      *
@@ -65,22 +82,34 @@ public class ListNotes extends AppCompatActivity {
         ///notes table
         ListView listView = (ListView)findViewById(R.id.listView);
 
-        ///load up the db and retrieve notes
+        ///load up the db
         SQLiteDatabase db = this.openOrCreateDatabase("notes", MODE_PRIVATE, null);
         AllNotes.getInstance().setUpDB(db);
+
+        ///check if user is logged in
+        SharedPreferences settings = getSharedPreferences("UserInfoPrefs", 0);
+        int userID = settings.getInt("userID", -1);
+        if(userID == -1){ //not logged in. Redirect to login page
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        } else {
+            //logged in user. set user id on the remote DB class for MySQL Queries
+            RemoteDB.getInstance().setUserID(userID);
+        }
 
         ///delete old notes
         if(RemoteDB.getInstance().toSyncCount() == 0){
             AllNotes.getInstance().deleteAllNotes();
         } else {
             RemoteDB.getInstance().syncUp();
+            AllNotes.getInstance().deleteAllNotes();
         }
 
         ///set up note adapter
         adapter = new NoteAdapter(this, this.notes);
 
         //syncDown must be called after adapter is set
-        RemoteDB.getInstance().syncDown(adapter);
+        //RemoteDB.getInstance().syncDown(adapter);
 
         ///link adapter to listView
         listView.setAdapter(adapter);
@@ -107,8 +136,8 @@ public class ListNotes extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
+        AllNotes.getInstance().deleteAllNotes();
+        RemoteDB.getInstance().syncDown(adapter);
         adapter.notifyDataSetChanged();
-        //Log.i("RESUME","SYNC UP CALLED");
-        //RemoteDB.getInstance().syncUp();
     }
 }

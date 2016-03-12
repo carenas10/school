@@ -29,4 +29,10 @@
     <string name="something_new">Adding an image to a note. The app saves the image locally with a path in the Database.</string>
     <string name="issues_title">Known Issues</string>
     <string name="issues">The image icons in lists of notes don\'t show for the first item in the list.</string>
+    <string name="title_activity_login">Login</string>
+    <string name="loginToThrownote">Login to ThrowNote</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+    <string name="newUser">New User</string>
 </resources>

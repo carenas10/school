@@ -154,6 +154,7 @@ public class AllNotes {
         ///only update db if initialized
         if(this.db != null){
             note.updateNow(); //set updated timedate stamp
+            note.setToSync(1);
 
             this.db.execSQL("UPDATE notes SET " +
                     "textContent='" + note.getText().replaceAll("'","''") + "', " +
@@ -233,7 +234,6 @@ public class AllNotes {
         }//end if
     }
 
-
     /*!
      *  removes note with given index from both singleton list and SQLite DB
      *
@@ -249,7 +249,7 @@ public class AllNotes {
         }
 
         //deleting from DB and of image happens once synced
-        this.db.execSQL("UPDATE notes SET toDelete = 1 WHERE id=" + Integer.toString(note.getID()));
+        this.db.execSQL("UPDATE notes SET toDelete = 1, toSync=1 WHERE id=" + Integer.toString(note.getID()));
         this.db.execSQL("DELETE FROM tags_notes WHERE note_id=" + Integer.toString(note.getID()));
     }
 
@@ -267,10 +267,9 @@ public class AllNotes {
         }
 
         //deleting from DB and of image happens once synced
-        this.db.execSQL("UPDATE notes SET toDelete = 1 WHERE id=" + Integer.toString(note.getID()));
+        this.db.execSQL("UPDATE notes SET toDelete = 1, toSync = 1 WHERE id=" + Integer.toString(note.getID()));
         this.db.execSQL("DELETE FROM tags_notes WHERE note_id=" + Integer.toString(note.getID()));
     }
-
 
     /*!
      *  delete marked notes in DB

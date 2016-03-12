@@ -29,6 +29,10 @@ public class RemoteDB {
     private static final RemoteDB remoteDB = new RemoteDB();
     private Context context;
     private String baseURL = "http://thrownote.com/api/v1/";
+    private String username;
+    private String password;
+    private int userID;
+    private boolean loggedIn = false;
 
     /*!
      *  Singleton instance of this class
@@ -40,15 +44,32 @@ public class RemoteDB {
 
     //------------------------ GETTERS ------------------------
 
+    public String getUsername(){
+        return this.username;
+    }
+
+    public int getUserID(){
+        return this.userID;
+    }
+
+    public boolean loggedIn(){
+        return this.loggedIn;
+    }
+
+    public RequestQueue getRequestQueue(){ return this.requestQueue; }
+
+    public String getBaseURL(){ return this.baseURL; }
 
     //------------------------ SETTERS ------------------------
-    public void setContext(Context context){
-        this.context = context;
-    }
+    public void setUsername(String username){ this.username = username; }
 
-    public void instantiateRequestQueue(){
-        requestQueue = Volley.newRequestQueue(this.context);
-    }
+    public void setPassword(String password){ this.password = password; }
+
+    public void setUserID(int userID){ this.userID = userID; }
+
+    public void setContext(Context context){ this.context = context; }
+
+    public void instantiateRequestQueue(){ requestQueue = Volley.newRequestQueue(this.context); }
 
     //------------------------ API CALLS ------------------------
 
@@ -56,7 +77,7 @@ public class RemoteDB {
     public void syncDown(final NoteAdapter adapter){
         if (requestQueue == null) instantiateRequestQueue();
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,this.baseURL + "users/1/notes",null,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,this.baseURL + "users/" + userID + "/notes",null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -116,25 +137,80 @@ public class RemoteDB {
                 //update/delete/add depending on what is required
                 if(c.getInt(toDeleteIndex) == 0 && toSync.getRemoteID() == 0){
                     //completely new note
+                    Log.i("SYNC_UP","NEW NOTE");
                     syncUpAdd(toSync);
                 } else if(c.getInt(toDeleteIndex) == 0 && toSync.getRemoteID() != 0){
                     //old note to update on remote
+                    Log.i("SYNC_UP","UPDATE NOTE");
                     syncUpUpdate(toSync);
-                } else if(c.getInt(toDeleteIndex) == 1 && toSync.getRemoteID() == 0){
+                } /*else if(c.getInt(toDeleteIndex) == 1 && toSync.getRemoteID() == 0){
                     //delete note, local only. done after syncUpFinishes
-                } else if(c.getInt(toDeleteIndex) == 1 && toSync.getRemoteID() != 0){
+                }*/ else if(c.getInt(toDeleteIndex) == 1 && toSync.getRemoteID() != 0){
                     //delete remote
+                    Log.i("SYNC_UP","DELETE NOTE");
                     syncUpDelete(toSync);
                 } else {
                     Log.e("syncUp","conditions not checked");
                 }
             }
         }
+        c.close();
+        AllNotes.getInstance().deleteMarkedNotes();
     }
 
-    //log in
+    //log in. sends username and password to API.
+    //API returns json description of user if correct login
     public void login(){
+        if (requestQueue == null) instantiateRequestQueue();
 
+        StringRequest strRequest = new StringRequest(Request.Method.POST, this.baseURL + "users/" + this.username,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response)
+                    {
+                        Log.i("LOGIN_RESPONSE",response);
+                        try {
+                            JSONObject responseJSON = new JSONObject(response);
+
+                            boolean success = responseJSON.getJSONObject("data").getBoolean("login");
+                            if(success){
+                                userID = responseJSON.getJSONObject("data").getInt("id");
+                                loggedIn = true;
+                                Log.i("LOGIN_RESPONSE_ID","user id from response: " + userID);
+                            }
+                        } catch(JSONException e){
+                            Log.i("ERROR PARSING JSON", "TRUE");
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        Log.i("LOGIN_ERROR","TRUE");
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("username", username);
+                params.put("password", password);
+                return params;
+            }
+        };
+
+        this.requestQueue.add(strRequest);
+    }
+
+    public void logOut(){
+        username = "";
+        password = "";
+        userID = -1;
+        loggedIn = false;
     }
 
     //------------------------ HELPER METHODS ------------------------
@@ -147,7 +223,7 @@ public class RemoteDB {
                     @Override
                     public void onResponse(String response)
                     {
-                        Log.i("SYNC_ADD_UP_RESP_DATA",response.toString());
+                        Log.i("SYNC_ADD_UP_RESP_DATA",response);
                         try {
                             JSONObject responseJSON = new JSONObject(response);
                             int remoteID =responseJSON.getJSONObject("data").getInt("id");
@@ -160,7 +236,6 @@ public class RemoteDB {
                         } catch(JSONException e){
                             Log.i("ERROR PARSING JSON", "TRUE");
                         }
-
                     }
                 },
                 new Response.ErrorListener()
@@ -176,29 +251,85 @@ public class RemoteDB {
             protected Map<String, String> getParams()
             {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("owner", "1");
+                params.put("owner", Integer.toString(userID));
                 params.put("text", note.getText());
                 params.put("created", note.getCreated());
                 return params;
             }
         };
 
-        //Log.i("POST REQUEST",postRequest.toString());
-        //Log.i("POST REQUEST", postRequest.getBodyContentType());
+        this.requestQueue.add(strRequest);
+    }
+
+    public void syncUpUpdate(final Note note){
+        if (requestQueue == null) instantiateRequestQueue();
+
+        StringRequest strRequest = new StringRequest(Request.Method.POST, this.baseURL + "notes/" + note.getRemoteID(),
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response)
+                    {
+                        Log.i("SYNC_UP_UPD_RESP_DATA",response);
+                        note.setToSync(0);
+                        AllNotes.getInstance().updateNote(note);
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        Log.i("SYNC_UP_UPD_ERROR","TRUE");
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("owner", Integer.toString(userID));
+                params.put("text", note.getText());
+                params.put("created", note.getCreated());
+                params.put("updated",note.getUpdated());
+                return params;
+            }
+        };
 
         this.requestQueue.add(strRequest);
     }
 
-    public void syncUpUpdate(Note note){
-        Log.i("SYNC", "SYNC_UP_UPDATE");
-    }
+    public void syncUpDelete(final Note note){
+        if (requestQueue == null) instantiateRequestQueue();
 
-    public void syncUpDelete(Note note){
-        Log.i("SYNC", "SYNC_UP_DELETE");
+        Log.i("SYNC_UP_DEL_ID", Integer.toString(note.getRemoteID()));
+        StringRequest strRequest = new StringRequest(Request.Method.DELETE, this.baseURL + "notes/" + note.getRemoteID(),
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response)
+                    {
+                        Log.i("SYNC_UP_DEL_RESP_DATA",response);
+                        note.setToSync(0);
+                        AllNotes.getInstance().updateNote(note);
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        Log.i("SYNC_UP_DEL_ERROR","TRUE");
+                    }
+                });
+
+        this.requestQueue.add(strRequest);
     }
 
     public int toSyncCount(){
         Cursor c = AllNotes.getInstance().getDB().rawQuery("SELECT * FROM notes WHERE toSync=1", null);
-        return c.getCount();
+        int count = c.getCount();
+        c.close();
+        return count;
     }
 }

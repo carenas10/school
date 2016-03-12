@@ -97,6 +97,7 @@ public class EditNote extends AppCompatActivity {
 
         AllNotes.getInstance().getNotes().set(index,note);
         AllNotes.getInstance().updateNote(index);
+        RemoteDB.getInstance().syncUp();
         finish(); //return back to the previous activity
     }
 
@@ -112,6 +113,7 @@ public class EditNote extends AppCompatActivity {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         AllNotes.getInstance().deleteNote(index);
+                        RemoteDB.getInstance().syncUp();
                         finish();
                     }
                 })
