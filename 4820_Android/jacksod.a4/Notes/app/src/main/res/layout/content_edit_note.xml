@@ -46,20 +46,58 @@
                 android:maxLength="256"
                 android:hint="@string/textEntry" />
 
-            <EditText
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/enterTags"
-                android:maxLength="100"
-                android:hint="@string/tagsEntry" />
+                android:id="@+id/linearEditImageAndButtonView"
+                android:layout_marginTop="10dp"
+                >
 
-            <ImageView
-                android:layout_width="wrap_content"
+                <ImageView
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editImage"
+                    android:layout_width="0px"
+                    android:layout_weight="1"
+                    android:maxHeight="100dp"
+                    android:maxWidth="100dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/note"
+                    android:layout_gravity="center"
+                    />
+
+                <Button
+                    android:layout_width="0px"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:text="@string/remove"
+                    android:id="@+id/editRemoveButton"
+                    android:textColor="#ffffff"
+                    android:background="#ad0000"
+                    android:onClick="removePhoto"
+                    />
+            </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/noteImage"
-                android:layout_gravity="center"
-                android:maxHeight="150dp"
-                android:adjustViewBounds="true"
+                android:text="@string/addAPhoto"
+                android:id="@+id/newPhotoButton"
+                android:onClick="newPhoto"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="#ffffff"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/recordAudio"
+                android:id="@+id/newAudioButton"
+                android:onClick="newAudioRecordingButton"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="#ffffff"
                 />
 
             <Button

@@ -10,7 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Jake on 2/1/16.
@@ -26,30 +29,53 @@ public class NoteAdapter extends ArrayAdapter<Note> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
-        ///get data for view
+        /// get data for view
         Note note = notes.get(position);
 
-        ///Check if an existing view is being reused, otherwise inflate the view
+        /// Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_note, parent, false);
         }
 
-        ///Lookup view for data population
+        /// Lookup view for data population
         TextView noteText = (TextView) convertView.findViewById(R.id.noteText);
-        TextView noteTags = (TextView) convertView.findViewById(R.id.noteTags);
-            noteTags.setVisibility(View.INVISIBLE);
+        TextView noteTimeStamp = (TextView) convertView.findViewById(R.id.noteTimeStamp);
+            //noteTags.setVisibility(View.INVISIBLE);
         ImageView imageIcon = (ImageView) convertView.findViewById(R.id.imageIcon);
 
-        ///Populate the data into the template view using the data object
+        /// Populate the data into the template view using the data object
         noteText.setText(note.getText());
 
-        ///hide the image icon if no image with note
-        if(note.getPicturePath() == null){
-            imageIcon.setVisibility(View.GONE);
+        /// show the time created or updated
+        if(note.getUpdated() != null && !note.getUpdated().equals("null")){
+            noteTimeStamp.setText(dateParse(note.getUpdated()));
+        } else {
+            noteTimeStamp.setText(dateParse(note.getCreated()));
         }
 
-        ///Return the completed view to render on screen
+        /// hide the image icon if no image with note
+        if(note.getPicturePath() == null && note.getAudioPath() == null){
+            imageIcon.setVisibility(View.GONE);
+        } else if(note.getPicturePath() != null){
+            imageIcon.setImageResource(R.drawable.imageicon);
+        } else { //has an audio note
+            imageIcon.setImageResource(R.drawable.soundicon);
+        }
+
+        /// Return the completed view to render on screen
         return convertView;
+    }
+
+    public static String dateParse(String dateTime){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date date = simpleDateFormat.parse(dateTime);
+            return String.format("%tb %<te, %<tY", date);
+
+        } catch (ParseException ex) {
+            System.out.println("Exception "+ex);
+            return "";
+        }
     }
 
 }

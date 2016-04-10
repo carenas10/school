@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">ThrowNote</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_new_note">New Note</string>
+    <string name="zero">0</string>
+    <string name="textEntry">Enter note text</string>
+    <string name="tagsEntry">Enter tags, separated by a space</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="title_activity_edit_note">Edit Note</string>
+    <string name="search">Search</string>
+    <string name="info">Info</string>
+    <string name="title_activity_info">Info</string>
+    <string name="author">
+    	Developed by Jake Dawkins
+    	\nhttp://jakedawkins.com
+    </string>
+    <string name="instructions_title">Instructions</string>
+    <string name="instructions_content">
+    	- To create a new note, tap the plus at the bottom of the main window.
+        \n- To refresh the feed, tap the more icon in the menubar and tap "refresh".
+    	\n- To edit a note, tap the note in the main window and tap "edit".
+        \n- To delete a note, tap the note in the main window and tap "delete".
+    </string>
+    <string name="ack_title">Acknowledgments</string>
+    <string name="ack_content">Volley HTTP Requests\nhttp://developer.android.com/training/volley/request.html#request-json\n\nJSON Parsing\nhttp://stackoverflow.com/questions/2591098/how-to-parse-json-in-java\n\nShared Preferences\nhttp://developer.android.com/guide/topics/data/data-storage.html\n\nImplicit Tagging (hashtags)\nhttp://stackoverflow.com/questions/10432543/extract-hash-tag-from-string\n\nDateTime Parsing and Printing\nhttp://stackoverflow.com/questions/16910344/how-to-convert-string-into-date-time-format-in-java</string>
+    <string name="title_activity_search">Search</string>
+    <string name="addAPhoto">Add a Photo</string>
+    <string name="remove">Remove</string>
+    <string name="something_new_title">Something New</string>
+    <string name="something_new">- ThrowNote now uses Logins.\n- Passwords are stored with a salted hash.\n- ThrowNote is now backed by a RESTful API ( https://en.wikipedia.org/wiki/Representational_state_transfer ).</string>
+    <string name="issues_title">Known Issues</string>
+    <string name="issues">Sometimes the notes list does not refresh automatically. Logging in takes two tries.</string>
+    <string name="title_activity_login">Login</string>
+    <string name="loginToThrownote">Login to ThrowNote</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+    <string name="newUser">New User</string>
+    <string name="title_activity_view_note">ViewNoteActivity</string>
+    <string name="edit">Edit</string>
+    <string name="textContent">Text Content</string>
+    <string name="viewNote">View Note</string>
+</resources>

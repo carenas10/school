@@ -45,13 +45,6 @@
                 android:maxLength="256"
                 android:hint="@string/textEntry" />
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/enterTags"
-                android:maxLength="100"
-                android:hint="@string/tagsEntry" />
-
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -90,6 +83,17 @@
                 android:text="@string/addAPhoto"
                 android:id="@+id/newPhotoButton"
                 android:onClick="newPhoto"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="#ffffff"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/recordAudio"
+                android:id="@+id/newAudioButton"
+                android:onClick="newAudioRecordingButton"
                 android:layout_marginTop="10dp"
                 android:background="@color/colorPrimary"
                 android:textColor="#ffffff"
