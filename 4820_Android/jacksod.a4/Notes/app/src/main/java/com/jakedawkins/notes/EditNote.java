@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.renderscript.Script;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,8 +14,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,10 +27,14 @@ import java.util.regex.Pattern;
 public class EditNote extends AppCompatActivity {
 
     private EditText enterTextContent;
-    //private EditText enterTags;
     private TextView charCount;
     private int index;
-    //private ImageView noteImage;
+    private ImageView editImage;
+    private LinearLayout linearEditImageAndButtonView;
+
+    private Button addPhotoButton;
+    private Button addAudioButton;
+
     Note note;
 
     /// to count the number of characters and display to the top right
@@ -81,34 +88,6 @@ public class EditNote extends AppCompatActivity {
         finish(); //return back to the previous activity
     }
 
-    /*!
-     *  takes an already existing note and removes it from List and DB
-     *
-     *  \param View | button pressed
-     */
-    /*
-    public void deleteNote(View view){
-        new AlertDialog.Builder(this)
-            .setTitle("Delete Note")
-            .setMessage("Are you sure you want to delete this note")
-            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    Note note = AllNotes.getInstance().getNotes().get(index);
-                    RemoteDB.getInstance().syncUpDelete(note);
-                    AllNotes.getInstance().deleteNote(index);
-                    AllNotes.getInstance().deleteMarkedNotes();
-                    finish();
-                }
-            })
-            .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    // do nothing
-                }
-            })
-            .setIcon(android.R.drawable.ic_dialog_alert)
-            .show();
-    }*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,22 +105,38 @@ public class EditNote extends AppCompatActivity {
 
         enterTextContent = (EditText)findViewById(R.id.enterTextContent);
             enterTextContent.addTextChangedListener(textCounter);
-        //enterTags = (EditText)findViewById(R.id.enterTags);
-        //enterTags.setVisibility(View.INVISIBLE);
         charCount = (TextView)findViewById(R.id.characterCount);
 
         index = AllNotes.getInstance().getEditIndex();
 
         ///set up the textfields
         enterTextContent.setText(AllNotes.getInstance().getNotes().get(index).getText());
-        //enterTags.setText(AllNotes.getInstance().getNotes().get(index).tagsToString());
 
-        ///load up the image
-        //this.noteImage = (ImageView)findViewById(R.id.noteImage);
+        /// set up buttons
+        this.addAudioButton = (Button) findViewById(R.id.newAudioButton);
+        this.addPhotoButton = (Button) findViewById(R.id.newPhotoButton);
+
+        /// set up linear image and remove button view
+        this.linearEditImageAndButtonView = (LinearLayout) findViewById(R.id.linearEditImageAndButtonView);
+
+        /// set up image view
+        this.editImage = (ImageView)findViewById(R.id.editImage);
+
+        //note has an image
         if(AllNotes.getInstance().getNotes().get(index).getPicturePath() != null && !AllNotes.getInstance().getNotes().get(index).getPicturePath().equals("")){
             Log.i("IMAGE PATH", AllNotes.getInstance().getNotes().get(index).getPicturePath());
             Bitmap bitmap = BitmapFactory.decodeFile(AllNotes.getInstance().getNotes().get(index).getPicturePath());
-            //this.noteImage.setImageBitmap(bitmap);
+            this.editImage.setImageBitmap(bitmap);
+
+            //hide add buttons
+            this.addPhotoButton.setVisibility(View.INVISIBLE);
+            this.addPhotoButton.getLayoutParams().height = 0;
+            this.addAudioButton.setVisibility(View.INVISIBLE);
+            this.addAudioButton.getLayoutParams().height = 0;
+        } else { //note has no image
+            //hide the image and remove button
+            this.linearEditImageAndButtonView.setVisibility(View.INVISIBLE);
+            this.linearEditImageAndButtonView.getLayoutParams().height = 0;
         }
     }
 }

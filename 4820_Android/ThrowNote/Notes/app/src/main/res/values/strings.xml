@@ -41,4 +41,9 @@
     <string name="edit">Edit</string>
     <string name="textContent">Text Content</string>
     <string name="viewNote">View Note</string>
+    <string name="recordAudio">Record Audio</string>
+    <string name="recent">Recent</string>
+    <string name="photos">Photos</string>
+    <string name="audio">Audio</string>
+    <string name="bookmarks">Bookmarks</string>
 </resources>

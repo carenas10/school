@@ -29,12 +29,11 @@ import java.util.regex.Pattern;
 public class NewNote extends AppCompatActivity {
 
     private EditText enterTextContent;
-    //private EditText enterTags;
     private TextView charCount;
-    //private LinearLayout linear;
-    //private Button addPhotoButton;
+    private LinearLayout linear;
+    private Button addPhotoButton;
     private Bitmap bitmap;
-    //private ImageView newImage;
+    private ImageView newImage;
 
     /// to count the number of characters and display to the top right
     private final TextWatcher textCounter = new TextWatcher() {
@@ -44,7 +43,6 @@ public class NewNote extends AppCompatActivity {
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             /// This sets a TextView to the current length
             charCount.setText(String.valueOf(s.length()));
-
 
             if (s.length() > 250) {
                 charCount.setTextColor(Color.RED);
@@ -109,48 +107,42 @@ public class NewNote extends AppCompatActivity {
 
         enterTextContent = (EditText) findViewById(R.id.enterTextContent);
         enterTextContent.addTextChangedListener(textCounter);
-        //enterTags = (EditText) findViewById(R.id.enterTags);
-        //enterTags.setVisibility(View.INVISIBLE);
         charCount = (TextView) findViewById(R.id.characterCount);
-        //this.addPhotoButton = (Button) findViewById(R.id.newPhotoButton);
-        //this.newImage = (ImageView) findViewById(R.id.newImage);
-
-        //addPhotoButton.setVisibility(View.INVISIBLE);
+        this.addPhotoButton = (Button) findViewById(R.id.newPhotoButton);
+        this.newImage = (ImageView) findViewById(R.id.newImage);
 
         ///hide the image/button layout
-        //this.linear = (LinearLayout) findViewById(R.id.linearImageAndButtonView);
-        //this.linear.setVisibility(View.INVISIBLE);
-        //this.linear.getLayoutParams().height = 0;
+        this.linear = (LinearLayout) findViewById(R.id.linearImageAndButtonView);
+        this.linear.setVisibility(View.INVISIBLE);
+        this.linear.getLayoutParams().height = 0;
     }
 
     //---------------- PHOTO METHODS ----------------
 
     /// user presses add photo button
-    /*
     public void newPhoto(View view) {
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(i, 1);
-    }*/
+    }
 
-    //TODO -- why doesn't this work until after typing something
     /// removes the photo from the note
-    /*
     public void removePhoto(View view) {
         //hide the image/button layout
         this.linear.setVisibility(View.INVISIBLE);
         this.linear.getLayoutParams().height = 0;
-        Log.i("height", Integer.toString(this.linear.getLayoutParams().height));
 
         //show the add photo button
-
         this.addPhotoButton.setVisibility(View.VISIBLE);
         this.addPhotoButton.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
 
         this.bitmap = null;
-    }*/
+
+        //TODO -- this works, but flashes black
+        //force redraw
+        recreate();
+    }
 
     /// after the image picker returns
-    /*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -176,6 +168,8 @@ public class NewNote extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        } else if (requestCode == 2 && resultCode == RESULT_OK && data != null){
+            Log.i("REQUEST_CODE",Integer.toString(2));
         }
-    }*/
+    }
 }

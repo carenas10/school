@@ -58,19 +58,26 @@ public class AllNotes {
      */
     public void setUpDB(SQLiteDatabase db){
         this.db = db;
-
         this.db.execSQL("CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY, textContent TEXT NOT NULL, created TEXT NOT NULL, updated TEXT, imagePath TEXT, toSync INTEGER DEFAULT 0, toDelete INTEGER DEFAULT 0, remoteID INTEGER DEFAULT 0)");
+        this.db.execSQL("CREATE TABLE IF NOT EXISTS filetypes(id INTEGER PRIMARY KEY, filetype TEXT NOT NULL)");
+        this.db.execSQL("CREATE TABLE IF NOT EXISTS attachments(id INTEGER PRIMARY KEY, filename TEXT NOT NULL, filetype_id INTEGER NOT NULL, note_id INTEGER NOT NULL, path TEXT NOT NULL, FOREIGN KEY (filetype_id) REFERENCES filetypes(id), FOREIGN KEY (note_id) REFERENCES notes(id)) ");
         this.db.execSQL("CREATE TABLE IF NOT EXISTS tags(id INTEGER PRIMARY KEY, name TEXT NOT NULL)");
         this.db.execSQL("CREATE TABLE IF NOT EXISTS tags_notes(id INTEGER PRIMARY KEY, tag_id INTEGER NOT NULL, note_id INTEGER NOT NULL, FOREIGN KEY (tag_id) REFERENCES tags(id), FOREIGN KEY (note_id) REFERENCES notes(id))");
+
+        //allowed filetypes
+        if(AllNotes.getFiletypeID("png") == -1){
+            this.db.execSQL("INSERT INTO filetypes(id,filetype) VALUES(1,'png')");
+        }
+        if(AllNotes.getFiletypeID("mp3") == -1) {
+            this.db.execSQL("INSERT INTO filetypes(id,filetype) VALUES(2,'mp3')");
+        }
     }
 
     public void setEditIndex(int editIndex){
         this.editIndex = editIndex;
     }
 
-    public void setContext(Context context){
-        this.context = context;
-    }
+    public void setContext(Context context){ this.context = context; }
 
     //---------------- HELPERS ----------------
 
@@ -123,6 +130,7 @@ public class AllNotes {
                 }
             }//end for
 
+            /// note has an image
             if(newNote.getBitmap() != null){
                 /// add image to internal storage
                 File internalStorage = context.getDir("NotePictures", Context.MODE_PRIVATE);
@@ -142,7 +150,12 @@ public class AllNotes {
                 }
 
                 /// add image path to DB
+                // TODO
                 this.db.execSQL("UPDATE notes SET imagePath='" + newNote.getPicturePath() + "' WHERE id='" + newNote.getID() + "'");
+
+                //delete all old attachments for note
+                //add new attachment for note
+
             }
         }//end if
 
@@ -261,6 +274,7 @@ public class AllNotes {
         }
 
         /// deleting from DB and of image happens once synced
+        // TODO
         this.db.execSQL("UPDATE notes SET toDelete = 1, toSync=1 WHERE id=" + Integer.toString(note.getID()));
         this.db.execSQL("DELETE FROM tags_notes WHERE note_id=" + Integer.toString(note.getID()));
     }
@@ -279,6 +293,7 @@ public class AllNotes {
         }
 
         /// deleting from DB and of image happens once synced
+        // TODO
         this.db.execSQL("UPDATE notes SET toDelete = 1, toSync = 1 WHERE id=" + Integer.toString(note.getID()));
         this.db.execSQL("DELETE FROM tags_notes WHERE note_id=" + Integer.toString(note.getID()));
     }
@@ -290,6 +305,7 @@ public class AllNotes {
         Cursor c = this.db.rawQuery("SELECT id FROM notes WHERE toDelete=1",null);
         int idIndex = c.getColumnIndex("id");
 
+        // TODO
         for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
             int id = c.getInt(idIndex);
             this.db.execSQL("DELETE FROM notes WHERE id=" + id);
@@ -301,6 +317,7 @@ public class AllNotes {
      *  delete all notes in local db and singleton list
      */
     public void deleteAllNotes(){
+        // TODO
         this.db.execSQL("DELETE FROM notes");
         this.db.execSQL("DELETE FROM tags");
         this.db.execSQL("DELETE FROM tags_notes");
@@ -316,6 +333,7 @@ public class AllNotes {
         if(this.db == null) return false;
         Cursor c = this.db.rawQuery("SELECT * FROM notes WHERE toDelete=0", null);
 
+        // TODO
         int textContentIndex = c.getColumnIndex("textContent");
         int idIndex = c.getColumnIndex("id");
         int imagePathIndex = c.getColumnIndex("imagePath");
@@ -363,6 +381,7 @@ public class AllNotes {
     }
 
     public Note fetchNote(int id){
+        // TODO
         if(this.db == null) return null;
         Cursor c = this.db.rawQuery("SELECT * FROM notes WHERE id=" + id, null);
 
@@ -421,6 +440,22 @@ public class AllNotes {
         }
 
         return tags;
+    }
+
+    /*!
+    *   get id of a filetype from local db
+    */
+    public static int getFiletypeID(String filetype){
+        Cursor c = AllNotes.getInstance().db.rawQuery("SELECT * FROM filetypes WHERE filetype='" + filetype + "'", null);
+
+        int idIndex = c.getColumnIndex("id");
+
+        if(c.getCount() > 0) c.moveToFirst();
+
+        int filetypeID = c.getInt(idIndex);
+
+        c.close();
+        return filetypeID;
     }
 
 }

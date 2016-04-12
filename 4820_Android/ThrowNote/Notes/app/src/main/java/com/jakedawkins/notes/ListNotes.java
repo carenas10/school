@@ -49,15 +49,6 @@ public class ListNotes extends AppCompatActivity {
             RemoteDB.getInstance().setUserID(userID);
         }
 
-        /// delete old notes
-        /*
-        if(RemoteDB.getInstance().toSyncCount() == 0){
-            AllNotes.getInstance().deleteAllNotes();
-        } else {
-            //RemoteDB.getInstance().syncUp();
-            AllNotes.getInstance().deleteAllNotes();
-        }*/
-
         /// set up note adapter
         adapter = new NoteAdapter(this, this.notes);
 
@@ -151,10 +142,10 @@ public class ListNotes extends AppCompatActivity {
         if(RemoteDB.getInstance().toSyncCount() == 0){
             AllNotes.getInstance().deleteAllNotes();
         } else {
-            RemoteDB.getInstance().syncUp();
+            //RemoteDB.getInstance().syncUp();
             AllNotes.getInstance().deleteAllNotes();
         }
-        RemoteDB.getInstance().syncDown(adapter);
+        //RemoteDB.getInstance().syncDown(adapter);
     }
 
     //------------------------ ADDITIONAL ACTION METHODS ------------------------

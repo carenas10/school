@@ -17,8 +17,14 @@ public class Note {
     private String created;
     private String updated;
     private ArrayList<String> tags;
+
+    //IMAGE INFO
     private String picturePath;
     private Bitmap bitmap;
+
+    //AUDIO INFO
+    private String audioPath;
+
     private int remoteID;
     private int toSync;
     private int toDelete;
@@ -32,13 +38,14 @@ public class Note {
         this.remoteID = 0;
         this.toDelete = 0;
         this.toSync = 0;
+        this.picturePath = null;
+        this.bitmap = null;
+        this.audioPath = null;
     }
 
     //---------------- SETTERS ----------------
 
-    public void setID(int id){
-        this.id = id;
-    }
+    public void setID(int id){ this.id = id; }
 
     public void setText(String text){
         this.text = text;
@@ -66,13 +73,15 @@ public class Note {
         this.updated = now();
     }
 
+
+    //ATTACHMENTS
     public void setPicturePath(String picturePath) {
         this.picturePath = picturePath;
     }
-
     public void setBitmap(Bitmap bitmap){
         this.bitmap = bitmap;
     }
+    public void setAudioPath(String audioPath){ this.audioPath = audioPath; }
 
     public void setRemoteID(int remoteID){ this.remoteID = remoteID; }
 
@@ -84,9 +93,7 @@ public class Note {
 
     //---------------- GETTERS ----------------
 
-    public String getText(){
-        return this.text;
-    }
+    public String getText(){ return this.text; }
 
     public int getID(){
         return this.id;
@@ -107,13 +114,14 @@ public class Note {
         return this.tags;
     }
 
+    //ATTACHMENTS
     public String getPicturePath(){
         return this.picturePath;
     }
-
     public Bitmap getBitmap(){
         return this.bitmap;
     }
+    public String getAudioPath() { return this.audioPath; }
 
     public int getRemoteID(){ return this.remoteID; }
 
