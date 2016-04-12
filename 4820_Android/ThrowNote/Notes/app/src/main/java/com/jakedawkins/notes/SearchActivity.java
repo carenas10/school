@@ -114,7 +114,7 @@ public class SearchActivity extends AppCompatActivity {
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(SearchActivity.this, EditNote.class);
+                Intent intent = new Intent(SearchActivity.this, ViewNoteActivity.class);
                 AllNotes.getInstance().setEditIndex(position);
                 startActivity(intent);
             }
