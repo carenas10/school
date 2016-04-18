@@ -35,6 +35,8 @@ public class NewNote extends AppCompatActivity {
     private Bitmap bitmap;
     private ImageView newImage;
 
+    private static final int CAMERA_REQUEST = 1888;
+
     /// to count the number of characters and display to the top right
     private final TextWatcher textCounter = new TextWatcher() {
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -125,6 +127,15 @@ public class NewNote extends AppCompatActivity {
         startActivityForResult(i, 1);
     }
 
+    /// modified new photo
+    public void newPhoto2(View view){
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, CAMERA_REQUEST);
+        }
+    }
+
+
     /// removes the photo from the note
     public void removePhoto(View view) {
         //hide the image/button layout
@@ -147,8 +158,7 @@ public class NewNote extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        //Image picker
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null) { //pick image
             //location of selected image
             Uri selectedImage = data.getData();
 
@@ -168,8 +178,24 @@ public class NewNote extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else if (requestCode == 2 && resultCode == RESULT_OK && data != null){
-            Log.i("REQUEST_CODE",Integer.toString(2));
+        } else if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK && data != null){ //capture photo
+            /// TODO -- full res photo
+            Log.i("REQUEST_CODE",Integer.toString(CAMERA_REQUEST));
+            Bundle extras = data.getExtras();
+
+            this.bitmap = (Bitmap) extras.get("data");
+
+            this.newImage.setImageBitmap(this.bitmap);
+
+            //make the linear layout visible and expand
+            this.linear.setVisibility(View.VISIBLE);
+            this.linear.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
+
+            //hide the add photo button
+            this.addPhotoButton.setVisibility(View.INVISIBLE);
+            this.addPhotoButton.getLayoutParams().height = 0;
+        } else {
+            Log.i("REQUEST_CODE",Integer.toString(requestCode));
         }
     }
 }

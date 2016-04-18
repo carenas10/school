@@ -56,18 +56,18 @@
         android:id="@+id/button3"
         android:layout_below="@+id/button2"
         android:layout_centerHorizontal="true"
+        android:onClick="newUserPressed"
         />
 
-    <!--
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_below="@id/button2"
+        android:layout_below="@id/button3"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="Creating a new user does not work. Use:\n User: jakedawkins\nPassword: password"
+        android:text="For evaluation use:\nusername: jakedawkins\npassword: password"
         />
-    -->
 
 </RelativeLayout>

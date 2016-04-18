@@ -74,7 +74,7 @@
                     android:id="@+id/editRemoveButton"
                     android:textColor="#ffffff"
                     android:background="#ad0000"
-                    android:onClick="removePhoto"
+
                     />
             </LinearLayout>
 
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/addAPhoto"
                 android:id="@+id/newPhotoButton"
-                android:onClick="newPhoto"
+
                 android:layout_marginTop="10dp"
                 android:background="@color/colorPrimary"
                 android:textColor="#ffffff"
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/recordAudio"
                 android:id="@+id/newAudioButton"
-                android:onClick="newAudioRecordingButton"
+
                 android:layout_marginTop="10dp"
                 android:background="@color/colorPrimary"
                 android:textColor="#ffffff"

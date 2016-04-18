@@ -30,6 +30,7 @@ public class NoteAdapter extends ArrayAdapter<Note> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         /// get data for view
+        //TODO -- prevent deleted notes from crashing this
         Note note = notes.get(position);
 
         /// Check if an existing view is being reused, otherwise inflate the view

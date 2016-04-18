@@ -62,7 +62,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    /*
     public void newUserPressed(View view){
         String username = usernameField.getText().toString();
         String password = passwordfield.getText().toString();
@@ -75,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             RemoteDB.getInstance().setUsername(username);
             RemoteDB.getInstance().setPassword(password);
-            RemoteDB.getInstance().login();
+            RemoteDB.getInstance().newUser();
 
             if(RemoteDB.getInstance().loggedIn()){
                 SharedPreferences settings = getSharedPreferences("UserInfoPrefs", 0);
@@ -93,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                 toast.show();
             }
         }
-    }*/
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

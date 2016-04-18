@@ -113,7 +113,7 @@ public class RemoteDB {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Error: ", error.getMessage());
+                //Log.e("Error: ", error.getMessage());
             }
         });
 
@@ -206,7 +206,6 @@ public class RemoteDB {
         this.requestQueue.add(strRequest);
     }
 
-    /*
     public void newUser(){
         if (requestQueue == null) instantiateRequestQueue();
 
@@ -251,7 +250,7 @@ public class RemoteDB {
         };
 
         this.requestQueue.add(strRequest);
-    }*/
+    }
 
     public void logOut(){
         username = "";

@@ -451,6 +451,7 @@ public class AllNotes {
         int idIndex = c.getColumnIndex("id");
 
         if(c.getCount() > 0) c.moveToFirst();
+        else return -1;
 
         int filetypeID = c.getInt(idIndex);
 
