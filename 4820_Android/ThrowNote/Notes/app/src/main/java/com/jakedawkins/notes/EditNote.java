@@ -338,7 +338,9 @@ public class EditNote extends AppCompatActivity {
 
         note.setText(enterTextContent.getText().toString());
         /// add the image bitmap to the note for saving
-        if (this.bitmap != null) { note.setBitmap(this.bitmap); }
+        if (this.bitmap != null) {
+            note.setBitmap(this.bitmap);
+        }
         else if (this.outputFile != null) {
             /// add mp3 file info
             note.setFiletype("mp3");
@@ -346,8 +348,8 @@ public class EditNote extends AppCompatActivity {
             note.setPath(outputFile);
         }
 
-        AllNotes.getInstance().getNotes().set(index,note);
-        AllNotes.getInstance().updateNote(index);
+        AllNotes.getInstance().updateNote(note);
+        AllNotes.getInstance().getNotes().set(index, note);
         RemoteDB.getInstance().syncUpUpdate(note);
         finish(); //return back to the previous activity
     }

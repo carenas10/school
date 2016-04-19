@@ -67,7 +67,7 @@
         android:layout_below="@id/button3"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="For evaluation use:\nusername: jakedawkins\npassword: password"
+        android:text="Known issue:\nLogin/New User takes 2 tries."
         />
 
 </RelativeLayout>
