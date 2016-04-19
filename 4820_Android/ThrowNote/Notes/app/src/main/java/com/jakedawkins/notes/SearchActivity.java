@@ -14,7 +14,10 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -24,19 +27,10 @@ public class SearchActivity extends AppCompatActivity {
     Note noResults = new Note();
     NoteAdapter adapter;
 
-    private TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) { search(); }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
-        @Override
-        public void afterTextChanged(Editable s) { }
-    };
-
+    //------------------------ SEARCH METHODS ------------------------
     /*!
      *  Used to find the notes
+     *  Basic search by text
      */
     public void search(){
         EditText searchBox = (EditText)findViewById(R.id.searchBox);
@@ -76,8 +70,126 @@ public class SearchActivity extends AppCompatActivity {
             notes.add(noResults);
         }
 
+        c.close();
+        c2.close();
+
         adapter.notifyDataSetChanged();
     }
+
+    /*
+    *   user hit recent button
+    *   searches notes made in the last 3 days
+    */
+    public void searchRecent(View view){
+        Cursor c = AllNotes.getInstance().getDB().rawQuery("SELECT * FROM notes WHERE `created` LIKE '" + nowShort() + "%'", null);
+
+        int idIndex = c.getColumnIndex("id");
+        HashSet<Integer> indices = new HashSet<Integer>();
+
+        if(c.getCount() > 0) {
+            if(c.getCount() > 0){
+                for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+                    indices.add(c.getInt(idIndex));
+                }
+            }
+
+            notes.clear();
+
+            Iterator<Integer> i = indices.iterator();
+            while (i.hasNext()) {
+                int id = i.next();
+                Note newNote = AllNotes.getInstance().fetchNote(id);
+                notes.add(newNote);
+            }
+        } else { /// no notes found
+            notes.clear();
+            notes.add(noResults);
+        }
+
+        c.close();
+
+        adapter.notifyDataSetChanged();
+    }
+
+    /*
+    *   user hit photo button
+    *   searches notes with photos
+    */
+    public void searchPhotos(View view){
+        Cursor c = AllNotes.getInstance().getDB().rawQuery("SELECT DISTINCT note_id FROM attachments WHERE filetype_id=" + AllNotes.getFiletypeID("png"), null);
+
+        int idIndex = c.getColumnIndex("note_id");
+        HashSet<Integer> indices = new HashSet<Integer>();
+
+        if(c.getCount() > 0) {
+            if(c.getCount() > 0){
+                for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+                    indices.add(c.getInt(idIndex));
+                }
+            }
+
+            notes.clear();
+
+            Iterator<Integer> i = indices.iterator();
+            while (i.hasNext()) {
+                int id = i.next();
+                Note newNote = AllNotes.getInstance().fetchNote(id);
+                notes.add(newNote);
+            }
+        } else { /// no notes found
+            notes.clear();
+            notes.add(noResults);
+        }
+
+        c.close();
+
+        adapter.notifyDataSetChanged();
+    }
+
+    /*
+    *   user hit audio button
+    *   searches notes with audio attachments
+    */
+    public void searchAudio(View view){
+        Cursor c = AllNotes.getInstance().getDB().rawQuery("SELECT DISTINCT note_id FROM attachments WHERE filetype_id=" + AllNotes.getFiletypeID("mp3"), null);
+
+        int idIndex = c.getColumnIndex("note_id");
+        HashSet<Integer> indices = new HashSet<Integer>();
+
+        if(c.getCount() > 0) {
+            if(c.getCount() > 0){
+                for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+                    indices.add(c.getInt(idIndex));
+                }
+            }
+
+            notes.clear();
+
+            Iterator<Integer> i = indices.iterator();
+            while (i.hasNext()) {
+                int id = i.next();
+                Note newNote = AllNotes.getInstance().fetchNote(id);
+                notes.add(newNote);
+            }
+        } else { /// no notes found
+            notes.clear();
+            notes.add(noResults);
+        }
+
+        c.close();
+
+        adapter.notifyDataSetChanged();
+    }
+
+    /*
+    *   user hit bookmarks button
+    *   searches notes with bookmark links
+    */
+    public void searchBookmark(){
+
+    }
+
+    //------------------------ UI METHODS ------------------------
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,4 +233,41 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
+    //------------------------ HELPER METHODS ------------------------
+
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) { search(); }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+        @Override
+        public void afterTextChanged(Editable s) { }
+    };
+
+
+    /*!
+     *  Used to generate a mySQL-like timedate string of right now
+     *  in format of YYYY-MM-DD HH:MM:SS
+     *
+     *  \return String| current timeDate string
+     */
+    public String now(){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        return dateFormat.format(date); //2014-08-06 15:59:48
+    }
+
+    /*!
+     *  Used to generate a mySQL-like timedate string of right now
+     *  in format of YYYY-MM-DD HH:MM:SS
+     *
+     *  \return String| current timeDate string
+     */
+    public String nowShort(){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        return dateFormat.format(date); //2014-08-06
+    }
 }

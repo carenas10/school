@@ -35,15 +35,17 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/recent"
-            android:id="@+id/recentSearchFilterButton" />
+            android:text="@string/today"
+            android:id="@+id/recentSearchFilterButton"
+            android:onClick="searchRecent"/>
 
         <Button
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/photos"
-            android:id="@+id/photoSearchFilterButton" />
+            android:id="@+id/photoSearchFilterButton"
+            android:onClick="searchPhotos"/>
     </LinearLayout>
 
     <!-- second two buttons -->
@@ -58,7 +60,8 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/audio"
-            android:id="@+id/audioSearchFilterButton" />
+            android:id="@+id/audioSearchFilterButton"
+            android:onClick="searchAudio"/>
 
         <Button
             android:layout_width="0dp"

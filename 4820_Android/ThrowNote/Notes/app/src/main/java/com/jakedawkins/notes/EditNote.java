@@ -56,7 +56,7 @@ public class EditNote extends AppCompatActivity {
 
     private static final int CAMERA_REQUEST = 1888;
 
-    Note note;
+    Note note = AllNotes.getInstance().getNotes().get(AllNotes.getInstance().getEditIndex());
 
     //------------------------ AUDIO METHODS -------------------------
     //user taps add photo button
@@ -191,12 +191,19 @@ public class EditNote extends AppCompatActivity {
             linear.setVisibility(View.INVISIBLE);
             linear.getLayoutParams().height = 0;
 
-            /// show the add photo button
+            /// show the add buttons
             addPhotoButton.setVisibility(View.VISIBLE);
             addPhotoButton.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            addAudioButton.setVisibility(View.VISIBLE);
+            addAudioButton.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
 
             /// remove photo
             bitmap = null;
+            editImage.setImageBitmap(null);
+
+            note.setPath(null);
+            note.setFilename(null);
+            note.setFiletype(null);
 
             //TODO -- this works, but flashes black
             //force redraw
@@ -226,7 +233,6 @@ public class EditNote extends AppCompatActivity {
         charCount = (TextView)findViewById(R.id.characterCount);
 
         index = AllNotes.getInstance().getEditIndex();
-        note = AllNotes.getInstance().getNotes().get(index);
 
         ///set up the textfields
         enterTextContent.setText(note.getText());

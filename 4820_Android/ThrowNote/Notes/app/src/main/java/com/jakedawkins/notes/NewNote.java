@@ -180,9 +180,11 @@ public class NewNote extends AppCompatActivity {
             linear.setVisibility(View.INVISIBLE);
             linear.getLayoutParams().height = 0;
 
-            /// show the add photo button
+            /// show the add buttons
             addPhotoButton.setVisibility(View.VISIBLE);
             addPhotoButton.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            addAudioButton.setVisibility(View.VISIBLE);
+            addAudioButton.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
 
             /// remove photo
             bitmap = null;
