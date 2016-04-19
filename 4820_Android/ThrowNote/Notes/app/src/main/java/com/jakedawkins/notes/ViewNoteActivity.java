@@ -6,15 +6,17 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.IOException;
 
 public class ViewNoteActivity extends AppCompatActivity {
 
@@ -54,6 +56,25 @@ public class ViewNoteActivity extends AppCompatActivity {
             .show();
     }
 
+    View.OnClickListener playListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            Log.i("PLAY", "CLICKED");
+
+            MediaPlayer m = new MediaPlayer();
+
+            try { m.setDataSource(note.getPath()); }
+
+            catch (IOException e) {e.printStackTrace();}
+
+            try { m.prepare(); }
+
+            catch (IOException e) { e.printStackTrace(); }
+
+            m.start();
+            Toast.makeText(getApplicationContext(), "Playing audio", Toast.LENGTH_LONG).show();
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,11 +104,20 @@ public class ViewNoteActivity extends AppCompatActivity {
             characterCount.setTextColor(Color.rgb(0,160,0));
         }
 
-        /// load up the image
-        if(note.getPicturePath() != null && !note.getPicturePath().equals("")){
-            Log.i("IMAGE PATH", note.getPicturePath());
-            Bitmap bitmap = BitmapFactory.decodeFile(note.getPicturePath());
-            this.viewNoteImage.setImageBitmap(bitmap);
+        /// load up any attachments
+        if(note.getPath() != null && !note.getPath().equals("")){
+            if(note.getFiletype().equals("png")){
+                /// load up the image
+                Log.i("IMAGE PATH", note.getPath());
+                Bitmap bitmap = BitmapFactory.decodeFile(note.getPath());
+                this.viewNoteImage.setImageBitmap(bitmap);
+            } else if(note.getFiletype().equals("mp3")){
+                //load up audio file
+                Log.i("AUDIO PATH", note.getPath());
+                this.viewNoteImage.setImageResource(R.drawable.playicon);
+                viewNoteImage.setOnClickListener(playListener); //play
+            }
+
         }
 
     }

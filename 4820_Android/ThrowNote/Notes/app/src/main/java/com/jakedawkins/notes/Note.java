@@ -18,12 +18,12 @@ public class Note {
     private String updated;
     private ArrayList<String> tags;
 
-    //IMAGE INFO
-    private String picturePath;
-    private Bitmap bitmap;
+    /// ATTACHMENTS INFO
+    private String filename; // like test.png
+    private String filetype; // like "png"
+    private String path;    // like dir/dir/test.png
 
-    //AUDIO INFO
-    private String audioPath;
+    private Bitmap bitmap; // only if theres a photo
 
     private int remoteID;
     private int toSync;
@@ -38,9 +38,8 @@ public class Note {
         this.remoteID = 0;
         this.toDelete = 0;
         this.toSync = 0;
-        this.picturePath = null;
+        this.path = null;
         this.bitmap = null;
-        this.audioPath = null;
     }
 
     //---------------- SETTERS ----------------
@@ -75,13 +74,12 @@ public class Note {
 
 
     //ATTACHMENTS
-    public void setPicturePath(String picturePath) {
-        this.picturePath = picturePath;
+    public void setPath(String path) {
+        this.path = path;
     }
-    public void setBitmap(Bitmap bitmap){
-        this.bitmap = bitmap;
-    }
-    public void setAudioPath(String audioPath){ this.audioPath = audioPath; }
+    public void setBitmap(Bitmap bitmap){ this.bitmap = bitmap; }
+    public void setFilename(String filename){ this.filename = filename; }
+    public void setFiletype(String filetype) { this.filetype = filetype; }
 
     public void setRemoteID(int remoteID){ this.remoteID = remoteID; }
 
@@ -115,13 +113,12 @@ public class Note {
     }
 
     //ATTACHMENTS
-    public String getPicturePath(){
-        return this.picturePath;
+    public String getPath(){
+        return this.path;
     }
-    public Bitmap getBitmap(){
-        return this.bitmap;
-    }
-    public String getAudioPath() { return this.audioPath; }
+    public Bitmap getBitmap() { return this.bitmap; }
+    public String getFilename() { return this.filename; }
+    public String getFiletype() { return this.filetype; }
 
     public int getRemoteID(){ return this.remoteID; }
 

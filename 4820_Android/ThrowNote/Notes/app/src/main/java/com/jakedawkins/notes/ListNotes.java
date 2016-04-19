@@ -53,8 +53,8 @@ public class ListNotes extends AppCompatActivity {
         adapter = new NoteAdapter(this, this.notes);
 
         /// syncDown must be called after adapter is set
-        AllNotes.getInstance().deleteAllNotes();
-        RemoteDB.getInstance().syncDown(adapter);
+//        AllNotes.getInstance().deleteAllNotes();
+//        RemoteDB.getInstance().syncDown(adapter);
 
         /// link adapter to listView
         listView.setAdapter(adapter);
@@ -140,10 +140,10 @@ public class ListNotes extends AppCompatActivity {
     public void refresh(MenuItem item){
         /// delete old notes
         if(RemoteDB.getInstance().toSyncCount() == 0){
-            AllNotes.getInstance().deleteAllNotes();
+//            AllNotes.getInstance().deleteAllNotes();
         } else {
             //RemoteDB.getInstance().syncUp();
-            AllNotes.getInstance().deleteAllNotes();
+//            AllNotes.getInstance().deleteAllNotes();
         }
         //RemoteDB.getInstance().syncDown(adapter);
     }

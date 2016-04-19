@@ -30,33 +30,74 @@ public class EditNote extends AppCompatActivity {
     private TextView charCount;
     private int index;
     private ImageView editImage;
-    private LinearLayout linearEditImageAndButtonView;
+    private LinearLayout linear;
 
     private Button addPhotoButton;
     private Button addAudioButton;
+    private Button removeButton;
 
-    Note note;
+    //------------------------ AUDIO METHODS -------------------------
 
-    /// to count the number of characters and display to the top right
-    private final TextWatcher textCounter = new TextWatcher() {
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    //------------------------ PHOTO METHODS -------------------------
+
+
+    //------------------------ UI METHODS -------------------------
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_edit_note);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        /// Get a support ActionBar corresponding to this toolbar
+        ActionBar ab = getSupportActionBar();
+
+        /// Enable the Up button
+        if (ab != null){
+            ab.setDisplayHomeAsUpEnabled(true);
         }
 
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            /// This sets a TextView to the current length
-            charCount.setText(String.valueOf(s.length()));
+        enterTextContent = (EditText)findViewById(R.id.enterTextContent);
+            enterTextContent.addTextChangedListener(textCounter);
+        charCount = (TextView)findViewById(R.id.characterCount);
 
+        index = AllNotes.getInstance().getEditIndex();
 
-            if(s.length() > 250){
-                charCount.setTextColor(Color.RED);
-            } else {
-                charCount.setTextColor(Color.rgb(0,160,0));
-            }
+        ///set up the textfields
+        enterTextContent.setText(AllNotes.getInstance().getNotes().get(index).getText());
+
+        /// set up buttons
+        this.addAudioButton = (Button) findViewById(R.id.newAudioButton);
+        this.addPhotoButton = (Button) findViewById(R.id.newPhotoButton);
+        this.removeButton = (Button) findViewById(R.id.editRemoveButton);
+
+        /// set up linear image and remove button view
+        this.linear = (LinearLayout) findViewById(R.id.linearEditImageAndButtonView);
+
+        /// set up image view
+        this.editImage = (ImageView)findViewById(R.id.editImage);
+
+        //note has an image
+        if(AllNotes.getInstance().getNotes().get(index).getPath() != null && !AllNotes.getInstance().getNotes().get(index).getPath().equals("")){
+            Log.i("IMAGE PATH", AllNotes.getInstance().getNotes().get(index).getPath());
+            Bitmap bitmap = BitmapFactory.decodeFile(AllNotes.getInstance().getNotes().get(index).getPath());
+            this.editImage.setImageBitmap(bitmap);
+
+            //hide add buttons
+            this.addPhotoButton.setVisibility(View.INVISIBLE);
+            this.addPhotoButton.getLayoutParams().height = 0;
+            this.addAudioButton.setVisibility(View.INVISIBLE);
+            this.addAudioButton.getLayoutParams().height = 0;
+        } else { //note has no image
+            //hide the image and remove button
+            this.linear.setVisibility(View.INVISIBLE);
+            this.linear.getLayoutParams().height = 0;
         }
+    }
 
-        public void afterTextChanged(Editable s) {
-        }
-    };
+    //------------------------ HELPER METHODS -------------------------
 
     /*!
      *  takes an already existing note and saves it.
@@ -88,55 +129,24 @@ public class EditNote extends AppCompatActivity {
         finish(); //return back to the previous activity
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_note);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        /// Get a support ActionBar corresponding to this toolbar
-        ActionBar ab = getSupportActionBar();
-
-        /// Enable the Up button
-        if (ab != null){
-            ab.setDisplayHomeAsUpEnabled(true);
+    /// to count the number of characters and display to the top right
+    private final TextWatcher textCounter = new TextWatcher() {
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
 
-        enterTextContent = (EditText)findViewById(R.id.enterTextContent);
-            enterTextContent.addTextChangedListener(textCounter);
-        charCount = (TextView)findViewById(R.id.characterCount);
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            /// This sets a TextView to the current length
+            charCount.setText(String.valueOf(s.length()));
 
-        index = AllNotes.getInstance().getEditIndex();
 
-        ///set up the textfields
-        enterTextContent.setText(AllNotes.getInstance().getNotes().get(index).getText());
-
-        /// set up buttons
-        this.addAudioButton = (Button) findViewById(R.id.newAudioButton);
-        this.addPhotoButton = (Button) findViewById(R.id.newPhotoButton);
-
-        /// set up linear image and remove button view
-        this.linearEditImageAndButtonView = (LinearLayout) findViewById(R.id.linearEditImageAndButtonView);
-
-        /// set up image view
-        this.editImage = (ImageView)findViewById(R.id.editImage);
-
-        //note has an image
-        if(AllNotes.getInstance().getNotes().get(index).getPicturePath() != null && !AllNotes.getInstance().getNotes().get(index).getPicturePath().equals("")){
-            Log.i("IMAGE PATH", AllNotes.getInstance().getNotes().get(index).getPicturePath());
-            Bitmap bitmap = BitmapFactory.decodeFile(AllNotes.getInstance().getNotes().get(index).getPicturePath());
-            this.editImage.setImageBitmap(bitmap);
-
-            //hide add buttons
-            this.addPhotoButton.setVisibility(View.INVISIBLE);
-            this.addPhotoButton.getLayoutParams().height = 0;
-            this.addAudioButton.setVisibility(View.INVISIBLE);
-            this.addAudioButton.getLayoutParams().height = 0;
-        } else { //note has no image
-            //hide the image and remove button
-            this.linearEditImageAndButtonView.setVisibility(View.INVISIBLE);
-            this.linearEditImageAndButtonView.getLayoutParams().height = 0;
+            if(s.length() > 250){
+                charCount.setTextColor(Color.RED);
+            } else {
+                charCount.setTextColor(Color.rgb(0,160,0));
+            }
         }
-    }
+
+        public void afterTextChanged(Editable s) {
+        }
+    };
 }

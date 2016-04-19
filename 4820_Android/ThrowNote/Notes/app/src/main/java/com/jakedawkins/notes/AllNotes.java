@@ -135,7 +135,10 @@ public class AllNotes {
                 /// add image to internal storage
                 File internalStorage = context.getDir("NotePictures", Context.MODE_PRIVATE);
                 File reportFilePath = new File(internalStorage, newNote.getID() + ".png");
-                newNote.setPicturePath(reportFilePath.toString());
+
+                newNote.setPath(reportFilePath.toString());
+                newNote.setFilename(newNote.getID() + ".png");
+                newNote.setFiletype("png");
 
                 /// compress and output
                 FileOutputStream fos;
@@ -146,18 +149,28 @@ public class AllNotes {
                 }
                 catch (Exception ex) {
                     Log.i("DATABASE", "Problem updating picture", ex);
-                    newNote.setPicturePath("");
+                    newNote.setPath("");
                 }
 
-                /// add image path to DB
-                // TODO
-                this.db.execSQL("UPDATE notes SET imagePath='" + newNote.getPicturePath() + "' WHERE id='" + newNote.getID() + "'");
+                /// add attachment to DB
+                this.db.execSQL("INSERT INTO attachments(filename, path, filetype_id, note_id) VALUES('" +
+                        newNote.getFilename() + "','" +
+                        newNote.getPath() + "','" +
+                        getFiletypeID(newNote.getFiletype()) + "','" +
+                        newNote.getID() +
+                        "')");
+            } else if(newNote.getPath() != null){
+                /// note has audio
 
-                //delete all old attachments for note
-                //add new attachment for note
-
+                /// add attachment to DB
+                this.db.execSQL("INSERT INTO attachments(filename, path, filetype_id, note_id) VALUES('" +
+                        newNote.getFilename() + "','" +
+                        newNote.getPath() + "','" +
+                        getFiletypeID(newNote.getFiletype()) + "','" +
+                        newNote.getID() +
+                        "')");
             }
-        }//end if
+        }//end if db
 
         AllNotes.getInstance().getNotes().add(0, newNote);
     }
@@ -209,6 +222,49 @@ public class AllNotes {
                 }
                 c.close();
             }//end for
+
+            /// handle attachments
+            /// delete all old attachments
+            this.db.execSQL("DELETE FROM attachments WHERE note_id='" + note.getID() + "'");
+
+            //add attachments back
+            /// note has an image
+            if(note.getBitmap() != null){
+                /// add image to internal storage
+                File internalStorage = context.getDir("NotePictures", Context.MODE_PRIVATE);
+                File reportFilePath = new File(internalStorage, note.getID() + ".png");
+                note.setPath(reportFilePath.toString());
+
+                /// compress and output
+                FileOutputStream fos;
+                try {
+                    fos = new FileOutputStream(reportFilePath);
+                    note.getBitmap().compress(Bitmap.CompressFormat.PNG, 100 /*quality*/, fos);
+                    fos.close();
+                }
+                catch (Exception ex) {
+                    Log.i("DATABASE", "Problem updating picture", ex);
+                    note.setPath("");
+                }
+
+                /// add attachment to DB
+                this.db.execSQL("INSERT INTO attachments(filename, path, filetype_id, note_id) VALUES('" +
+                        note.getFilename() + "','" +
+                        note.getPath() + "','" +
+                        getFiletypeID(note.getFiletype()) + "','" +
+                        note.getID() +
+                        "')");
+            } else if(note.getPath() != null){
+                /// note has audio
+
+                /// add attachment to DB
+                this.db.execSQL("INSERT INTO attachments(filename, path, filetype_id, note_id) VALUES('" +
+                        note.getFilename() + "','" +
+                        note.getPath() + "','" +
+                        getFiletypeID(note.getFiletype()) + "','" +
+                        note.getID() +
+                        "')");
+            }
         }//end if
     }
 
@@ -223,7 +279,7 @@ public class AllNotes {
             note.updateNow(); //set updated timedate stamp
 
             this.db.execSQL("UPDATE notes SET " +
-                    "textContent='" + note.getText().replaceAll("'","''") + "', " +
+                    "textContent='" + note.getText().replaceAll("'", "''") + "', " +
                     "updated='" + note.getUpdated() + "', " +
                     "toSync=" + note.getToSync() + ", " +
                     "toDelete=" + note.getToDelete() + ", " +
@@ -268,15 +324,16 @@ public class AllNotes {
         Note note = this.getNotes().remove(index);
 
         /// delete note from local storage
-        if (note.getPicturePath() != null && note.getPicturePath().length() != 0) {
-            File noteFilePath = new File(note.getPicturePath());
-            noteFilePath.delete();
+        if (note.getPath() != null && note.getPath().length() != 0) {
+            File noteFilePath = new File(note.getPath());
+            boolean success = noteFilePath.delete();
+            Log.i("DELETE_FILE",Boolean.toString(success));
         }
 
         /// deleting from DB and of image happens once synced
-        // TODO
         this.db.execSQL("UPDATE notes SET toDelete = 1, toSync=1 WHERE id=" + Integer.toString(note.getID()));
         this.db.execSQL("DELETE FROM tags_notes WHERE note_id=" + Integer.toString(note.getID()));
+        this.db.execSQL("DELETE FROM attachments WHERE note_id=" + note.getID());
     }
 
     /*!
@@ -284,18 +341,20 @@ public class AllNotes {
      *
      *  \param index| index of note to be removed
      */
+    // TODO -- remove from singleton
     public void deleteNote(Note note){
 
         /// delete note from local storage
-        if (note.getPicturePath() != null && note.getPicturePath().length() != 0) {
-            File noteFilePath = new File(note.getPicturePath());
-            noteFilePath.delete();
+        if (note.getPath() != null && note.getPath().length() != 0) {
+            File noteFilePath = new File(note.getPath());
+            boolean success = noteFilePath.delete();
+            Log.i("DELETE_FILE", Boolean.toString(success));
         }
 
         /// deleting from DB and of image happens once synced
-        // TODO
         this.db.execSQL("UPDATE notes SET toDelete = 1, toSync = 1 WHERE id=" + Integer.toString(note.getID()));
         this.db.execSQL("DELETE FROM tags_notes WHERE note_id=" + Integer.toString(note.getID()));
+        this.db.execSQL("DELETE FROM attachments WHERE note_id=" + note.getID());
     }
 
     /*!
@@ -305,22 +364,25 @@ public class AllNotes {
         Cursor c = this.db.rawQuery("SELECT id FROM notes WHERE toDelete=1",null);
         int idIndex = c.getColumnIndex("id");
 
-        // TODO
         for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
             int id = c.getInt(idIndex);
             this.db.execSQL("DELETE FROM notes WHERE id=" + id);
             this.db.execSQL("DELETE FROM tags_notes WHERE note_id=" + id);
+            this.db.execSQL("DELETE FROM attachments WHERE note_id=" + id);
         }
+
+        c.close();
     }
 
     /*!
      *  delete all notes in local db and singleton list
      */
+    // TODO -- remove files in save dir
     public void deleteAllNotes(){
-        // TODO
         this.db.execSQL("DELETE FROM notes");
         this.db.execSQL("DELETE FROM tags");
         this.db.execSQL("DELETE FROM tags_notes");
+        this.db.execSQL("DELETE FROM attachments");
         this.notes.clear();
     }
 
@@ -333,10 +395,8 @@ public class AllNotes {
         if(this.db == null) return false;
         Cursor c = this.db.rawQuery("SELECT * FROM notes WHERE toDelete=0", null);
 
-        // TODO
         int textContentIndex = c.getColumnIndex("textContent");
         int idIndex = c.getColumnIndex("id");
-        int imagePathIndex = c.getColumnIndex("imagePath");
         int createdIndex = c.getColumnIndex("created");
         int updatedIndex = c.getColumnIndex("updated");
         int toSyncIndex = c.getColumnIndex("toSync");
@@ -352,7 +412,6 @@ public class AllNotes {
             note = new Note();
             note.setID(Integer.parseInt(c.getString(idIndex)));
             note.setText(c.getString(textContentIndex));
-            note.setPicturePath(c.getString(imagePathIndex));
             note.setCreated(c.getString(createdIndex));
             note.setUpdated(c.getString(updatedIndex));
             note.setToSync(c.getInt(toSyncIndex));
@@ -377,17 +436,33 @@ public class AllNotes {
             c.close();
         }
 
+        /// add attachments to notes
+        for(int i=0; i<this.notes.size(); i++){
+            note = this.notes.get(i);
+            c = this.db.rawQuery("SELECT * FROM attachments WHERE note_id=" + note.getID(), null);
+
+            int filenameIndex = c.getColumnIndex("filename");
+            int filetypeIDIndex = c.getColumnIndex("filetype_id");
+            int pathIndex = c.getColumnIndex("path");
+
+            for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
+                note.setFilename(c.getString(filenameIndex));
+                note.setFiletype(getFiletypeName(c.getInt(filetypeIDIndex)));
+                note.setPath(c.getString(pathIndex));
+            }
+
+            c.close();
+        }
+
         return true;
     }
 
     public Note fetchNote(int id){
-        // TODO
         if(this.db == null) return null;
         Cursor c = this.db.rawQuery("SELECT * FROM notes WHERE id=" + id, null);
 
         int textContentIndex = c.getColumnIndex("textContent");
         int idIndex = c.getColumnIndex("id");
-        int imagePathIndex = c.getColumnIndex("imagePath");
         int createdIndex = c.getColumnIndex("created");
         int updatedIndex = c.getColumnIndex("updated");
         int toSyncIndex = c.getColumnIndex("toSync");
@@ -401,7 +476,6 @@ public class AllNotes {
                 note = new Note();
                 note.setID(Integer.parseInt(c.getString(idIndex)));
                 note.setText(c.getString(textContentIndex));
-                note.setPicturePath(c.getString(imagePathIndex));
                 note.setRemoteID(c.getInt(remoteIDIndex));
                 note.setCreated(c.getString(createdIndex));
                 note.setUpdated(c.getString(updatedIndex));
@@ -421,6 +495,23 @@ public class AllNotes {
                 for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
                     note.addTag(c.getString(tagIndex));
                 }
+            }
+
+            c.close();
+        }
+
+        /// add attachments to note
+        if(note != null){
+            c = this.db.rawQuery("SELECT * FROM attachments WHERE note_id=" + note.getID(), null);
+
+            int filenameIndex = c.getColumnIndex("filename");
+            int filetypeIDIndex = c.getColumnIndex("filetype_id");
+            int pathIndex = c.getColumnIndex("path");
+
+            for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
+                note.setFilename(c.getString(filenameIndex));
+                note.setFiletype(getFiletypeName(c.getInt(filetypeIDIndex)));
+                note.setPath(c.getString(pathIndex));
             }
 
             c.close();
@@ -457,6 +548,23 @@ public class AllNotes {
 
         c.close();
         return filetypeID;
+    }
+
+    /*!
+    *   get name of a filetype, given the ID
+    */
+    public static String getFiletypeName(int filetypeID){
+        Cursor c = AllNotes.getInstance().db.rawQuery("SELECT * FROM filetypes WHERE id=" + filetypeID, null);
+
+        int filetypeIndex = c.getColumnIndex("filetype");
+
+        if(c.getCount() > 0) c.moveToFirst();
+        else return "";
+
+        String filetype = c.getString(filetypeIndex);
+
+        c.close();
+        return filetype;
     }
 
 }

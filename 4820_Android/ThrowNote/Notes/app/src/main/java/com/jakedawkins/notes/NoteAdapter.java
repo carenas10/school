@@ -55,11 +55,11 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         }
 
         /// hide the image icon if no image with note
-        if(note.getPicturePath() == null && note.getAudioPath() == null){
+        if(note.getPath() == null){
             imageIcon.setVisibility(View.GONE);
-        } else if(note.getPicturePath() != null){
+        } else if(note.getFiletype().equals("png")){
             imageIcon.setImageResource(R.drawable.imageicon);
-        } else { //has an audio note
+        } else if(note.getFiletype().equals("mp3")){
             imageIcon.setImageResource(R.drawable.soundicon);
         }
 
