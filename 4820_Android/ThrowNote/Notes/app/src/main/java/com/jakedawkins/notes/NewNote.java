@@ -193,43 +193,7 @@ public class NewNote extends AppCompatActivity {
         }
     };
 
-    /*!
-     * takes a new note and saves it to the list and DB
-     *
-     * \param View | button pressed
-     */
-    public void saveNote(View view) {
-        if (enterTextContent.getText().toString().length() == 0) {
-            new AlertDialog.Builder(this)
-                .setTitle("No Note Added")
-                .setMessage("You must enter text for the note")
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // continue with delete
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
-            return;
-        }
 
-        Note note = new Note();
-
-        note.setText(enterTextContent.getText().toString());
-        note.createNow();
-
-        /// add the image bitmap to the note for saving
-        if (this.bitmap != null) { note.setBitmap(this.bitmap); }
-        else if (this.outputFile != null) {
-            note.setFiletype("mp3");
-            note.setFilename(filename);
-            note.setPath(outputFile);
-        }
-
-        AllNotes.getInstance().addNewNote(note);
-        RemoteDB.getInstance().syncUpAdd(note);
-        finish(); /// return back to the previous activity
-    }
 
     //---------------- UI METHODS ----------------
 
@@ -295,6 +259,44 @@ public class NewNote extends AppCompatActivity {
     }
 
     //---------------- HELPER METHODS ----------------
+
+    /*!
+     * takes a new note and saves it to the list and DB
+     *
+     * \param View | button pressed
+     */
+    public void saveNote(View view) {
+        if (enterTextContent.getText().toString().length() == 0) {
+            new AlertDialog.Builder(this)
+                    .setTitle("No Note Added")
+                    .setMessage("You must enter text for the note")
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
+
+        Note note = new Note();
+
+        note.setText(enterTextContent.getText().toString());
+        note.createNow();
+
+        /// add the image bitmap to the note for saving
+        if (this.bitmap != null) { note.setBitmap(this.bitmap); }
+        else if (this.outputFile != null) {
+            note.setFiletype("mp3");
+            note.setFilename(filename);
+            note.setPath(outputFile);
+        }
+
+        AllNotes.getInstance().addNewNote(note);
+        RemoteDB.getInstance().syncUpAdd(note);
+        finish(); /// return back to the previous activity
+    }
 
     /// to count the number of characters and display to the top right
     private final TextWatcher textCounter = new TextWatcher() {

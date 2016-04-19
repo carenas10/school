@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -117,7 +118,6 @@ public class ViewNoteActivity extends AppCompatActivity {
                 this.viewNoteImage.setImageResource(R.drawable.playicon);
                 viewNoteImage.setOnClickListener(playListener); //play
             }
-
         }
 
     }
@@ -138,6 +138,26 @@ public class ViewNoteActivity extends AppCompatActivity {
             characterCount.setTextColor(Color.RED);
         } else {
             characterCount.setTextColor(Color.rgb(0,160,0));
+        }
+
+        /// load up any attachments
+        if(note.getPath() != null && !note.getPath().equals("")){
+            if(note.getFiletype().equals("png")){
+                /// load up the image
+                Log.i("IMAGE PATH", note.getPath());
+                Bitmap bitmap = BitmapFactory.decodeFile(note.getPath());
+                this.viewNoteImage.setImageBitmap(bitmap);
+                viewNoteImage.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            } else if(note.getFiletype().equals("mp3")){
+                //load up audio file
+                Log.i("AUDIO PATH", note.getPath());
+                this.viewNoteImage.setImageResource(R.drawable.playicon);
+                viewNoteImage.setOnClickListener(playListener); //play
+                viewNoteImage.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            }
+        } else {
+            viewNoteImage.setVisibility(View.INVISIBLE);
+            viewNoteImage.getLayoutParams().height = 0;
         }
     }
 

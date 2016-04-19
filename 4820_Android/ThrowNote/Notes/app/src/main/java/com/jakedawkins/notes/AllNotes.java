@@ -312,6 +312,49 @@ public class AllNotes {
                 }
                 c.close();
             }//end for
+
+            /// handle attachments
+            /// delete all old attachments
+            this.db.execSQL("DELETE FROM attachments WHERE note_id='" + note.getID() + "'");
+
+            //add attachments back
+            /// note has an image
+            if(note.getBitmap() != null){
+                /// add image to internal storage
+                File internalStorage = context.getDir("NotePictures", Context.MODE_PRIVATE);
+                File reportFilePath = new File(internalStorage, note.getID() + ".png");
+                note.setPath(reportFilePath.toString());
+
+                /// compress and output
+                FileOutputStream fos;
+                try {
+                    fos = new FileOutputStream(reportFilePath);
+                    note.getBitmap().compress(Bitmap.CompressFormat.PNG, 100 /*quality*/, fos);
+                    fos.close();
+                }
+                catch (Exception ex) {
+                    Log.i("DATABASE", "Problem updating picture", ex);
+                    note.setPath("");
+                }
+
+                /// add attachment to DB
+                this.db.execSQL("INSERT INTO attachments(filename, path, filetype_id, note_id) VALUES('" +
+                        note.getFilename() + "','" +
+                        note.getPath() + "','" +
+                        getFiletypeID(note.getFiletype()) + "','" +
+                        note.getID() +
+                        "')");
+            } else if(note.getPath() != null){
+                /// note has audio
+
+                /// add attachment to DB
+                this.db.execSQL("INSERT INTO attachments(filename, path, filetype_id, note_id) VALUES('" +
+                        note.getFilename() + "','" +
+                        note.getPath() + "','" +
+                        getFiletypeID(note.getFiletype()) + "','" +
+                        note.getID() +
+                        "')");
+            }
         }//end if
     }
 
