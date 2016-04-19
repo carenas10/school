@@ -341,7 +341,6 @@ public class AllNotes {
      *
      *  \param index| index of note to be removed
      */
-    // TODO -- remove from singleton
     public void deleteNote(Note note){
 
         /// delete note from local storage
@@ -349,6 +348,12 @@ public class AllNotes {
             File noteFilePath = new File(note.getPath());
             boolean success = noteFilePath.delete();
             Log.i("DELETE_FILE", Boolean.toString(success));
+        }
+
+        for(int i=0; i<getNotes().size(); i++){
+            if(getNotes().get(i).getID() == note.getID()){
+                getNotes().remove(i);
+            }
         }
 
         /// deleting from DB and of image happens once synced
