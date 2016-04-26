@@ -68,7 +68,6 @@ public class NewNote extends AppCompatActivity {
         /// make the linear layout visible and expand
         this.linear.setVisibility(View.VISIBLE);
         this.linear.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
-
         this.newImage.setImageResource(R.drawable.recordicon);
 
         /// add method to image for recording
@@ -81,14 +80,16 @@ public class NewNote extends AppCompatActivity {
         public void onClick(View v) {
             //set filename
             outputFile = Environment.getExternalStorageDirectory().getAbsolutePath();
-            //TODO -- change from test
-            outputFile = outputFile + "/" + "test.3gp";
+            //outputFile = outputFile + "/" + now() + ".3gp";
+            outputFile = outputFile + "/" + now() + ".mp3";
 
             recorder = new MediaRecorder();
             recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            //recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
             recorder.setOutputFile(outputFile);
-            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            //recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
 
 
             try {
@@ -141,7 +142,6 @@ public class NewNote extends AppCompatActivity {
             filename = null;
             recorder = null;
 
-            //TODO -- this works, but flashes black
             //force redraw
             recreate();
 
@@ -197,7 +197,6 @@ public class NewNote extends AppCompatActivity {
             /// remove photo
             bitmap = null;
 
-            //TODO -- this works, but flashes black
             //force redraw
             recreate();
         }
@@ -245,7 +244,6 @@ public class NewNote extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK && data != null){ //capture photo
-            /// TODO -- full res photo
             Log.i("REQUEST_CODE", Integer.toString(CAMERA_REQUEST));
             Bundle extras = data.getExtras();
 
@@ -333,7 +331,7 @@ public class NewNote extends AppCompatActivity {
      *  \return String| current timeDate string
      */
     public String now(){
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         Date date = new Date();
         return dateFormat.format(date); //2014-08-06 15:59:48
     }
