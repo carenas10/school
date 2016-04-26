@@ -153,9 +153,9 @@ public class NewNote extends AppCompatActivity {
     View.OnClickListener playListener = new View.OnClickListener() {
         public void onClick(View v) {
             Log.i("PLAY", "CLICKED");
-            //TODO -- multiple plays
-            newImage.setOnClickListener(null); //play
-
+            if(mPlayer != null && mPlayer.isPlaying()){
+                mPlayer.stop();
+            }
             mPlayer = new MediaPlayer();
 
             try {
