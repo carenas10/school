@@ -250,6 +250,7 @@ public class EditNote extends AppCompatActivity {
 
         /// load up any attachments
         if(note.getPath() != null && !note.getPath().equals("")){
+            Log.i("PATH", note.getPath());
             if(note.getFiletype().equals("png")){
                 /// note has image
                 Log.i("IMAGE PATH", note.getPath());
@@ -348,6 +349,7 @@ public class EditNote extends AppCompatActivity {
             note.setPath(outputFile);
         }
 
+        Log.i("PRE-UPDATE", note.toString());
         AllNotes.getInstance().updateNote(note);
         AllNotes.getInstance().getNotes().set(index, note);
         RemoteDB.getInstance().syncUpUpdate(note);

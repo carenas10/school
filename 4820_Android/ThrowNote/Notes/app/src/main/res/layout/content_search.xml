@@ -68,6 +68,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/bookmarks"
+            android:onClick="searchBookmark"
             android:id="@+id/bookmarkSearchFilterButton" />
     </LinearLayout>
 

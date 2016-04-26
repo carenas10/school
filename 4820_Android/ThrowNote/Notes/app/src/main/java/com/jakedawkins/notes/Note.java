@@ -126,6 +126,19 @@ public class Note {
 
     public int getToDelete(){ return this.toDelete; }
 
+    public String toString(){
+        return "" +
+                "ID: " + this.id + "\n" +
+                "CRE: " + this.created + "\n" +
+                "UPD: " + this.updated + "\n" +
+                "FN: " + this.filename + "\n" +
+                "FT: " + this.filetype + "\n" +
+                "PA: " + this.path + "\n" +
+                "RID: " + this.remoteID + "\n" +
+                "SYN: " + this.toSync + "\n" +
+                "DEL: " + this.toDelete + "\n";
+    }
+
     //---------------- HELPERS ----------------
 
     /*!

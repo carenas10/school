@@ -39,6 +39,7 @@
                 android:ems="10"
                 android:id="@+id/viewNoteTextContent"
                 android:maxLength="256"
+                android:autoLink="web"
                 android:hint="@string/textEntry" />
 
             <ImageView

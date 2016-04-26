@@ -48,12 +48,14 @@ public class NewNote extends AppCompatActivity {
     //audio
     private String filename = null;
     private String outputFile = null;
-    MediaRecorder recorder = new MediaRecorder();
+    MediaRecorder recorder;
+    MediaPlayer mPlayer;
 
     private static final int CAMERA_REQUEST = 1888;
 
     //---------------- AUDIO METHODS ----------------
 
+    // PRE-RECORDING
     //user taps add photo button
     public void addAudio(View view){
 
@@ -72,35 +74,38 @@ public class NewNote extends AppCompatActivity {
         /// add method to image for recording
         newImage.setOnClickListener(recordAudioListener);
         removeButton.setOnClickListener(removeAudio);
-
-        //prepare audio recorder
-        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-        filename = RemoteDB.getInstance().getUserID() + now() + ".mp3";
-        File internalStorage = this.getDir("NotePictures", Context.MODE_PRIVATE);
-        File reportFilePath = new File(internalStorage, filename);
-        outputFile = reportFilePath.toString();
-
-        recorder.setOutputFile(outputFile);
-        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
     }
 
+    //RECORD
     View.OnClickListener recordAudioListener = new View.OnClickListener() {
         public void onClick(View v) {
+            //set filename
+            outputFile = Environment.getExternalStorageDirectory().getAbsolutePath();
+            //TODO -- change from test
+            outputFile = outputFile + "/" + "test.3gp";
+
+            recorder = new MediaRecorder();
+            recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            recorder.setOutputFile(outputFile);
+            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
 
             try {
                 recorder.prepare();
-                recorder.start();
-                Log.i("RECORD", "CLICKED");
-                newImage.setImageResource(R.drawable.stopicon);
-                newImage.setOnClickListener(stopRecordListener);
-                Toast.makeText(getApplicationContext(), "Recording started", Toast.LENGTH_LONG).show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            recorder.start();
+            Log.i("RECORD", "CLICKED");
+            newImage.setImageResource(R.drawable.stopicon);
+            newImage.setOnClickListener(stopRecordListener);
+            Toast.makeText(getApplicationContext(), "Recording started", Toast.LENGTH_SHORT).show();
         }
     };
 
+    //DONE RECORDING
     View.OnClickListener stopRecordListener = new View.OnClickListener() {
         public void onClick(View v) {
             Log.i("STOP","CLICKED");
@@ -112,10 +117,11 @@ public class NewNote extends AppCompatActivity {
             recorder.release();
             recorder  = null;
 
-            Toast.makeText(getApplicationContext(), "Audio recorded successfully",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Audio recorded successfully",Toast.LENGTH_SHORT).show();
         }
     };
 
+    //REMOVE AUDIO CLIPS
     View.OnClickListener removeAudio = new View.OnClickListener() {
         public void onClick(View v) {
             Log.i("REMOVE","CLICKED");
@@ -139,27 +145,29 @@ public class NewNote extends AppCompatActivity {
             //force redraw
             recreate();
 
-            Toast.makeText(getApplicationContext(), "Audio removed",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Audio removed",Toast.LENGTH_SHORT).show();
         }
     };
 
+    //PLAY AUDIO
     View.OnClickListener playListener = new View.OnClickListener() {
         public void onClick(View v) {
             Log.i("PLAY", "CLICKED");
+            //TODO -- multiple plays
             newImage.setOnClickListener(null); //play
 
-            MediaPlayer m = new MediaPlayer();
+            mPlayer = new MediaPlayer();
 
-            try { m.setDataSource(outputFile); }
+            try {
+                mPlayer.setDataSource(outputFile);
+                mPlayer.prepare();
+                mPlayer.start();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
 
-            catch (IOException e) { e.printStackTrace(); }
-
-            try { m.prepare(); }
-
-            catch (IOException e) { e.printStackTrace(); }
-
-            m.start();
-            Toast.makeText(getApplicationContext(), "Playing audio", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Playing audio", Toast.LENGTH_SHORT).show();
         }
     };
 

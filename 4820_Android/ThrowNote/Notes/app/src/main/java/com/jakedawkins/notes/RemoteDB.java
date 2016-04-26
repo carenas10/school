@@ -2,6 +2,7 @@ package com.jakedawkins.notes;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -16,6 +17,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -277,6 +286,16 @@ public class RemoteDB {
                             Log.i("REMOTE ID FROM REQUEST", Integer.toString(remoteID));
 
                             note.setRemoteID(remoteID);
+
+                            //check if there is an attachment to upload
+                            if(note.getPath() != null){
+                                if(note.getFiletype().equals("png")){
+                                    new UploadFileTask().execute(new FileParams(note.getPath(), note.getRemoteID(), "photo"));
+                                } else {
+                                    new UploadFileTask().execute(new FileParams(note.getPath(), note.getRemoteID(), "audio"));
+                                }
+                            }
+
                             note.setToSync(0);
                             AllNotes.getInstance().updateNote(note);
 
@@ -319,6 +338,19 @@ public class RemoteDB {
                     public void onResponse(String response)
                     {
                         Log.i("SYNC_UP_UPD_RESP_DATA",response);
+
+                        //first delete old attachments
+                        fileDelete(note);
+
+                        //check if there is an attachment to upload
+                        if(note.getPath() != null){
+                            if(note.getFiletype().equals("png")){
+                                new UploadFileTask().execute(new FileParams(note.getPath(), note.getRemoteID(), "photo"));
+                            } else {
+                                new UploadFileTask().execute(new FileParams(note.getPath(), note.getRemoteID(), "audio"));
+                            }
+                        }
+
                         note.setToSync(0);
                         AllNotes.getInstance().updateNote(note);
                     }
@@ -351,6 +383,9 @@ public class RemoteDB {
     public void syncUpDelete(final Note note){
         if (requestQueue == null) instantiateRequestQueue();
 
+        //delete attachments first
+        fileDelete(note);
+
         Log.i("SYNC_UP_DEL_ID", Integer.toString(note.getRemoteID()));
         StringRequest strRequest = new StringRequest(Request.Method.DELETE, this.baseURL + "notes/" + note.getRemoteID(),
                 new Response.Listener<String>()
@@ -381,5 +416,134 @@ public class RemoteDB {
         int count = c.getCount();
         c.close();
         return count;
+    }
+
+    //------------------------ File Uploading Methods ------------------------
+    private class FileParams {
+        public String path;
+        public int remoteID;
+        public String type;
+
+        FileParams(String path, int remoteID, String type){
+            this.path = path;
+            this.remoteID = remoteID;
+            this.type = type;
+        }
+    }
+
+    private class UploadFileTask extends AsyncTask<FileParams, Void, String> {
+        @Override
+        protected String doInBackground(FileParams... params) {
+            return uploadFile(params[0].path, params[0].remoteID, params[0].type);
+        }
+    }
+
+    //Uploads a local file to a server
+    public String uploadFile(final String path, int noteID, String type) {
+        String ret="0";
+
+        String fileName = path;
+        HttpURLConnection conn = null;
+        DataOutputStream dos = null;
+        //Separators for the post data
+        String lineEnd = "\r\n";
+        String twoHyphens = "--";
+        String boundary = "*****";
+        int bytesRead, bytesAvailable, bufferSize;
+        byte[] buffer;
+        int maxBufferSize = 1024 * 1024;
+        File sourceFile = new File(path);
+        Log.i("FILE",sourceFile.getName());
+
+        try {
+            FileInputStream fileInputStream = new FileInputStream(sourceFile);
+            //The php script
+            URL url = new URL("http://thrownote.com/api/v1/notes/" + noteID + "/file");
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+            conn.setUseCaches(false);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Connection", "Keep-Alive");
+            conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+            conn.setRequestProperty(type, fileName);
+
+            //Boundary
+            dos = new DataOutputStream(conn.getOutputStream());
+            dos.writeBytes(twoHyphens + boundary + lineEnd);
+
+            //$_FILE['uploaded_file']
+            //type -- photo or audio
+            dos.writeBytes("Content-Disposition: form-data; name=\"" + type + "\";filename=\"" + fileName + "\"" + lineEnd);
+            dos.writeBytes(lineEnd);
+            bytesAvailable = fileInputStream.available();
+            bufferSize = Math.min(bytesAvailable, maxBufferSize);
+            buffer = new byte[bufferSize];
+            bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+            while (bytesRead > 0) {
+                dos.write(buffer, 0, bufferSize);
+                bytesAvailable = fileInputStream.available();
+                bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+            }
+
+            //Boundary
+            dos.writeBytes(lineEnd);
+            dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+
+            int serverResponseCode = conn.getResponseCode();
+            //Good return
+            if (serverResponseCode == 200 || serverResponseCode==201) {
+                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String line = br.readLine();
+                //The php script either returns a url or 0 if the upload failed
+                ret=line;
+            }
+
+            fileInputStream.close();
+            dos.flush();
+            dos.close();
+
+            //Return the result to our activity
+            Log.i("FILE RET", ret);
+            return ret;
+
+        } catch (MalformedURLException ex) {
+            Log.i("FILE MALFORMED ERR RET", ret);
+            Log.e("Exeption", ex.toString());
+            return ret;
+        } catch (final Exception e) {
+            Log.i("FILE ERR RET", ret);
+            Log.e("Exeption", e.toString());
+            return ret;
+        }
+    }
+
+    /// deletes a note in the remote DB
+    public void fileDelete(final Note note){
+        if (requestQueue == null) instantiateRequestQueue();
+
+        Log.i("DEL_FILE", Integer.toString(note.getRemoteID()));
+        StringRequest strRequest = new StringRequest(Request.Method.DELETE, this.baseURL + "notes/" + note.getRemoteID() + "/file",
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response)
+                    {
+                        Log.i("DEL_FILE_RESP_DATA",response);
+                        note.setToSync(0);
+                        AllNotes.getInstance().updateNote(note);
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        Log.i("DEL_FILE_ERROR","TRUE");
+                    }
+                });
+
+        this.requestQueue.add(strRequest);
     }
 }

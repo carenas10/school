@@ -185,8 +185,37 @@ public class SearchActivity extends AppCompatActivity {
     *   user hit bookmarks button
     *   searches notes with bookmark links
     */
-    public void searchBookmark(){
+    public void searchBookmark(View view){
+        Cursor c = AllNotes.getInstance().getDB().rawQuery("SELECT * FROM notes", null);
 
+        int idIndex = c.getColumnIndex("id");
+        HashSet<Integer> indices = new HashSet<Integer>();
+
+        if(c.getCount() > 0) {
+            if(c.getCount() > 0){
+                for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+                    indices.add(c.getInt(idIndex));
+                }
+            }
+
+            notes.clear();
+
+            Iterator<Integer> i = indices.iterator();
+            while (i.hasNext()) {
+                int id = i.next();
+                Note newNote = AllNotes.getInstance().fetchNote(id);
+                if(newNote.getText().contains("http://")){
+                    notes.add(newNote);
+                }
+            }
+        } else { /// no notes found
+            notes.clear();
+            notes.add(noResults);
+        }
+
+        c.close();
+
+        adapter.notifyDataSetChanged();
     }
 
     //------------------------ UI METHODS ------------------------

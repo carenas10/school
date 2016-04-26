@@ -8,7 +8,10 @@ import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -133,11 +136,12 @@ public class AllNotes {
             /// note has an image
             if(newNote.getBitmap() != null){
                 /// add image to internal storage
+                String nowString = now();
                 File internalStorage = context.getDir("NotePictures", Context.MODE_PRIVATE);
-                File reportFilePath = new File(internalStorage, newNote.getID() + ".png");
+                File reportFilePath = new File(internalStorage, nowString + ".png");
 
                 newNote.setPath(reportFilePath.toString());
-                newNote.setFilename(newNote.getID() + ".png");
+                newNote.setFilename(nowString + ".png");
                 newNote.setFiletype("png");
 
                 /// compress and output
@@ -231,9 +235,13 @@ public class AllNotes {
             /// note has an image
             if(note.getBitmap() != null){
                 /// add image to internal storage
+                String nowString = now();
                 File internalStorage = context.getDir("NotePictures", Context.MODE_PRIVATE);
-                File reportFilePath = new File(internalStorage, note.getID() + ".png");
+                File reportFilePath = new File(internalStorage, nowString + ".png");
+
                 note.setPath(reportFilePath.toString());
+                note.setFilename(nowString + ".png");
+                note.setFiletype("png");
 
                 /// compress and output
                 FileOutputStream fos;
@@ -321,9 +329,13 @@ public class AllNotes {
             /// note has an image
             if(note.getBitmap() != null){
                 /// add image to internal storage
+                String nowString = now();
                 File internalStorage = context.getDir("NotePictures", Context.MODE_PRIVATE);
-                File reportFilePath = new File(internalStorage, note.getID() + ".png");
+                File reportFilePath = new File(internalStorage, nowString + ".png");
+
                 note.setPath(reportFilePath.toString());
+                note.setFilename(nowString + ".png");
+                note.setFiletype("png");
 
                 /// compress and output
                 FileOutputStream fos;
@@ -355,6 +367,7 @@ public class AllNotes {
                         note.getID() +
                         "')");
             }
+            Log.i("NOTE DATA:", note.toString());
         }//end if
     }
 
@@ -613,6 +626,18 @@ public class AllNotes {
 
         c.close();
         return filetype;
+    }
+
+    /*!
+ *  Used to generate a mySQL-like timedate string of right now
+ *  in format of YYYY-MM-DD HH:MM:SS
+ *
+ *  \return String| current timeDate string
+ */
+    public String now(){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        return dateFormat.format(date); //2014-08-06 15:59:48
     }
 
 }
