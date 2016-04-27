@@ -36,8 +36,8 @@ public class LoginActivity extends AppCompatActivity {
 
         /// Validate the fields first
         /// one of the fields are empty
-        if(username.length() == 0 || password.length() == 0){
-            Toast toast = Toast.makeText(this, "Both fields must be filled", Toast.LENGTH_LONG);
+        if(username.length() < 6 || password.length() < 6){
+            Toast toast = Toast.makeText(this, "Both fields must be 6 characters", Toast.LENGTH_LONG);
             toast.show();
         } else {
             RemoteDB.getInstance().setUsername(username);

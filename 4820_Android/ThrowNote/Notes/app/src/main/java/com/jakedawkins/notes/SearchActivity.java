@@ -150,6 +150,7 @@ public class SearchActivity extends AppCompatActivity {
     *   user hit audio button
     *   searches notes with audio attachments
     */
+    //TODO -- audio search double returns
     public void searchAudio(View view){
         Cursor c = AllNotes.getInstance().getDB().rawQuery("SELECT DISTINCT note_id FROM attachments WHERE filetype_id=" + AllNotes.getFiletypeID("mp3"), null);
 
@@ -204,7 +205,7 @@ public class SearchActivity extends AppCompatActivity {
             while (i.hasNext()) {
                 int id = i.next();
                 Note newNote = AllNotes.getInstance().fetchNote(id);
-                if(newNote.getText().contains("http://")){
+                if(newNote != null && newNote.getText().contains("http://")){
                     notes.add(newNote);
                 }
             }

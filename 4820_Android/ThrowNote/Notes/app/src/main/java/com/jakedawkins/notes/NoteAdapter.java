@@ -45,24 +45,26 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         ImageView imageIcon = (ImageView) convertView.findViewById(R.id.imageIcon);
 
         /// Populate the data into the template view using the data object
-        noteText.setText(note.getText());
+        if(note != null) {
+            noteText.setText(note.getText());
 
-        /// show the time created or updated
-        if(note.getUpdated() != null && !note.getUpdated().equals("null")){
-            noteTimeStamp.setText(dateParse(note.getUpdated()));
-        } else {
-            noteTimeStamp.setText(dateParse(note.getCreated()));
+
+            /// show the time created or updated
+            if (note.getUpdated() != null && !note.getUpdated().equals("null")) {
+                noteTimeStamp.setText(dateParse(note.getUpdated()));
+            } else {
+                noteTimeStamp.setText(dateParse(note.getCreated()));
+            }
+
+            /// hide the image icon if no image with note
+            if (note.getPath() == null) {
+                imageIcon.setVisibility(View.GONE);
+            } else if (note.getFiletype().equals("png")) {
+                imageIcon.setImageResource(R.drawable.imageicon);
+            } else if (note.getFiletype().equals("mp3")) {
+                imageIcon.setImageResource(R.drawable.soundicon);
+            }
         }
-
-        /// hide the image icon if no image with note
-        if(note.getPath() == null){
-            imageIcon.setVisibility(View.GONE);
-        } else if(note.getFiletype().equals("png")){
-            imageIcon.setImageResource(R.drawable.imageicon);
-        } else if(note.getFiletype().equals("mp3")){
-            imageIcon.setImageResource(R.drawable.soundicon);
-        }
-
         /// Return the completed view to render on screen
         return convertView;
     }

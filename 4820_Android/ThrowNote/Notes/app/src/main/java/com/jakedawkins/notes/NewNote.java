@@ -1,9 +1,11 @@
 package com.jakedawkins.notes;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -12,6 +14,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -58,21 +62,36 @@ public class NewNote extends AppCompatActivity {
     // PRE-RECORDING
     //user taps add photo button
     public void addAudio(View view){
+        //check for permissions
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED){
+            if (enterTextContent.getText().toString().length() == 0) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Not Allowed")
+                        .setMessage("You must approve this permission in settings")
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+        } else { //permissions granted
+            /// hide the add photo/audio button
+            this.addPhotoButton.setVisibility(View.INVISIBLE);
+            this.addPhotoButton.getLayoutParams().height = 0;
+            this.addAudioButton.setVisibility(View.INVISIBLE);
+            this.addAudioButton.getLayoutParams().height = 0;
 
-        /// hide the add photo/audio button
-        this.addPhotoButton.setVisibility(View.INVISIBLE);
-        this.addPhotoButton.getLayoutParams().height = 0;
-        this.addAudioButton.setVisibility(View.INVISIBLE);
-        this.addAudioButton.getLayoutParams().height = 0;
+            /// make the linear layout visible and expand
+            this.linear.setVisibility(View.VISIBLE);
+            this.linear.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            this.newImage.setImageResource(R.drawable.recordicon);
 
-        /// make the linear layout visible and expand
-        this.linear.setVisibility(View.VISIBLE);
-        this.linear.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        this.newImage.setImageResource(R.drawable.recordicon);
-
-        /// add method to image for recording
-        newImage.setOnClickListener(recordAudioListener);
-        removeButton.setOnClickListener(removeAudio);
+            /// add method to image for recording
+            newImage.setOnClickListener(recordAudioListener);
+            removeButton.setOnClickListener(removeAudio);
+        }
     }
 
     //RECORD
