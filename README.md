@@ -1,2 +1,2 @@
 # clemson-cpsc
-repository containing all private work for Clemson CPSC classes
+repository containing all work for Clemson CPSC classes
